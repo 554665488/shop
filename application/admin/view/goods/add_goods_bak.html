@@ -1,0 +1,669 @@
+{extend name="common/father"/}
+{block name="headCss"}
+<!--<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/product.css">-->
+<!--<script type="text/javascript" src="__PUBLIC__/static/js/wdatepicker.js"></script>-->
+<style type="text/css">
+    .tr-title {
+        height: 30px;
+        background: #E3E3E3;
+        border: 1px solid rgba(234, 233, 233, 0.51);
+    }
+
+    .a-pro-view-img {
+        float: left;
+    }
+
+    .thumbnail-img {
+        width: 60px;
+        margin-right: 10px;
+    }
+
+    .cell i {
+        display: block;
+    }
+
+    .remodal-bg.with-red-theme.remodal-is-opening, .remodal-bg.with-red-theme.remodal-is-opened {
+        filter: none;
+    }
+
+    .remodal-overlay.with-red-theme {
+        background-color: #f44336;
+    }
+
+    .remodal.with-red-theme {
+        background: #fff;
+    }
+
+    input[type="radio"], input[type="checkbox"] {
+        margin: -1px 5px 0;
+        margin-left: 0px;
+    }
+
+    .edit-group {
+        border-bottom: 1px solid #ebebeb;
+        margin-bottom: 10px;
+    }
+
+    .edit-group label {
+        font-weight: normal;
+    }
+
+    .edit-group-title {
+        height: 15px;
+        line-height: 15px;
+        width: 140px;
+        margin-top: 3px;
+        margin-bottom: 3px;
+    }
+
+    .edit-group-button {
+        border-color: #3283fa;
+        border: 1px solid #bbb;
+        height: 26px;
+        line-height: 24px;
+        padding: 0 5px;
+    }
+
+    .group-button-bg {
+        background: #3283fa;
+        color: #fff;
+    }
+
+    .div-pro-view-name {
+        width: 100%;
+        min-height: 60px;
+    }
+
+    i.hot, i.recommend, i.new {
+        font-size: 12px;
+        margin-right: 5px;
+        font-style: normal;
+        color: #fff;
+        background-color: #E84C3D;
+        border-radius: 2px;
+        padding: 1px 2px;
+    }
+
+    .icon-qrcode:before {
+        content: "\f029";
+    }
+
+    [class^="icon-"]:before, [class*=" icon-"]:before {
+        text-decoration: inherit;
+        display: inline-block;
+        speak: none;
+    }
+
+    [class^="icon-"], [class*=" icon-"] {
+        font-family: FontAwesome;
+        font-weight: normal;
+        font-style: normal;
+        text-decoration: inherit;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    .goodsCategory {
+        width: 216px;
+        height: 300px;
+        border: 1px solid #CCCCCC;
+        position: absolute;
+        z-index: 100;
+        background: #fff;
+        left: 352px;
+        display: none;
+        overflow-y: auto;
+    }
+
+    .goodsCategory::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .goodsCategory::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+        border-radius: 10px;
+        background-color: #f5f5f5;
+    }
+
+    .goodsCategory::-webkit-scrollbar-thumb {
+        /*width: 10px;*/
+        height: 20px;
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+        background-color: #ddd;
+    }
+
+    .goodsCategory ul {
+        height: 280px;
+        margin-top: -2px;
+        margin-left: 0;
+    }
+
+    .goodsCategory ul li {
+        text-align: left;
+        padding: 0 15px;
+        line-height: 30px;
+    }
+
+    .goodsCategory ul li i {
+        float: right;
+        line-height: 30px;
+    }
+
+    .goodsCategory ul li:hover {
+        cursor: pointer;
+    }
+
+    .goodsCategory ul li:hover, .goodsCategory ul li.selected {
+        background: #00C0FF;
+        color: #fff;
+    }
+
+    .two {
+        left: 570px;
+        border-left: 0;
+    }
+
+    .three {
+        left: 787px;
+        width: 198px;
+        border-left: 0;
+    }
+
+    .selectGoodsCategory {
+        width: 216px;
+        height: 45px;
+        border: 1px solid #CCCCCC;
+        position: absolute;
+        z-index: 100;
+        left: 352px;
+        margin-top: 300px;
+        border-collapse: collapse;
+        background: #fff;
+        display: none;
+    }
+
+    .selectGoodsCategory a {
+        display: block;
+        height: 30px;
+        width: 100px;
+        text-align: center;
+        color: #fff;
+        line-height: 30px;
+        margin: 8px;
+        background: #00C0FF;
+        text-decoration: none;
+    }
+
+    .RIGHT {
+        min-height: 800px;
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    .table th, .table td {
+        vertical-align: middle;
+    }
+
+    .recommendBox {
+        width: 360px;
+        display: inline-block;
+        float: right;
+    }
+
+    .introduction_box {
+        width: 360px;
+        display: inline-block;
+        float: right;
+    }
+</style>
+{/block}
+<!-- 左边菜单的加载 -->
+{block name='left'}
+<div class="LEFT">
+    <div id="accordion2" class="accordion leftmenu">
+        <div class="accordion-group">
+            <div class="sidebarX">
+                <img src="../../static/picture/admin_left_logo.png" />
+                <h2>商品</h2>
+            </div>
+            <div class="accordion-body collapse in" id="collapseOne">
+                <ul class="nav nav-pills nav-stacked" id="left_menu-small">
+                    <li><a href="http://tp.23673.com/admin/goods/goodslist">商品列表</a></li>
+                    <li class="active"><h1></h1><a href="http://tp.23673.com/admin/goods/addgoods">商品发布</a></li>
+                    <li><a href="http://tp.23673.com/admin/goods/goodsgrouplist">商品标签</a></li>
+                    <li><a href="http://tp.23673.com/admin/saleservice/consultlist">咨询管理</a></li>
+                    <li><a href="http://tp.23673.com/admin/goods/goodscomment">商品评价</a></li>
+                    <li><a href="http://tp.23673.com/admin/system/albumlist">相册管理</a></li>
+                    <li><a href="http://tp.23673.com/admin/goods/recyclelist">商品回收站</a></li>
+                    <li><a href="http://tp.23673.com/admin/goods/supplierlist">供货商</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+    <!-- 右边主要内容的加载 -->
+<div class="MAIN" style="min-height: 94vh;">
+{block name="right"}
+     <div class="main">
+
+    <div class="ncsc-form-goods">
+        <h3 class="js-goods-info">商品信息</h3>
+        <dl>
+            <dt><i class="required">*</i>商品分类：</dt>
+            <dd id="tbcNameCategory" data-flag="category" data-goods-id="0" cid="" data-attr-id="" cname="">
+                <span class="category-text" ></span>
+                <button class="category-button">选择</button>
+                <span><label for="g_name" class="error"><i class="icon-exclamation-sign"></i>商品分类不能为空</label></span>
+                <span class="help-inline">请选择商品分类</span>
+            </dd>
+        </dl>
+        <dl>
+            <dt>扩展分类：</dt>
+            <dd id = "extend_name_category_box">
+                <div class="extend-name-category-box">
+                </div>
+                <div class="clear">
+                    <button  class="select-button"onclick="addExtentCategoryBox();"><i class="fa fa-plus-square"></i>&nbsp;添加</button>
+                </div>
+
+            </dd>
+        </dl>
+        <dl>
+            <dt><i class="required">*</i>商品名称：</dt>
+            <dd>
+                <input class="productname" type="text" id="txtProductTitle" placeholder="请输入商品名称，不能超过60个字" />
+                <span class="help-inline">请填写商品名称</span>
+            </dd>
+        </dl>
+        <dl>
+            <dt>商品促销语：</dt>
+            <dd>
+                <input class="productname" type="text" id="txtIntroduction" placeholder="请输入促销语，不能超过60个字符" />
+                <span class="help-inline">商品促销语输入不正确</span>
+            </dd>
+        </dl>
+        <dl>
+            <dt>关键词：</dt>
+            <dd>
+                <input class="productname" type="text" id="txtKeyWords" placeholder="商品关键词用于SEO搜索" />
+                <span class="help-inline">请输入商品促销语，不能超过40个字符</span>
+            </dd>
+        </dl>
+        <dl>
+            <dt>供货商：</dt>
+            <dd>
+                <select id="supplierSelect">
+                    <option value="0">请选择供货商</option>
+                </select>
+                <span class="help-inline">请选择商品类型</span>
+            </dd>
+        </dl>
+        <dl>
+            <dt>市场价：</dt>
+            <dd>
+                <input class="goods_price" type="number"  id="txtProductMarketPrice" min="0" placeholder="0" /><em class="add-on">元</em>
+                <span class="help-inline">商品市场不能为空且需是数字</span>
+            </dd>
+        </dl>
+        <dl>
+            <dt><i class="required">*</i>销售价：</dt>
+            <dd>
+                <input class="goods_price" type="number" id="txtProductSalePrice" min="0" placeholder="0" /><em class="add-on">元</em>
+                <span class="help-inline">商品现价不能为空且需是数字</span>
+            </dd>
+        </dl>
+        <dl>
+            <dt>成本价：</dt>
+            <dd>
+                <input class="goods_price" type="number"  id="txtProductCostPrice" min="0" placeholder="0" /><em class="add-on">元</em>
+                <span class="help-inline">商品成本不能为空且需是数字</span>
+            </dd>
+        </dl>
+        <dl>
+            <dt>基础销量：</dt>
+            <dd>
+                <input type="number" class="span1" id="BasicSales" placeholder="0" />
+                <span class="help-inline">基础销量需是数字</span>
+            </dd>
+        </dl>
+        <dl>
+            <dt>基础点击数：</dt>
+            <dd>
+                <input type="number" class="span1" id="BasicPraise" placeholder="0" />
+                <span class="help-inline">基础点击数需是数字</span>
+            </dd>
+        </dl>
+        <dl>
+            <dt>基础分享数：</dt>
+            <dd>
+                <input type="number" class="span1" id="BasicShare" placeholder="0" />
+                <span class="help-inline">基础分享数需是数字</span>
+            </dd>
+        </dl>
+        <dl>
+            <dt>商家编码：</dt>
+            <dd>
+                <input type="text" id="txtProductCodeA" placeholder="请输入商家编码" />
+                <span class="help-inline">请输入商家编码，不能超过40个字符</span>
+            </dd>
+        </dl>
+        <dl>
+            <dt><i class="required">*</i>总库存：</dt>
+            <dd>
+                <input type="number" class="goods-stock" id="txtProductCount" min="0" value="0" />
+                <span class="help-inline">请输入总库存数量，必须是大于0的整数</span>
+            </dd>
+        </dl>
+        <dl>
+            <dt><i class="required">*</i>库存预警：</dt>
+            <dd>
+                <input type="number" class="goods-stock"  id="txtMinStockLaram" min="0" value="0" />
+                <span class="help-inline">请输入库存预警数，必须是大于0的整数</span>
+                <p class="hint">设置最低库存预警值。当库存低于预警值时商家中心商品列表页库存列红字提醒。<br>0为不预警。</p>
+            </dd>
+        </dl>
+
+        <h3 class="js-goods-type">商品类型</h3>
+        <dl>
+            <dt>商品类型：</dt>
+            <dd>
+                <select id="goodsType">
+                    <option value="0">请选择商品类型</option>
+                    <option value="28">衣服</option>
+                    <option value="30">手机</option>
+                    <option value="32">鞋子</option>
+                </select>
+                <span class="help-inline">请选择商品类型</span>
+            </dd>
+        </dl>
+        <dl>
+            <dt><span class="color-red"></span></dt>
+            <dd>
+                <table class="goods-sku js-goods-sku"></table>
+            </dd>
+        </dl>
+        <dl class="control-group js-spec-table" name="skuTable" style="display: none;">
+            <dt><span class="color-red"></span>商品库存：</dt>
+            <dd>
+                <div class="controls">
+                    <div class="js-goods-stock control-group" style="font-size: 14px; margin-top: 10px;">
+                        <div id="stock-region" class="sku-group">
+                            <table class="table-sku-stock">
+                                <thead></thead>
+                                <tbody></tbody>
+                                <tfoot></tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </dd>
+        </dl>
+        <dl class="control-group js-goods-attribute-block" style="display:none;">
+            <dt><span class="color-red"></span>商品属性：</dt>
+            <dd>
+                <div class="controls">
+                    <table class="goods-sku-attribute js-goods-sku-attribute" style="margin:0;"></table>
+                </div>
+            </dd>
+        </dl>
+
+        <h3 class="js-goods-img">商品图片</h3>
+        <dl>
+            <dt><i class="required">*</i>商品图片：</dt>
+            <dd>
+                <div id="goods_picture_box"class="controls" style="background-color:#FFF;border: 1px solid #E9E9E9;">
+                    <div class="ncsc-goods-default-pic">
+                        <div class="goodspic-uplaod" style="padding: 15px;">
+                            <div class='img-box' style="min-height:160px;">
+                                <div class="upload-thumb" id="default_uploadimg">
+                                    <img src="../../static/picture/default_goods_image_240.gif">
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                            <span class="img-error">最少需要一张图片作为商品主图</span>
+                            <p class="hint">上传商品图片，<font color="red">第一张图片将作为商品主图</font>,支持同时上传多张图片,多张图片之间可随意调整位置；支持jpg、gif、png格式上传或从图片空间中选择，建议使用尺寸800x800像素以上、大小不超过1M的正方形图片，上传后的图片将会自动保存在图片空间的默认分类中。</p>
+                            <div class="handle">
+                                <div class="ncsc-upload-btn">
+                                    <a href="javascript:void(0);">
+									<span>
+										<input style="cursor:pointer;font-size:0;" type="file" id="fileupload" hidefocus="true" class="input-file" name="file_upload"multiple="multiple" />
+									</span>
+                                        <p>图片上传</p>
+                                    </a>
+                                </div>
+                                <a class="ncsc-btn mt5"  id="img_box"nctype="show_image" href="javascript:void(0);">从图片空间选择</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <span class="help-inline">最少需要一张图片作为商品主图</span>
+            </dd>
+        </dl>
+        <dl>
+            <dt><i class="required"></i>规格图片：</dt>
+            <dd>
+                <div class="sku-picture-div">
+                    <!-- <span class="sku-picture-span sku-picture-active">颜色</span>
+                    <span class="sku-picture-span">尺码</span>
+                    <span class="sku-picture-span">款式</span> -->
+                </div>
+                <div class="clear"></div>
+            </dd>
+        </dl>
+        <style>
+            .upload-thumb{
+                display:block !important;
+                float:left;
+                width:147px !important;
+                height:147px !important;
+                position:relative;
+            }
+            .upload-thumb img{
+                width:100%;
+                height:100%;
+            }
+            .img-box, .sku-img-box{
+                overflow:hidden;
+            }
+            .off-box, .sku-off-box{
+                position:absolute;
+                width:18px;
+                height:18px;
+                right:0;
+                top:0;
+                line-height: 18px;
+                background-color:#FFF;
+                cursor:pointer;
+            }
+
+            .black-bg{
+                position:absolute;
+                right:0;
+                top:0;
+                left:0;
+                bottom:0;
+                background-color:rgba(0,0,0,0.3);
+            }
+            .img-error{
+                color:red;s
+            height:25px;
+                line-height:25px;
+                display:none;
+            }
+        </style>
+
+        <h3 class="js-goods_detail">商品详情</h3>
+        <dl>
+            <dt>商品品牌：</dt>
+            <dd>
+                <select id="brandSelect">
+                    <option value="0">请选择商品品牌</option>
+                    <option value="10">乐视</option>
+                </select>
+                <span class="help-inline">请选择商品品牌</span>
+            </dd>
+        </dl>
+        <dl>
+            <dt><i class="required">*</i>商品描述：</dt>
+            <dd>
+                <div class="controls" id="discripContainer">
+                    <textarea id="tareaProductDiscrip" name="discripArea" style="height: 500px; width: 800px; display: none;"></textarea>
+                    <script id="editor" type="text/plain" style="width: 800px; height: 500px;"></script>
+                    <span class="help-inline">请填写商品描述</span>
+                </div>
+            </dd>
+        </dl>
+
+        <h3 class="js-goods-express-info">商品物流信息</h3>
+        <dl>
+            <dt>所在地：</dt>
+            <dd>
+                <select id="provinceSelect" onchange="getProvince(this,'#citySelect',-1)">
+                    <option value="0">请选择省</option>
+                </select>
+                <select id="citySelect">
+                    <option value="0">请选择市</option>
+                </select>
+            </dd>
+        </dl>
+        <dl>
+            <dt><i class="required">*</i>运费：</dt>
+            <dd>
+                <div class="controls">
+                    <label class="radio inline normal"><input type="radio" name="fare" value="0" checked="checked" />免邮</label>
+                    <label class="radio inline normal"><input type="radio" name="fare" value="1" /> 买家承担运费</label>
+                    <span class="help-inline">请选择运费类型</span>
+                </div>
+            </dd>
+        </dl>
+        <dl id="valuation-method" style="display: none">
+            <dt><i class="required">*</i>计价方式：</dt>
+            <dd>
+                <label class="radio inline normal"><input type="radio" name="shipping_fee_type" value="3" checked="checked" />计件</label>
+                <label class="radio inline normal"><input type="radio" name="shipping_fee_type" value="2" />体积</label>
+                <label class="radio inline normal"><input type="radio" name="shipping_fee_type" value="1" />重量</label>
+            </dd>
+        </dl>
+        <dl id="commodity-weight" style="display: none">
+            <dt><i class="required">*</i>商品重量：</dt>
+            <dd>
+                <input type="number" class="goods-stock" id="goods_weight" min="0" value="0" />公斤
+                <span class="help-inline">商品重量必须大于0</span>
+            </dd>
+        </dl>
+        <dl id="commodity-volume" style="display: none">
+            <dt><i class="required">*</i>商品体积：</dt>
+            <dd>
+                <input type="number" class="goods-stock" id="goods_volume" min="0" value="0" />立方米
+                <span class="help-inline">商品体积必须大于0</span>
+            </dd>
+        </dl>
+        <dl>
+            <dt><i class="required">*</i>库存显示：</dt>
+            <dd>
+                <div class="controls">
+                    <label class="radio inline normal"><input type="radio" name="stock" checked="checked" value="1" /> 是</label>
+                    <label class="radio inline normal"><input type="radio" name="stock" value="0" /> 否</label>
+                    <span class="help-inline">请选择库存是否显示</span>
+                </div>
+            </dd>
+        </dl>
+
+        <h3 class="js-goods-point">积分购买设置</h3>
+        <dl>
+            <dt><i class="required">*</i>积分设置：</dt>
+            <dd>
+                <div class="controls">
+                    <label class="radio inline normal"><input type="radio" name="integralSelect" value="0" checked="checked" /> 非积分兑换</label>
+                    <label class="radio inline normal"><input type="radio" name="integralSelect" value="1" />积分兑换</label>
+                </div>
+            </dd>
+        </dl>
+        <dl id="integral-exchange" style="display: none">
+            <dt>积分兑换：</dt>
+            <dd>
+                <div class="controls">
+                    <input id="integration_available_use" class="input-mini" placeholder="0" min="0" type="number" onchange="integrationChange(this);" />&nbsp;积分
+                    <span class="help-inline">请设置积分</span>
+                </div>
+            </dd>
+        </dl>
+        <dl>
+            <dt>购买可赠送：</dt>
+            <dd>
+                <div class="controls">
+                    <input id="integration_available_give" class="input-mini" placeholder="0" min="0" type="number" onchange="integrationChange(this);" />&nbsp;积分
+                </div>
+            </dd>
+        </dl>
+
+        <h3 class="js-goods-other">其他信息</h3>
+        <div class="js-mask-category" style="position: fixed; width: 100%; height: 100%; top: 0px; left: 0px; right: 0px; bottom: 0px; z-index: 90; display: none; background: rgba(0, 0, 0, 0);"></div>
+        <dl>
+            <dt>商品标签：</dt>
+            <dd>
+                <div class="group-text-check-box">
+                    <div class="controls product-category-position">
+                        <div class="productcategory-selected" id="productcategory-selected"></div>
+                        <button  class="gruop-button" onclick="showGoodsGroup();"><i class="fa fa-plus-square"></i>&nbsp;添加商品标签</button>
+                        <div class="goods-gruop-div">
+                            <select class="goods-gruop-select">
+                                <option value="107"> 女装</option>
+                                <option value="108">连衣裙</option>
+                                <option value="109">男装</option>
+                                <option value="110">平板</option>
+                                <option value="111">分组添加测试</option>
+                                <option value="112">手机</option>
+                                <option value="113">电器</option>
+                            </select>
+                            <button class="check-button" onclick="checkGoodsGroup();">确认</button>
+                        </div>
+                        <span class="span-error">暂无可选的商品标签</span>
+                    </div>
+                </div>
+            </dd>
+        </dl>
+        <dl>
+            <dt>每人限购：</dt>
+            <dd>
+                <div class="controls">
+                    <input type="number" class="input-mini" min="0" placeholder="0" id="PurchaseSum"/>
+                    <span class="help-inline">件</span>
+                </div>
+            </dd>
+        </dl>
+        <dl>
+            <dt><i class="required">*</i>是否上架：</dt>
+            <dd>
+                <div class="controls">
+                    <label class="radio inline normal"><input type="radio" name="shelves" value="1" checked="checked" /> 立刻上架</label>
+                    <label class="radio inline normal"><input type="radio" name="shelves" value="0" /> 放入仓库</label>
+                </div>
+            </dd>
+        </dl>
+    </div>
+            <script type='text/javascript' src='../../static/js/sample.js' ></script>
+            <input type="hidden" id="goodsId" value="0" />
+            <input type="hidden" id="shop_type" value="2" />
+            <input type="hidden" id="hidQRcode" value="1" />
+            <input type="hidden" id="hidden_qrcode" value="" />
+            <input type="hidden" id="hidden_sort" value="0" />
+         <div class="btn-submit">
+             <button class="btn btn-info" id="btnSave" type="button" onClick="SubmitProductInfo(0,'http://tp.23673.com/admin','http://tp.23673.com')">保存</button>
+             <button class="btn btn-info" id="btnSave2" type="button" onClick="SubmitProductInfo(1,'http://tp.23673.com/admin','http://tp.23673.com')">保存并预览</button>
+         </div>
+</div>
+{/block}
+</div>
+{block name="footerJs"}
+<script src="__PUBLIC__/js/ns_common_base.js"></script>
+<script src="__PUBLIC__/admin/js/goodslist_v2.js__VERSION__"></script>

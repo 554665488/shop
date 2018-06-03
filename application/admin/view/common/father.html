@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {block name='head'}
+    {include file='common/head'}
+    {/block}
+    {block name="headCss"}{/block}
+</head>
+<body>
+{include file="common/header"/}
+<div class="MAIN" style="min-height: 94vh;">
+    {block name='left'}{/block}
+
+    <div class="main">
+        <!-- 右边主要内容的加载 -->
+        <div class="RIGHT">
+        {block name="rightMain"}{include file='common/rightMain'}{/block}
+        {block name="tabMenu"}{/block}
+        {block name="right"}
+        {/block}
+        {include file="common/page"/}
+        </div>
+    </div>
+</div>
+{block name="commonJs"}{include file="common/commonJs"/}{/block}
+{block name="footer"}{include file="common/commonJs"/}{/block}
+{block name="footerJs"}{/block}
+{block name='layui_toolbar'}{include file="common/layui_toolbar"/}{/block}
+</body>
+</html>

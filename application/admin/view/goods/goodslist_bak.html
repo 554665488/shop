@@ -1,0 +1,435 @@
+﻿{extend name="common/father"/}
+{block name="headCss"}
+<!--<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/product.css">-->
+<!--<script type="text/javascript" src="__PUBLIC__/static/js/wdatepicker.js"></script>-->
+<style type="text/css">
+    .tr-title {
+        height: 30px;
+        background: #E3E3E3;
+        border: 1px solid rgba(234, 233, 233, 0.51);
+    }
+
+    .a-pro-view-img {
+        float: left;
+    }
+
+    .thumbnail-img {
+        width: 60px;
+        margin-right: 10px;
+    }
+
+    .cell i {
+        display: block;
+    }
+
+    .remodal-bg.with-red-theme.remodal-is-opening, .remodal-bg.with-red-theme.remodal-is-opened {
+        filter: none;
+    }
+
+    .remodal-overlay.with-red-theme {
+        background-color: #f44336;
+    }
+
+    .remodal.with-red-theme {
+        background: #fff;
+    }
+
+    input[type="radio"], input[type="checkbox"] {
+        margin: -1px 5px 0;
+        margin-left: 0px;
+    }
+
+    .edit-group {
+        border-bottom: 1px solid #ebebeb;
+        margin-bottom: 10px;
+    }
+
+    .edit-group label {
+        font-weight: normal;
+    }
+
+    .edit-group-title {
+        height: 15px;
+        line-height: 15px;
+        width: 140px;
+        margin-top: 3px;
+        margin-bottom: 3px;
+    }
+
+    .edit-group-button {
+        border-color: #3283fa;
+        border: 1px solid #bbb;
+        height: 26px;
+        line-height: 24px;
+        padding: 0 5px;
+    }
+
+    .group-button-bg {
+        background: #3283fa;
+        color: #fff;
+    }
+
+    .div-pro-view-name {
+        width: 100%;
+        min-height: 60px;
+    }
+
+    i.hot, i.recommend, i.new {
+        font-size: 12px;
+        margin-right: 5px;
+        font-style: normal;
+        color: #fff;
+        background-color: #E84C3D;
+        border-radius: 2px;
+        padding: 1px 2px;
+    }
+
+    .icon-qrcode:before {
+        content: "\f029";
+    }
+
+    [class^="icon-"]:before, [class*=" icon-"]:before {
+        text-decoration: inherit;
+        display: inline-block;
+        speak: none;
+    }
+
+    [class^="icon-"], [class*=" icon-"] {
+        font-family: FontAwesome;
+        font-weight: normal;
+        font-style: normal;
+        text-decoration: inherit;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    .goodsCategory {
+        width: 216px;
+        height: 300px;
+        border: 1px solid #CCCCCC;
+        position: absolute;
+        z-index: 100;
+        background: #fff;
+        left: 352px;
+        display: none;
+        overflow-y: auto;
+    }
+
+    .goodsCategory::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .goodsCategory::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+        border-radius: 10px;
+        background-color: #f5f5f5;
+    }
+
+    .goodsCategory::-webkit-scrollbar-thumb {
+        /*width: 10px;*/
+        height: 20px;
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+        background-color: #ddd;
+    }
+
+    .goodsCategory ul {
+        height: 280px;
+        margin-top: -2px;
+        margin-left: 0;
+    }
+
+    .goodsCategory ul li {
+        text-align: left;
+        padding: 0 15px;
+        line-height: 30px;
+    }
+
+    .goodsCategory ul li i {
+        float: right;
+        line-height: 30px;
+    }
+
+    .goodsCategory ul li:hover {
+        cursor: pointer;
+    }
+
+    .goodsCategory ul li:hover, .goodsCategory ul li.selected {
+        background: #00C0FF;
+        color: #fff;
+    }
+
+    .two {
+        left: 570px;
+        border-left: 0;
+    }
+
+    .three {
+        left: 787px;
+        width: 198px;
+        border-left: 0;
+    }
+
+    .selectGoodsCategory {
+        width: 216px;
+        height: 45px;
+        border: 1px solid #CCCCCC;
+        position: absolute;
+        z-index: 100;
+        left: 352px;
+        margin-top: 300px;
+        border-collapse: collapse;
+        background: #fff;
+        display: none;
+    }
+
+    .selectGoodsCategory a {
+        display: block;
+        height: 30px;
+        width: 100px;
+        text-align: center;
+        color: #fff;
+        line-height: 30px;
+        margin: 8px;
+        background: #00C0FF;
+        text-decoration: none;
+    }
+
+    .RIGHT {
+        min-height: 800px;
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    .table th, .table td {
+        vertical-align: middle;
+    }
+
+    .recommendBox {
+        width: 360px;
+        display: inline-block;
+        float: right;
+    }
+
+    .introduction_box {
+        width: 360px;
+        display: inline-block;
+        float: right;
+    }
+</style>
+{/block}
+<body>
+{block name='left'}
+<div class="LEFT">
+    <div id="accordion2" class="accordion leftmenu">
+        <div class="accordion-group">
+            <div class="sidebarX">
+                <img src="__PUBLIC__/static/picture/admin_left_logo.png"/>
+                <h2>商品</h2>
+            </div>
+            <div class="accordion-body collapse in" id="collapseOne">
+                <ul class="nav nav-pills nav-stacked" id="left_menu-small">
+                    <li class="active"><h1></h1><a href="http://tp.23673.com/admin/goods/goodslist">商品列表</a></li>
+                    <li><a href="http://tp.23673.com/admin/goods/addgoods">商品发布</a></li>
+                    <li><a href="http://tp.23673.com/admin/goods/goodsgrouplist">商品标签</a></li>
+                    <li><a href="http://tp.23673.com/admin/saleservice/consultlist">咨询管理</a></li>
+                    <li><a href="http://tp.23673.com/admin/goods/goodscomment">商品评价</a></li>
+                    <li><a href="http://tp.23673.com/admin/system/albumlist">相册管理</a></li>
+                    <li><a href="http://tp.23673.com/admin/goods/recyclelist">商品回收站</a></li>
+                    <li><a href="http://tp.23673.com/admin/goods/supplierlist">供货商</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+<!-- 左边菜单的加载 -->
+<div class="MAIN" style="min-height: 94vh;">
+    {block name="right"}
+    <!--顶部边框开始  -->
+    <div class="tabmenu">
+        <ul class="tab pngFix">
+            <li class="active"><a href="http://tp.23673.com/admin/goods/goodslist">商品列表</a></li>
+        </ul>
+        <div class="right_side_operation">
+            <ul>
+
+                <li><a class="nscs-table-handle_green" href="http://tp.23673.com/admin/goods/addgoods"><i
+                        class="fa fa-plus-circle"></i>&nbsp;发布商品</a></li>
+
+            </ul>
+        </div>
+    </div>
+    <hr class="tabmenu_hr" style="border:1px solid #00C0FF;margin:0 0px 10px 20px;"/>
+    <div class="main">
+
+        <div class="js-mask-category"
+             style="display:none;background: rgba(0,0,0,0);position:fixed;width:100%;height:100%;top:0;left:0;right:0;bottom:0;z-index:90;"></div>
+        <table class="mytable">
+            <tr>
+                <th style="line-height:33px;">
+                    商品分类：
+                    <input type="text" placeholder="请选择商品分类" id="goodsCategoryOne" is_show="false">
+                    <div class="goodsCategory one">
+                        <ul>
+                            {volist name='goodsCateGoryList' id='vo' empty='暂时没有数据'}
+                            <li class="js-category-one" category_id="{$vo.category_id}">{$vo.category_name}
+                                {if isset($vo._child)}<i class="fa fa-angle-right fa-lg"></i>{/if}
+                            </li>
+                            {/volist}
+                        </ul>
+                    </div>
+                    <div class="goodsCategory two" style="border-left:0;">
+                        <ul id="goodsCategoryTwo">
+
+                        </ul>
+                    </div>
+                    <div class="goodsCategory three">
+                        <ul id="goodsCategoryThree">
+
+                        </ul>
+                    </div>
+                    <div class="selectGoodsCategory">
+                        <a href="javascript:;" id="confirmSelect" style="float:right;">确认选择</a>
+                    </div>
+                    <input type="hidden" id="category_id_1">
+                    <input type="hidden" id="category_id_2">
+                    <input type="hidden" id="category_id_3">
+                    商品名称：<input id="goods_name" class="input-medium" type="text" value="" placeholder="要搜索的商品名称">
+                    上下架
+                    <select id="state">
+                        <option value="">全部</option>
+                        <option value="1">上架</option>
+                        <option value="0">下架</option>
+                    </select>
+                    <input type="button" onclick="searchData()" value="搜索"/>
+                </th>
+            </tr>
+        </table>
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane active">
+                <table class="table table-striped table-main" border="0">
+                    <colgroup>
+                        <col width="3%">
+                        <col width="23%">
+                        <col width="12%">
+                        <col width="6%">
+                        <col width="6%">
+                        <col width="7%">
+                        <col width="7%">
+                        <col width="15%">
+                    </colgroup>
+                    <tbody>
+                    <tr class="table-title" style="background: white;z-index: 10;border: 1px solid #E3E3E3;">
+                        <th></th>
+                        <th>商品名称</th>
+                        <th>价格（元）</th>
+                        <th>总库存</th>
+                        <th>销量</th>
+                        <th>上下架</th>
+                        <th>排序</th>
+                        <th style="text-align:center;">操作</th>
+                    </tr>
+                    <tr class="trcss">
+                        <td colspan="5">
+                            <label style="display: inline-block;vertical-align: middle;">
+                                <input onclick="CheckAll(this)" type="checkbox" id="chek_all">
+                                <span style="display: inline-block; margin-left: 0px; margin-right: 10px;font-weight: 400;">全选</span>
+                            </label>
+                            <a class="btn btn-small fun-a" href="javascript:batchDelete()">批量删除</a>
+                            <a class="btn btn-small fun-a upstore" href="javascript:void(0)"
+                               onclick="goodsIdCount('online')">上架</a>
+                            <a class="btn btn-small fun-a downstore" href="javascript:void(0)"
+                               onclick="goodsIdCount('offline')">下架</a>
+                            <!-- <a class="btn btn-small fun-a recommend" href="javascript:void(0)" onclick="ShowRecommend()" data-html="true" id="setRecommend" title="推荐"
+                            data-container="body" data-placement="bottom"  data-trigger="manual"
+                            data-content="<div class='edit-group' id='recommendType'>
+                                 <label class='checkbox-inline'><input type='checkbox' value='1'>热销 </label>
+                                <label class='checkbox-inline'><input type='checkbox' value='2'>推荐 </label>
+                                <label class='checkbox-inline'><input type='checkbox' value='3'>新品 </label>
+                                </div>
+                                <button class='edit-group-button group-button-bg' onclick='setRecommend();'>保存</button>
+                                <button class='edit-group-button' onclick='hideSetRecommend()'>取消</button>
+                                "
+                            >推荐</a> -->
+                            <a onclick="goodsGroupIdCount();" data-html="true" class="btn btn-small fun-a category"
+                               href="javascript:void(0)" id="editGroup"
+                               title="<h6 class='edit-group-title'>修改商品标签</h6>" data-container="body"
+                               data-placement="bottom" data-trigger="manual"
+                               data-content="<div class='edit-group' id='goodsChecked' style='max-width:auto;'>
+
+ 							<p>
+ 							<label class='checkbox-inline' style='display:inline-block;' >
+								<input type='checkbox' value='107'><b> 女装</b>&nbsp;&nbsp;&nbsp;
+							</label>
+														<label style='display:inline-block;'>
+								<input type='checkbox' value='108'>连衣裙								</label>
+															</p>
+
+ 							<p>
+ 							<label class='checkbox-inline' style='display:inline-block;' >
+								<input type='checkbox' value='109'><b>男装</b>&nbsp;&nbsp;&nbsp;
+							</label>
+														</p>
+
+ 							<p>
+ 							<label class='checkbox-inline' style='display:inline-block;' >
+								<input type='checkbox' value='110'><b>平板</b>&nbsp;&nbsp;&nbsp;
+							</label>
+														</p>
+
+ 							<p>
+ 							<label class='checkbox-inline' style='display:inline-block;' >
+								<input type='checkbox' value='111'><b>分组添加测试</b>&nbsp;&nbsp;&nbsp;
+							</label>
+														</p>
+
+ 							<p>
+ 							<label class='checkbox-inline' style='display:inline-block;' >
+								<input type='checkbox' value='112'><b>手机</b>&nbsp;&nbsp;&nbsp;
+							</label>
+														</p>
+
+ 							<p>
+ 							<label class='checkbox-inline' style='display:inline-block;' >
+								<input type='checkbox' value='113'><b>电器</b>&nbsp;&nbsp;&nbsp;
+							</label>
+														</p>
+														</div>
+							<button class='edit-group-button group-button-bg' onclick='goodsGroupUpdate();'>保存</button>
+							<button class='edit-group-button' onclick='hideEditGroup()'>取消</button>
+							">
+                                商品标签</a>
+                            <a href="javascript:;" class="btn btn-small fun-a category" title="更新二维码"
+                               onclick="batchUpdateGoodsQrcode();">更新二维码</a>
+                            <input type='hidden' value='' id='goods_type_ids'/>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tbody id="productTbody" style="border: 0px;"></tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <!-- 公共的操作提示弹出框 common-success：成功，common-warning：警告，common-error：错误，-->
+    <div class="common-tip-message js-common-tip">
+        <div class="inner"></div>
+    </div>
+    {/block}
+</div>
+{block name="footerJs"}
+<!-- ********************【脚本统一写在goodslist.js中】******************** -->
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui-private.js" charset="utf-8"></script>
+<script src="__PUBLIC__/js/ns_common_base.js"></script>
+<script src="__PUBLIC__/admin/js/goodslist.js__VERSION__"></script>
+<script src="__PUBLIC__/admin/js/goodslist_v2.js__VERSION__"></script>
+{/block}

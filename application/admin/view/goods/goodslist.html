@@ -1,0 +1,165 @@
+﻿{extend name="common/father"/}
+{block name="headCss"}
+<!--<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/product.css">-->
+<!--<script type="text/javascript" src="__PUBLIC__/static/js/wdatepicker.js"></script>-->
+{/block}
+<!-- 左边菜单的加载start -->
+{block name='left'}
+<div class="LEFT">
+    <div id="accordion2" class="accordion leftmenu">
+        <div class="accordion-group">
+            <div class="sidebarX">
+                <img src="__PUBLIC__/static/picture/admin_left_logo.png"/>
+                <h2>商品</h2>
+            </div>
+            <div class="accordion-body collapse in" id="collapseOne">
+                <ul class="nav nav-pills nav-stacked" id="left_menu-small">
+                    <li class="active"><h1></h1><a href="http://tp.23673.com/admin/goods/goodslist">商品列表</a></li>
+                    <li><a href="http://tp.23673.com/admin/goods/addgoods">商品发布</a></li>
+                    <li><a href="http://tp.23673.com/admin/goods/goodsgrouplist">商品标签</a></li>
+                    <li><a href="http://tp.23673.com/admin/saleservice/consultlist">咨询管理</a></li>
+                    <li><a href="http://tp.23673.com/admin/goods/goodscomment">商品评价</a></li>
+                    <li><a href="http://tp.23673.com/admin/system/albumlist">相册管理</a></li>
+                    <li><a href="http://tp.23673.com/admin/goods/recyclelist">商品回收站</a></li>
+                    <li><a href="http://tp.23673.com/admin/goods/supplierlist">供货商</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+<!-- 左边菜单的加载end -->
+
+<div class="MAIN" style="min-height: 94vh;">
+    {block name="tabMenu"}
+    <div class="tabmenu">
+        <ul class="tab pngFix">
+            <li class="active"><a href="#">商品列表</a></li>
+        </ul>
+
+        <div class="right_side_operation">
+            <ul>
+                <li><a class="nscs-table-handle_green" href="{:url('/admin/goods/addGoods')}"><i class="fa fa-plus-circle"></i>&nbsp;发布商品</a></li>
+            </ul>
+        </div>
+    </div>
+    <hr class="tabmenu_hr" style="border:1px solid #00C0FF;margin:0 0px 10px 20px;"  />
+    {/block}
+    {block name="right"}
+    <!--搜索开始-->
+    <form class="layui-form" action="">
+        <div class="layui-form-item goods_search" style="width: 90%">
+            <ul class="search">
+                <li>
+                    <label class="layui-form-label">商品分类:</label>
+                    <div class="layui-input-inline">
+                        <select name="category_id_1" id="category_id_1"  class="js-category-one" lay-filter="js-category-one">
+                            <option value="">请选择一级分类</option>
+                            {volist name='goodsCateGoryList' id='vo' empty='暂时没有数据'}
+                            <option value="{$vo.category_id}" >{$vo.category_name}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                </li>
+                <li>
+                    <div class="layui-input-inline">
+                        <select name="category_id_2" class="js-category-two" lay-filter="js-category-two">
+
+                        </select>
+                    </div>
+                </li>
+                <li>
+                    <div class="layui-input-inline" >
+                        <select name="category_id_3" class="js-category-three" lay-filter="js-category-three">
+                            <!--<option value="">请选择三级分类</option>-->
+                            <!--<option value="西湖区">西湖区</option>-->
+                        </select>
+                    </div>
+                </li>
+                <li>
+                    <div class="layui-input-inline">
+                        <label class="layui-form-label">上架状态:</label>
+                        <div class="layui-input-block">
+                            <select name="interest" lay-filter="aihao" >
+                                <option value="" selected="">全部</option>
+                                <option value="1">上架</option>
+                                <option value="0">下架</option>
+                            </select>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="layui-inline">
+                        <label class="layui-form-label" style="padding: 9px 0">开始时间:</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="startTime" id="startTime" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="layui-inline">
+                        <label class="layui-form-label" style="padding: 9px 0">结束时间:</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="endTime" id="endTime" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </li>
+                <!--<div class="clear"></div>-->
+
+                <li>
+                    <div class="layui-input-inline" >
+                        <label class="layui-form-label">商品名称:</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="title"  lay-verify="title" autocomplete="off" placeholder="要搜索的商品名称" class="layui-input" style="width: 200px">
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="layui-inline">
+                        <div class="layui-input-block">
+                            <button class="layui-btn layui-btn-sm layui-btn-primary" data-type="getCheckData"><i class="layui-icon">
+                                &#xe615;</i>搜索
+                            </button>
+                        </div>
+
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </form>
+    <!--搜索结束-->
+    <!--表格内容开始-->
+    <div class="main">
+        <div class="layui-btn-group demoTable">
+            <button class="layui-btn layui-btn-sm layui-btn-danger" data-type="getCheckData"><i class="layui-icon">
+                &#xe640;</i>批量删除
+            </button>
+            <button class="layui-btn layui-btn-sm layui-btn-primary" data-type="getCheckData"><i class="layui-icon">
+                &#xe619;</i>上架
+            </button>
+            <button class="layui-btn layui-btn-sm layui-btn-primary" data-type="getCheckData"><i class="layui-icon">
+                &#xe61a;</i>下架
+            </button>
+            <button class="layui-btn layui-btn-sm layui-btn-normal" data-type="getCheckData"><i class="layui-icon">
+                &#xe63d;</i>更新二维码
+            </button>
+            <!--<button class="layui-btn" data-type="getCheckLength">获取选中数目</button>-->
+            <!--<button class="layui-btn" data-type="isAll">验证是否全选</button>-->
+        </div>
+        <div id="myTabContent">
+            <table id="goodsListTable" lay-filter="goodsListTableFilter"><!--商品列表数据加载table--></table>
+        </div>
+        <!--表格内容结束-->
+    </div>
+    <!-- 公共的操作提示弹出框 common-success：成功，common-warning：警告，common-error：错误，-->
+    <div class="common-tip-message js-common-tip">
+        <div class="inner"></div>
+    </div>
+    {/block}
+</div>
+{block name="footerJs"}
+<!-- ********************【脚本统一写在goodslist.js中】******************** -->
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui-private.js" charset="utf-8"></script>
+<script src="__PUBLIC__/js/ns_common_base.js"></script>
+<script src="__PUBLIC__/admin/js/goodslist_v2.js__VERSION__"></script>
+{/block}
