@@ -19,20 +19,20 @@ layui.use(['form', 'ajaxRequest'], function () {
         var category_one_value = data.value, that = $('.js-category-two');
         // console.log(category_one_value.length);
         if (category_one_value.length == 0) {
-            console.log('没有选择一级分类');
+            // console.log('没有选择一级分类');
             that.empty();
             $('.js-category-three').empty();
             form.render();
             return false;
         }
-        var url = urlObj.getGoodsCategoryAjax + category_one_value;
+        var url = urlConfig.goods.getGoodsCategoryAjax + category_one_value;
         ajaxRequest.loadTableHtml(that, url);
         $('.js-category-three').empty();
     });
     form.on('select(js-category-two)', function (data) {
         var category_two_value = data.value, that = $('.js-category-three');
         console.log(category_two_value);
-        var url = urlObj.getGoodsCategoryAjax + category_two_value;
+        var url = urlConfig.goods.getGoodsCategoryAjax + category_two_value;
         ajaxRequest.loadTableHtml(that, url);
     });
 });
@@ -44,7 +44,7 @@ layui.use(['table', 'ajaxRequest', 'form', 'laypage'], function () {
     var tableIns = table.render({
         elem: '#goodsListTable'
         // , height: 'full-100'
-        , url: '/admin/goodslist' //数据接口
+        , url: urlConfig.goods.goodslist //数据接口
         , page: true //开启分页
         , method: 'post'
         , cols: [[ //表头
@@ -70,7 +70,7 @@ layui.use(['table', 'ajaxRequest', 'form', 'laypage'], function () {
     form.on('switch(modifyGoodsOnline)', function (obj) {
         // console.log(this.getAttribute('goods_id'));
         layer.tips(this.value + ' ' + this.name + '：' + obj.elem.checked, obj.othis);
-        var url = urlObj.modifyGoodsOnline;
+        var url = urlConfig.goods.modifyGoodsOnline;
         if (obj.elem.checked == false) {
             ajaxRequest.ajaxRequest(url, {
                 'status': 0,
@@ -117,7 +117,7 @@ layui.use(['table', 'ajaxRequest', 'form', 'laypage'], function () {
             layer.msg('ID：' + data.id + ' 的查看操作');
         } else if (obj.event === 'del') {
             //向服务端发送删除指令
-            var url = urlObj.delGoods;
+            var url = urlConfig.goods.delGoods;
             ajaxRequest.delData(url, {'goods_ids': data.goods_id}, 'json', 'get', tableIns);
         } else if (obj.event === 'edit') {
             layer.alert('编辑行：<br>' + JSON.stringify(data))
@@ -137,7 +137,7 @@ layui.use(['table', 'ajaxRequest', 'form', 'laypage'], function () {
             $.each(data, function (k, val) {
                 goods_ids.push(val.goods_id)
             });
-            var url = urlObj.delGoods;
+            var url = urlConfig.goods.delGoods;
             ajaxRequest.delData(url, {'goods_ids': goods_ids}, 'json', 'post',tableIns);
         }
         , getCheckLength: function () { //获取选中数目

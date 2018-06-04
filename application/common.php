@@ -19,7 +19,7 @@ define('WAP_MODEL', 'wap');
 define('TEST_MODEL', 'test');
 define('Admin_MODEL', 'admin');
 // 项目文件指定根目录
-define('PROJECT_ROOT', __DIR__ . '\..\\');  //项目根目录地址
+define('PROJECT_ROOT', __DIR__ . '/..');  //项目根目录地址
 
 // 应用公共文件
 function ajaxReturn($code, $msg = '处理成功')

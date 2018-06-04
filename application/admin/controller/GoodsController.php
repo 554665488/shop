@@ -18,6 +18,14 @@ use think\facade\Lang;
 use think\facade\Request;
 use  UploadUtil;
 
+/**
+ * @description:
+ * @time:
+ * @Author: yfl
+ * @QQ 554665488
+ * Class GoodsController
+ * @package app\admin\controller
+ */
 class GoodsController extends BaseController
 {
     private $goodService;

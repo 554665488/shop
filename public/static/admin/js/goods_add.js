@@ -27,14 +27,14 @@ layui.use(['form', 'ajaxRequest'], function () {
             form.render();
             return false;
         }
-        var url = urlObj.getGoodsCategoryAjax + category_one_value;
+        var url = urlConfig.goods.getGoodsCategoryAjax + category_one_value;
         ajaxRequest.loadTableHtml(that, url);
         $('.js-category-three').empty();
     });
     form.on('select(js-category-two)', function (data) {
         var category_two_value = data.value, that = $('.js-category-three');
         console.log(category_two_value);
-        var url = urlObj.getGoodsCategoryAjax + category_two_value;
+        var url = urlConfig.goods.getGoodsCategoryAjax + category_two_value;
         ajaxRequest.loadTableHtml(that, url);
     });
     form.render();

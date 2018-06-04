@@ -86,7 +86,7 @@ jQuery(function() {
 
         chunked: true,
         // server: 'http://webuploader.duapp.com/server/fileupload.php',
-        server: urlObj.uploadGoodsImg,
+        server: urlConfig.goods.uploadGoodsImg,
         fileNumLimit: 5,
         fileSizeLimit: 5 * 1024 * 1024,    // 200 M
         fileSingleSizeLimit: 2 * 1024 * 1024    // 50 M
