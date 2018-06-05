@@ -53,7 +53,7 @@ layui.use(['table', 'ajaxRequest', 'form', 'laypage'], function () {
             , {field: 'picture', title: '商品主图', toolbar: '#picture'}
             , {field: 'price', title: '商品价格', sort: true}
             , {field: 'stock', title: '商品库存'}
-            , {field: 'sales', title: '销售数量', sort: true}
+            , {field: 'real_sales', title: '销售数量', sort: true}
             , {field: 'state', title: '上架下架', templet: '#modifyGoodsOnlineCheckbox', unresize: true}
             , {field: 'sort', title: '排序', edit: 'text'}
             , {fixed: 'right', title: '操作', align: 'center', toolbar: '#goodsToolbar'}

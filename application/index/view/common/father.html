@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--公共的头部-->
+    {block name="head"}{include file='common/head'/}{/block}
+    <!--单独的头部CSS-->
+    {block name="headCss"}{/block}
+</head>
+<body>
+<!--头部广告-->
+{block name="top-active"}{/block}
+<!--公共的顶部:登录-->
+{block name="header-top"}{include file='common/header-top'/}{/block}
+<!--菜单搜索工具栏-->
+{block name="search"}{include file='common/search'/}{/block}
+<!--首页导航-->
+{block name="indexCategoryShopNavStart"}{/block}
+{block name="content"}
+<!--首页导航-->
+{block name="indexTemplate-one"}{/block}
+{/block}
+</body>
+</html>
