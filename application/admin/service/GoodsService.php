@@ -149,7 +149,7 @@ class GoodsService extends BaseService
             'pic_name' => $imgPath['uploadFileInfo']['old_file_name'],//原图名字
             'pic_cover' => '/upload/goods_img/' . $imgPath['uploadFileInfo']['path'],//上传的图片路径
         ];
-        $absolutePath = PROJECT_ROOT . '/public' . $data['pic_cover'];//文件的绝对路径用来制作缩略图
+        $absolutePath = PROJECT_ROOT . '/public' . $data['pic_cover'];//文件的绝对路径用来制作缩略图 TODO
         $data['pic_cover_big'] = $this->makeImgThumb($absolutePath, 700, 700, '/upload/goods_img/');//大图路径;
         $data['pic_size_big'] = '700,700';//大图大小
         $data['pic_cover_mid'] = $this->makeImgThumb($absolutePath, 360, 360, '/upload/goods_img/');//中图路径
