@@ -174,7 +174,7 @@ function strToArray($string)
  * @param int $length 要生成的随机字符串长度
  * @param string $type 随机码类型：0，数字+大写字母；1，数字；2，小写字母；3，大写字母；4，特殊字符；-1，数字+大小写字母+特殊字符
  * @return string
-+----------------------------------------------------------
+ * +----------------------------------------------------------
  */
 function randCode($length = 5, $type = 0)
 {
@@ -206,20 +206,22 @@ function randCode($length = 5, $type = 0)
  */
 function delDirAndFile($path, $delDir = FALSE)
 {
-    $handle = opendir($path);
-    if ($handle) {
-        while (false !== ($item = readdir($handle))) {
-            if ($item != "." && $item != "..")
-                is_dir("$path/$item") ? delDirAndFile("$path/$item", $delDir) : unlink("$path/$item");
+    if (is_dir($path)) {
+        $handle = opendir($path);
+        if ($handle) {
+            while (false !== ($item = readdir($handle))) {
+                if ($item != "." && $item != "..")
+                    is_dir("$path/$item") ? delDirAndFile("$path/$item", $delDir) : unlink("$path/$item");
+            }
+            closedir($handle);
+            if ($delDir)
+                return rmdir($path);
         }
-        closedir($handle);
-        if ($delDir)
-            return rmdir($path);
     } else {
         if (file_exists($path)) {
             return unlink($path);
         } else {
-            return FALSE;
+            return 0;
         }
     }
 }

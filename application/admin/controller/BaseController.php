@@ -13,6 +13,7 @@ namespace app\admin\controller;
 
 
 use think\Controller;
+use think\facade\Request;
 
 /**
  * @description:  admin基类
@@ -97,6 +98,7 @@ class BaseController extends Controller
         ];
         return json($returnArray);
     }
+
     /**
      * @description:删除成功数据
      * @time: 2018年6月2日18:24:32
@@ -116,25 +118,7 @@ class BaseController extends Controller
         ];
         return json($returnArray);
     }
-    /**
-     * @description:缺失参数返回
-     * @time:2018年5月21日00:04:57
-     * @Author: yfl
-     * @QQ 554665488
-     * @param string $msg
-     * @param bool $status
-     * @param array $additional :额外返回的数据
-     * @return \think\response\Json
-     */
-    final protected function deletionParam($msg = '', $status = true, array $additional = [])
-    {
-        $returnArray = [
-            'msg' => $msg,
-            'additional' => $additional,
-            'status' => $status
-        ];
-        return json($returnArray);
-    }
+
     /**
      * @description:返回layui格式分页的数据
      * @time: 2018年6月2日16:05:50
@@ -154,5 +138,23 @@ class BaseController extends Controller
             'data' => $list,
             'count' => $count
         ]);
+    }
+
+    /**
+     * @description:ajax请求参数验证
+     * @time:2018年6月9日16:23:033
+     * @Author: yfl
+     * @QQ 554665488
+     * @param $param:需要验证的field
+     * @return bool
+     */
+    final public function isAjaxHasParam($param)
+    {
+
+        if (!Request::has($param)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

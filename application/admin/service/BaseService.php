@@ -32,29 +32,10 @@ class BaseService
         if (isset($imgPath) && file_exists($imgPath)) {
             $image = Image::open($imgPath);
             $fileInfoArr = filePathToArr($imgPath);
-            $thumbName=$fileInfoArr['filename'] . "_{$width},{$height}." . $fileInfoArr['extension'];//缩略图名字拼接规则原文件名子._宽，高.ext
+            $thumbName = $fileInfoArr['filename'] . "_{$width},{$height}." . $fileInfoArr['extension'];//缩略图名字拼接规则原文件名子._宽，高.ext
             $image->thumb($width, $height, $type)->save($fileInfoArr['dirname'] . '/' . $thumbName);
-            return $saveDir .$thumbName ;
+            return $saveDir . $thumbName;
         }
     }
 
-    /**
-     * @description:缺失参数返回
-     * @time:2018年5月21日00:04:57
-     * @Author: yfl
-     * @QQ 554665488
-     * @param string $msg
-     * @param bool $status
-     * @param array $additional :额外返回的数据
-     * @return \think\response\Json
-     */
-    final protected function deletionParam($msg = '', $status = true, array $additional = [])
-    {
-        $returnArray = [
-            'msg' => $msg,
-            'additional' => $additional,
-            'status' => $status
-        ];
-        return json($returnArray);
-    }
 }

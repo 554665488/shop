@@ -24,11 +24,11 @@ use Endroid\QrCode\QrCode;
 class QRcodeUtil
 {
     //二维码字体路径
-    private $font = PROJECT_ROOT . 'vendor/endroid/qr-code/assets/noto_sans.otf';
+    private $font = PROJECT_ROOT . '/vendor/endroid/qr-code/assets/noto_sans.otf';
     //logo图标地址
-    private $logoPath = PROJECT_ROOT . 'vendor/endroid/qr-code/assets/symfony.png';
+    private $logoPath = PROJECT_ROOT . '/vendor/endroid/qr-code/assets/symfony.png';
     //保存图片地址
-    private $savePath = PROJECT_ROOT . '/public/upload/goods_qrcode';
+    private $savePath =  'upload/goods_qrcode';
 
     /**
      * @description:
@@ -38,11 +38,11 @@ class QRcodeUtil
      * @param string $data:放入二维码数据
      * @param string $prefix:二维码名称前缀
      * @param string $suffix:二维码名称后缀
-     * @param string $text
+     * @param string $text 二维码下方的文字
      * @return bool|string
      * @throws \Endroid\QrCode\Exception\InvalidWriterException
      */
-    public function make($data = '', $prefix = 'qrcode', $suffix = 'png', $text = '100')
+    public function make($data = '', $prefix = 'qrcode', $suffix = 'png', $text = '商品二维码')
     {
         if ($data == '') return false;
         $qrCode = new QrCode($data);
@@ -57,8 +57,8 @@ class QRcodeUtil
         $qrCode->setLabel($text, 16, $this->font);
 //        $qrCode->setLogoPath($this->logoPath);
         $qrCode->setLogoWidth(150);
-        $qrCode->setRoundBlockSize(true);
-        $qrCode->setValidateResult(false);
+//        $qrCode->setRoundBlockSize(true);
+//        $qrCode->setValidateResult(false);
         // Directly output the QR code
         header('Content-Type: ' . $qrCode->getContentType());
         //保存图片

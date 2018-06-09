@@ -1,6 +1,6 @@
-layui.use(['laypage', 'layedit', 'ajaxRequest', 'form', 'laydate'], function () {
+layui.use(['laypage', 'layedit', 'ajaxRequest', 'form', 'laydate','flow'], function () {
     var laypage = layui.laypage
-        , layedit = layui.layedit, ajaxRequest = layui.ajaxRequest, form = layui.form, laydate = layui.laydate;
+        , layedit = layui.layedit, ajaxRequest = layui.ajaxRequest, form = layui.form, laydate = layui.laydate,flow = layui.flow;
     form.render();
     //日期
     laydate.render({
@@ -9,6 +9,8 @@ layui.use(['laypage', 'layedit', 'ajaxRequest', 'form', 'laydate'], function () 
     laydate.render({
         elem: '#endTime'
     });
+    //当你执行这样一个方法时，即对页面中的全部带有lay-src的img元素开启了懒加载（当然你也可以指定相关img）
+    flow.lazyimg();
 });
 
 
@@ -51,7 +53,8 @@ layui.use(['table', 'ajaxRequest', 'form', 'laypage'], function () {
         , cellMinWidth: 60
         , cols: [[ //表头
             {field: 'goods_id', title: 'ID', sort: true, fixed: 'left', type: 'checkbox'}
-            , {field: 'goods_name', title: '商品名称', templet: '#Qrcode'}
+            , {field: 'goods_name', title: '商品名称',fixed: 'left'}
+            , {title: '商品二维码', templet: '#Qrcode'}
             , {field: 'picture', title: '商品主图', templet: '#picture'}
             , {field: 'price', title: '商品价格', sort: true}
             , {field: 'stock', title: '商品库存'}
@@ -60,7 +63,7 @@ layui.use(['table', 'ajaxRequest', 'form', 'laypage'], function () {
             , {field: 'sort', title: '排序', edit: 'text'}
             , {fixed: 'right', title: '操作', align: 'center', toolbar: '#goodsToolbar'}
         ]]
-        , limit: 10
+        , limit: 20
         , initSort: {//初始化排序
             field: 'goods_id' //排序字段，对应 cols 设定的各字段名
             , type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
@@ -175,5 +178,22 @@ layui.use(['table', 'ajaxRequest', 'form', 'laypage'], function () {
     $('.goods-Table-btn .layui-btn').on('click', function () {
         var type = $(this).data('type');
         active[type] ? active[type].call(this) : '';
+    });
+});
+
+//二维码点击放大
+
+$(document).on('click','.QRcode',function () {
+    var obj=$(this);
+    obj.css('width','300px');
+    layer.open({
+        type: 1,
+        title: false,
+        closeBtn:0,
+        shadeClose: true,
+        content: $('#'+obj.attr('id')),
+        end:function(){
+            obj.css('width','20px');
+        }
     });
 });

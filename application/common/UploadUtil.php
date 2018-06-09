@@ -27,7 +27,7 @@ class UploadUtil
 {
     private $fileName = 'file';// file的name
     private $uploadPath = PROJECT_ROOT . '/public/upload'; //上传路径
-    private $savePath;
+    private $savePath;//图片上传到upload下边哪一个文件 不设置该属性 直接上传到upload
     private $ext = 'jpg,png,gif';
     private $size = 1024 * 1024 * 2;
     private $isSaveOldName = true;//是否以原图片名称
@@ -51,7 +51,7 @@ class UploadUtil
         if ($info) {
             $oldName = $info->getInfo()['name'];
 //            $ext = $info->getExtension();
-            $uploadFilePath = $info->getSaveName();
+            $uploadFilePath = $info->getSaveName();///20180605/46d1783c95aa20f09ec6f9c201b15788.JPG
         } else {
             $error = $file->getError();
         }

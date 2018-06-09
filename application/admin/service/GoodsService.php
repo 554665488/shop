@@ -14,17 +14,20 @@ namespace app\admin\service;
 use app\model\AlbumPicture;
 use app\model\Goods;
 use app\model\GoodsCategory;
+use think\Db;
 use Tree;
 use Table;
+use QRcodeUtil;
 
 class GoodsService extends BaseService
 {
     /**
      * @description:查询所有的商品分类格式化后返回
-     * @time: 2018年5月27日01:19:53
+     * @time:2018年6月4日16:33:17
      * @Author: yfl
      * @QQ 554665488
      * @return mixed
+     * @throws \think\exception\DbException
      */
     public function getAllGoodsCategory()
     {
@@ -66,7 +69,6 @@ class GoodsService extends BaseService
     public function getGoodsList($page_index, $page_size, array $where)
     {
 
-//        return Goods::with('shop,category_1,category_2,category_3')->select();
         foreach ($where as $index => $item) {
             if ($item == '') {
                 unset($where[$index]);
@@ -115,16 +117,48 @@ class GoodsService extends BaseService
 
     public function updateGoodsQrcode($goodIds)
     {
-        if (!isset($goodIds)) {
-            return false;
-        }
+        //处理一个商品
         if (strpos($goodIds, ',') === false) {
-            $QrcodeUrl = DOMAIN_NAME_VISIT . WAP_MODEL . '/goods/goodsDetail/goods_id' . $goodIds;
-        } else {
-            $goodIdsArr = explode(',', $goodIds);
-        }
-        dump($goodIdsArr);
+            //先删除原来的二维码文件
+            $delFilePath = Table::getTableField('goods', "goods_id = {$goodIds}", 'QRcode', true);
+            $delFileRealPath = PROJECT_ROOT . '/public' . $delFilePath['QRcode'];
 
+            if (delDirAndFile($delFileRealPath) === false) {
+                return ajaxReturn(false, '删除旧的二维码失败');
+            }
+            $QrcodeUrl = DOMAIN_NAME_VISIT . WAP_MODEL . '/goods/goodsDetail/goods_id' . $goodIds;
+            $file = QRcodeUtil::make($QrcodeUrl, 'goods_qrcode_' . $goodIds.'_');//生成二维码
+            //模型支持调用数据库的方法直接更新数据  //数据库的update方法返回影响的记录数
+            $res = Table::updateTable('goods', "goods_id = {$goodIds}", ['QRcode' => '/' . $file]);
+            if (!$res) {
+                return ajaxReturn(false, '更新二维码失败');
+            }else{
+                return ajaxReturn(true, '更新二维码成功');
+            }
+        } else {
+            //处理多个商品
+            $data = [];
+            //先删除原来的二维码文件
+            $delFilePath = Table::getTableField('goods', "goods_id in ({$goodIds})", 'QRcode');
+            foreach ($delFilePath as $index => $item) {
+                $delFileRealPath = PROJECT_ROOT . '/public' . $item['QRcode'];
+                if (delDirAndFile($delFileRealPath) === false) {
+                    return ajaxReturn(false, '删除旧的二维码失败');
+                }
+            }
+            $goodIdsArr = explode(',', $goodIds);
+            foreach ($goodIdsArr as $index => $item) {//批量生成二维码
+                $QrcodeUrl = DOMAIN_NAME_VISIT . WAP_MODEL . '/goods/goodsDetail/goods_id' . $item;
+                $data[] = ['goods_id' => $item, 'QRcode' => '/' . QRcodeUtil::make($QrcodeUrl, 'goods_qrcode_' . $item.'_')];
+            }
+            $goodsModel = new Goods;
+            $res = $goodsModel->saveAll($data);
+            if (!$res) {
+                return ajaxReturn(false, '更新二维码失败');
+            }else{
+                return ajaxReturn(true, '更新二维码成功');
+            }
+        }
     }
 
     /**
@@ -176,7 +210,7 @@ class GoodsService extends BaseService
         $data['pic_cover_micro'] = $this->makeImgThumb($absolutePath, 60, 60, '/upload/goods_img/');//微图路径
         $data['pic_size_micro'] = '60,60';//微图大小
         $data['upload_time'] = getDateTime();
-        $res = AlbumPicture::create($data);//create方法返回的是当前模型的对象实例
+        $res = AlbumPicture::create($data);//create方法返回的是当前模型的对象实例 静态新增数据
         if ($res) {
             return $res->pic_id;
         } else {

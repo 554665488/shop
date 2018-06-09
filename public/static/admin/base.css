@@ -4,3 +4,9 @@
 .goods_search .search li{
     float: left;
 }
+.QRcode{
+    width: 100px;
+}
+/*.QRcode:hover{*/
+    /*transform: scale(5);*/
+/*}*/

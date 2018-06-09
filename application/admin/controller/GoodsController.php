@@ -78,6 +78,7 @@ class GoodsController extends BaseController
     public function getGoodsCategoryAjax(Request $request)
     {
         if ($request::isGet()) {
+            $this->isHasParam('category_id');
             $category_id = $request::param('category_id', 0);
             $array = $this->goodService->getGoodsCategoryAjax($category_id);
             $html = '';
@@ -91,7 +92,6 @@ class GoodsController extends BaseController
             exit;
         }
     }
-
 
 
     //商品添加
@@ -142,21 +142,34 @@ class GoodsController extends BaseController
      */
     public function modifyGoodsOnline(Request $request)
     {
-        $condition = $request::param('goods_ids');
-        $status = $request::param('status');
-        $result = $this->goodService->modifyGoodsOnline($condition, $status);
-        if($result['code']){
-            return $this->ajaxReturnSuccess($result['msg']);
-        }else{
-            return $this->ajaxReturnFail($result['msg']);
+        if ($request::isAjax()) {
+            $condition = $request::param('goods_ids');
+            $status = $request::param('status');
+            $result = $this->goodService->modifyGoodsOnline($condition, $status);
+            if ($result['code']) {
+                return $this->ajaxReturnSuccess($result['msg']);
+            } else {
+                return $this->ajaxReturnFail($result['msg']);
+            }
         }
+
 
     }
 
     public function updateQrcode(Request $request)
     {
-      $condition = $request::param('goods_ids');
-      $this->goodService->updateGoodsQrcode($condition);
+        if ($request::isAjax()) {
+            if ($this->isAjaxHasParam('goods_ids')) {
+                return $this->ajaxReturnFail(' 没有选中商品');
+            }
+        }
+        $condition = $request::param('goods_ids');
+        $res = $this->goodService->updateGoodsQrcode($condition);
+        if ($res['code']) {
+           return $this->ajaxReturnSuccess($res['msg']);
+        }else{
+            return $this->ajaxReturnFail($res['msg']);
+        }
     }
 
     /**
@@ -169,7 +182,7 @@ class GoodsController extends BaseController
     {
         UploadUtil::setSavePath('/goods_img');
         $res = UploadUtil::uploadOne();
-        $pic_id=$this->goodService->GoodsImgSaveAlbumPicture($res);
+        $pic_id = $this->goodService->GoodsImgSaveAlbumPicture($res);
         echo $pic_id;
     }
 }

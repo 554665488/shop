@@ -22,7 +22,7 @@ use think\Facade;
  * Class QcodeFacade
  * @package app\common\facade
  */
-class QcodeFacade extends Facade
+class QRcodeFacade extends Facade
 {
 
 }
