@@ -117,7 +117,7 @@ class GoodsService extends BaseService
 
     public function updateGoodsQrcode($goodIds)
     {
-        //处理一个商品
+        //处理一个商品 xiu
         if (strpos($goodIds, ',') === false) {
             //先删除原来的二维码文件
             $delFilePath = Table::getTableField('goods', "goods_id = {$goodIds}", 'QRcode', true);
