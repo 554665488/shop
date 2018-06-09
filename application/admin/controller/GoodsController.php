@@ -47,6 +47,7 @@ class GoodsController extends BaseController
     {
         $this->setTitle(Lang::get('goods_list_title'));
         if (Request::isPost()) {
+            //搜索条件
             $where = [
                 'start_date' => !empty($request::param('start_date')) ? ['> time', $request::param('start_date')] : '',
                 'end_date' => !empty($request::param('end_date')) ? ['< time', $request::param('end_date')] : '',
@@ -91,11 +92,7 @@ class GoodsController extends BaseController
         }
     }
 
-    //商品分类
-    public function getcategorybyparentajax()
-    {
 
-    }
 
     //商品添加
     public function addGoods(Request $request)
@@ -148,16 +145,22 @@ class GoodsController extends BaseController
         $condition = $request::param('goods_ids');
         $status = $request::param('status');
         $result = $this->goodService->modifyGoodsOnline($condition, $status);
-        return json($result);
+        if($result['code']){
+            return $this->ajaxReturnSuccess($result['msg']);
+        }else{
+            return $this->ajaxReturnFail($result['msg']);
+        }
+
     }
 
-    public function updateQrcode()
+    public function updateQrcode(Request $request)
     {
-
+      $condition = $request::param('goods_ids');
+      $this->goodService->updateGoodsQrcode($condition);
     }
 
     /**
-     * @description:ajax异步上传图片
+     * @description:ajax异步上传图片添加商品 TODO：待完善
      * @time:2018年6月4日00:11:46
      * @Author: yfl
      * @QQ 554665488

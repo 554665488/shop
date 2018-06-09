@@ -12,7 +12,10 @@
 namespace app\wap\controller;
 
 
-class Goods extends  Base
+class Goods extends Base
 {
-
+    public function goodsDetail()
+    {
+           return 123;
+    }
 }

@@ -43,15 +43,15 @@ class BaseController extends Controller
      * @time:2018年5月21日00:04:57
      * @Author: yfl
      * @QQ 554665488
-     * @param string $data
+     * @param string $msg
      * @param bool $status
      * @param array $additional :额外返回的数据
      * @return \think\response\Json
      */
-    final protected function ajaxReturnSuccess($data = '', $status = true, array $additional = [])
+    final protected function ajaxReturnSuccess($msg = '', $status = true, array $additional = [])
     {
         $returnArray = [
-            'data' => $data,
+            'msg' => $msg,
             'additional' => $additional,
             'status' => $status
         ];
@@ -63,15 +63,15 @@ class BaseController extends Controller
      * @time:2018年5月21日00:05:31
      * @Author: yfl
      * @QQ 554665488
-     * @param string $data
+     * @param string $msg
      * @param bool $status
      * @param array $additional :额外返回的数据
      * @return \think\response\Json
      */
-    final protected function ajaxReturnFail($data = '', $status = false, array $additional = [])
+    final protected function ajaxReturnFail($msg = '', $status = false, array $additional = [])
     {
         $returnArray = [
-            'data' => $data,
+            'msg' => $msg,
             'additional' => $additional,
             'status' => $status
         ];
@@ -116,7 +116,25 @@ class BaseController extends Controller
         ];
         return json($returnArray);
     }
-
+    /**
+     * @description:缺失参数返回
+     * @time:2018年5月21日00:04:57
+     * @Author: yfl
+     * @QQ 554665488
+     * @param string $msg
+     * @param bool $status
+     * @param array $additional :额外返回的数据
+     * @return \think\response\Json
+     */
+    final protected function deletionParam($msg = '', $status = true, array $additional = [])
+    {
+        $returnArray = [
+            'msg' => $msg,
+            'additional' => $additional,
+            'status' => $status
+        ];
+        return json($returnArray);
+    }
     /**
      * @description:返回layui格式分页的数据
      * @time: 2018年6月2日16:05:50

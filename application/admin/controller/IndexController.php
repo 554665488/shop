@@ -34,8 +34,12 @@ class IndexController extends BaseController
                 return $this->ajaxReturnFail($validateRes, false, ['scene' => 'verify']);
             }
             $is_login = $index->login($postData['username'], $postData['password']);
+            if($is_login['code']==false){
+                return $this->ajaxReturnFail($is_login['msg']);
+            }else{
+                return $this->ajaxReturnSuccess($is_login['msg']);
+            }
 
-            return $this->ajaxReturnSuccess($is_login);
         }
         return $this->fetch();
     }

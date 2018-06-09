@@ -4,7 +4,6 @@ namespace app\index\controller;
 use app\index\service\GoodsService;
 use app\index\service\ShopService;
 use think\Controller;
-use app\admin\logic\IndexLogic;
 use Request;
 use Log;
 

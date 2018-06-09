@@ -47,10 +47,12 @@ layui.use(['table', 'ajaxRequest', 'form', 'laypage'], function () {
         , url: urlConfig.goods.goodslist //数据接口
         , page: true //开启分页
         , method: 'post'
+        , where: {token: 'sasasas', id: 123}
+        , cellMinWidth: 60
         , cols: [[ //表头
             {field: 'goods_id', title: 'ID', sort: true, fixed: 'left', type: 'checkbox'}
-            , {field: 'goods_name', title: '商品名称', toolbar: '#Qrcode'}
-            , {field: 'picture', title: '商品主图', toolbar: '#picture'}
+            , {field: 'goods_name', title: '商品名称', templet: '#Qrcode'}
+            , {field: 'picture', title: '商品主图', templet: '#picture'}
             , {field: 'price', title: '商品价格', sort: true}
             , {field: 'stock', title: '商品库存'}
             , {field: 'real_sales', title: '销售数量', sort: true}
@@ -64,7 +66,8 @@ layui.use(['table', 'ajaxRequest', 'form', 'laypage'], function () {
             , type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
         },
         even: true //开启隔行背景
-        , id: 'goodsListTableID'//设定容器唯一ID
+        , loading: true
+        // , id: 'goodsListTableID'//设定容器唯一ID
     });
     //监听上下架操作
     form.on('switch(modifyGoodsOnline)', function (obj) {
@@ -101,13 +104,13 @@ layui.use(['table', 'ajaxRequest', 'form', 'laypage'], function () {
 
         //尽管我们的 table 自带排序功能，但并没有请求服务端。
         //有些时候，你可能需要根据当前排序的字段，重新向服务端发送请求，从而实现服务端排序，如：
-        table.reload('goodsListTable', {
-            initSort: obj //记录初始排序，如果不设的话，将无法标记表头的排序状态。 layui 2.1.1 新增参数
-            , where: { //请求参数（注意：这里面的参数可任意定义，并非下面固定的格式）
-                field: obj.field //排序字段
-                , order: obj.type //排序方式
-            }
-        });
+        // table.reload('goodsListTable', {
+        //     initSort: obj //记录初始排序，如果不设的话，将无法标记表头的排序状态。 layui 2.1.1 新增参数
+        //     , where: { //请求参数（注意：这里面的参数可任意定义，并非下面固定的格式）
+        //         field: obj.field //排序字段
+        //         , order: obj.type //排序方式
+        //     }
+        // });
     });
 
     //监听工具条
@@ -123,22 +126,40 @@ layui.use(['table', 'ajaxRequest', 'form', 'laypage'], function () {
             layer.alert('编辑行：<br>' + JSON.stringify(data))
         }
     });
-
+    //批量操作监听处理
     var $ = layui.$, active = {
-        getCheckData: function () { //获取选中数据
-            var checkStatus = table.checkStatus('goodsListTableID')
+        CheckDataDel: function () { //批量删除
+            var checkStatus = table.checkStatus('goodsListTable')
                 , data = checkStatus.data;
             // layer.alert(JSON.stringify(data));
             if (data.length == 0) {
                 layer.msg('选中了：' + data.length + ' 个');
                 return false;
             }
+            //商品软删除
             var goods_ids = new Array();
             $.each(data, function (k, val) {
                 goods_ids.push(val.goods_id)
             });
             var url = urlConfig.goods.delGoods;
-            ajaxRequest.delData(url, {'goods_ids': goods_ids}, 'json', 'post',tableIns);
+            ajaxRequest.delData(url, {'goods_ids': goods_ids}, 'json', 'post', tableIns);
+        }
+        , updateQrcode: function () {//批量更新二维码
+            var checkStatus = table.checkStatus('goodsListTable')
+                , data = checkStatus.data;
+            // layer.alert(JSON.stringify(data));
+            if (data.length == 0) {
+                layer.msg('选中了：' + data.length + ' 个');
+                return false;
+            }
+            //商品软删除
+            var goods_ids = '';
+            $.each(data, function (k, val) {
+                goods_ids += val.goods_id + ','
+            });
+            goods_ids=StrTrimRight(goods_ids);
+            var url = urlConfig.goods.updateQrcode;
+            ajaxRequest.ajaxRequest(url, {'goods_ids': goods_ids}, 'json', 'post', tableIns);
         }
         , getCheckLength: function () { //获取选中数目
             var checkStatus = table.checkStatus('goodsListTableID')
@@ -150,8 +171,8 @@ layui.use(['table', 'ajaxRequest', 'form', 'laypage'], function () {
             layer.msg(checkStatus.isAll ? '全选' : '未全选')
         }
     };
-
-    $('.demoTable .layui-btn').on('click', function () {
+    //调用批量处理方法
+    $('.goods-Table-btn .layui-btn').on('click', function () {
         var type = $(this).data('type');
         active[type] ? active[type].call(this) : '';
     });

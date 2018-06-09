@@ -21,9 +21,9 @@ function fleshVerify() {
 jQuery.fn.center = function () {
     this.css("position", "absolute");
     this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) +
-            $(window).scrollTop()) - 30 + "px");
+        $(window).scrollTop()) - 30 + "px");
     this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) +
-            $(window).scrollLeft()) + "px");
+        $(window).scrollLeft()) + "px");
     return this;
 }
 
@@ -56,29 +56,32 @@ function checkLogin() {
             verify: verify
         },
         beforeSend: function (XMLHttpRequest) {
-            index = layer.load(1); //换了种风格
+            index = layer.load(1,{time: 2 * 1000}); //换了种风格
         },
         complete: function (XMLHttpRequest) { //请求完成时运行的函数（在请求成功或失败之后均调用，即在 success 和 error 函数之后）。
             layer.close(index);
         },
         success: function (res) {
-            if(res.status==false){
+            if (res.status == false) {
+                //表单验证
                 if (res.additional.scene == 'verify') {
-                    $.each(res.data, function ($k, $v) {
+                    $.each(res.msg, function ($k, $v) {
                         layer.tips($v, '#' + $k);
                         return false;
                     });
                     return false;
                 }
-            }
-            //登录失败
-            if (res.data.status == false) {
-                layer.msg(res.data.msg, {icon: 5});
+                //登录失败
+                layer.msg(res.msg, {icon: 5});
                 return false;
             }
+
             //登录成功
-            if (res.data.status) {
-                top.location.href = "/admin/Aindex";
+            if (res.status == true) {
+                layer.msg(res.msg + '请等待....',{icon:1});
+                setTimeout(function(){
+                    top.location.href = "/admin/Aindex";
+                },1000);
                 return false;
             }
         },

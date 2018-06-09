@@ -35,6 +35,6 @@ class IndexService
         SC::setLoginSessionKey(true);
         SC::setUserRoleSession($admin->adminRole);
         SC::setUserInfoSession($admin);
-        return ajaxReturn(true, '登录成功!');
+        return ajaxReturn(true, '登录成功.');
     }
 }

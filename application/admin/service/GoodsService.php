@@ -51,14 +51,17 @@ class GoodsService extends BaseService
     }
 
     /**
-     * @description: 获得商品
+     * @description:获得商品列表
      * @time: 2018年5月29日21:43:19
      * @Author: yfl
      * @QQ 554665488
      * @param $page_index
      * @param $page_size
      * @param array $where
-     * @return false|static[]
+     * @return array|\PDOStatement|string|\think\Collection
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function getGoodsList($page_index, $page_size, array $where)
     {
@@ -104,10 +107,24 @@ class GoodsService extends BaseService
         $result = Table::updateTable('goods', $where, $data);
 
         if ($result) {
-            return ajaxReturn(true);
+            return ajaxReturn(true, '下架成功');
         } else {
-            return ajaxReturn(false);
+            return ajaxReturn(false, '下架失败');
         }
+    }
+
+    public function updateGoodsQrcode($goodIds)
+    {
+        if (!isset($goodIds)) {
+            return false;
+        }
+        if (strpos($goodIds, ',') === false) {
+            $QrcodeUrl = DOMAIN_NAME_VISIT . WAP_MODEL . '/goods/goodsDetail/goods_id' . $goodIds;
+        } else {
+            $goodIdsArr = explode(',', $goodIds);
+        }
+        dump($goodIdsArr);
+
     }
 
     /**

@@ -28,22 +28,33 @@ class QRcodeUtil
     //logo图标地址
     private $logoPath = PROJECT_ROOT . 'vendor/endroid/qr-code/assets/symfony.png';
     //保存图片地址
-    private $savePath = PROJECT_ROOT . '/upload/goods_qrcode';
+    private $savePath = PROJECT_ROOT . '/public/upload/goods_qrcode';
 
+    /**
+     * @description:
+     * @time: 2018年6月9日12:28:41
+     * @Author: yfl
+     * @QQ 554665488
+     * @param string $data:放入二维码数据
+     * @param string $prefix:二维码名称前缀
+     * @param string $suffix:二维码名称后缀
+     * @param string $text
+     * @return bool|string
+     * @throws \Endroid\QrCode\Exception\InvalidWriterException
+     */
     public function make($data = '', $prefix = 'qrcode', $suffix = 'png', $text = '100')
     {
         if ($data == '') return false;
-        // Create a basic QR code
         $qrCode = new QrCode($data);
         $qrCode->setSize(300);
-        // Set advanced options
         $qrCode->setWriterByName($suffix);
         $qrCode->setMargin(10);
         $qrCode->setEncoding('UTF-8');
 //        $qrCode->setErrorCorrectionLevel(ErrorCorrectionLevel::HIGH);
         $qrCode->setForegroundColor(['r' => 0, 'g' => 0, 'b' => 0, 'a' => 0]);
         $qrCode->setBackgroundColor(['r' => 255, 'g' => 255, 'b' => 255, 'a' => 0]);
-//        $qrCode->setLabel('Scan the code', 16, $this->font, LabelAlignment::CENTER);
+//        $qrCode->setLabel('Scan the code', 16, $this->font);
+        $qrCode->setLabel($text, 16, $this->font);
 //        $qrCode->setLogoPath($this->logoPath);
         $qrCode->setLogoWidth(150);
         $qrCode->setRoundBlockSize(true);
@@ -51,7 +62,7 @@ class QRcodeUtil
         // Directly output the QR code
         header('Content-Type: ' . $qrCode->getContentType());
         //保存图片
-        $saveQrcodeFile = $this->savePath . '/' . $prefix . time() . rand(10, 9999) . '.' . $suffix;
+        $saveQrcodeFile = $this->savePath . '/' . $prefix . time() .'_' .rand(10, 9999) . '.' . $suffix;
 //        echo $qrCode->writeString();
 
         // Save it to a file

@@ -15,5 +15,6 @@ var urlConfig = {
         'modifyGoodsOnline': '/admin/goods/modifyGoodsOnline',  //上下架  get
         'delGoods': '/admin/goods/delGoods',  //删除商品 get / post
         'uploadGoodsImg': '/admin/goods/uploadGoodsImg',  //上传商品图片
+        'updateQrcode':'/admin/goods/updateQrcode', //更新二维码支持批量更新
     }
 };

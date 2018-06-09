@@ -12,21 +12,20 @@
 
 use think\facade\Request;
 
-define('DOMAIN_NAME_VISIT', 'http://101.200.59.92:9555' . Request::server('SCRIPT_NAME') . '/');
+define('DOMAIN_NAME_VISIT', 'http://101.200.59.92:9555' . Request::server('SCRIPT_NAME') . '/');   //http://101.200.59.92:9555/index.php/
 // 模块名
 define('INDEX_MODEL', 'index');
 define('WAP_MODEL', 'wap');
 define('TEST_MODEL', 'test');
-define('Admin_MODEL', 'admin');
+define('ADMIN_MODEL', 'admin');
 // 项目文件指定根目录
 define('PROJECT_ROOT', __DIR__ . '/..');  //项目根目录地址
 
 // 应用公共文件
 function ajaxReturn($code, $msg = '处理成功')
 {
-    if ($code == false) $msg = '处理失败';
     return [
-        'status' => $code,
+        'code' => $code,
         'msg' => $msg
     ];
 }
