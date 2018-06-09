@@ -12,7 +12,8 @@
 
 use think\facade\Request;
 
-define('DOMAIN_NAME_VISIT', 'http://101.200.59.92:9555' . Request::server('SCRIPT_NAME') . '/');   //http://101.200.59.92:9555/index.php/
+//define('DOMAIN_NAME_VISIT', 'http://101.200.59.92:9555' . Request::server('SCRIPT_NAME') . '/');   //http://101.200.59.92:9555/index.php/
+define('DOMAIN_NAME_VISIT', 'http://101.200.59.92:9555' . '/');   //http://101.200.59.92:9555/index.php/
 // 模块名
 define('INDEX_MODEL', 'index');
 define('WAP_MODEL', 'wap');

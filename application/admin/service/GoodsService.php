@@ -126,7 +126,7 @@ class GoodsService extends BaseService
             if (delDirAndFile($delFileRealPath) === false) {
                 return ajaxReturn(false, '删除旧的二维码失败');
             }
-            $QrcodeUrl = DOMAIN_NAME_VISIT . WAP_MODEL . '/goods/goodsDetail/goods_id' . $goodIds;
+            $QrcodeUrl = DOMAIN_NAME_VISIT . WAP_MODEL . '/goods/goodsDetail/goods_id/' . $goodIds;
             $file = QRcodeUtil::make($QrcodeUrl, 'goods_qrcode_' . $goodIds.'_');//生成二维码
             //模型支持调用数据库的方法直接更新数据  //数据库的update方法返回影响的记录数
             $res = Table::updateTable('goods', "goods_id = {$goodIds}", ['QRcode' => '/' . $file]);
@@ -148,7 +148,7 @@ class GoodsService extends BaseService
             }
             $goodIdsArr = explode(',', $goodIds);
             foreach ($goodIdsArr as $index => $item) {//批量生成二维码
-                $QrcodeUrl = DOMAIN_NAME_VISIT . WAP_MODEL . '/goods/goodsDetail/goods_id' . $item;
+                $QrcodeUrl = DOMAIN_NAME_VISIT . WAP_MODEL . '/goods/goodsDetail/goods_id/' . $item;
                 $data[] = ['goods_id' => $item, 'QRcode' => '/' . QRcodeUtil::make($QrcodeUrl, 'goods_qrcode_' . $item.'_')];
             }
             $goodsModel = new Goods;
