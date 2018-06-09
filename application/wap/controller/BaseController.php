@@ -6,16 +6,16 @@
  * @Author: yfl
  * @QQ 554665488
  * Date: 2018-6-2
- * Time: 21:43
+ * Time: 21:45
  */
 
 namespace app\wap\controller;
 
 
-class Goods extends Base
+
+use think\Controller;
+
+class BaseController extends Controller
 {
-    public function goodsDetail()
-    {
-           return 123;
-    }
+
 }
