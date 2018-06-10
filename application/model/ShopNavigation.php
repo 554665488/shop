@@ -11,7 +11,14 @@
 
 namespace app\model;
 
-//导航
+/**
+ * Class ShopNavigation
+ * @package app\model
+ * @description:店铺导航管理
+ * @time:
+ * @Author: yfl
+ * @QQ 554665488
+ */
 class ShopNavigation extends Base
 {
     protected $pk = 'nav_id';

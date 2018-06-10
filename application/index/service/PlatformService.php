@@ -25,7 +25,17 @@ use think\db\Query;
  */
 class PlatformService extends BaseService
 {
-
+    /**
+     * @description:获取首页推荐的商品
+     * @time:2018-6-10 20:00:23
+     * @Author: yfl
+     * @QQ 554665488
+     * @param string $where
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
     public function getPlatformGoodsRecommendList($where = '1 = 1')
     {
         /**
@@ -36,11 +46,11 @@ class PlatformService extends BaseService
         [ sql ] [ SQL ] SELECT * FROM `tp_album_picture` [ RunTime:0.002000s ]
         [ sql ] [ SQL ] SELECT * FROM `tp_album_picture` WHERE  `pic_id` IN (1844,1847,1849,1851,1853,1855,1857,1861) [ RunTime:0.001000s ]
          */
-        return PlatformGoodsRecommendClass::with([
+        return PlatformGoodsRecommendClass::field('*')->with([
             'platformGoodsRecommend'=>function($query){
                $query->field('goods_id,class_id')->with(['goods'=>function(Query $query){
-                   $query->field('*')->with(['albumPicture'=>function(Query $query){
-                       $query->field('*')->select();
+                   $query->field('goods_id,goods_name,picture')->with(['albumPicture'=>function(Query $query){
+                       $query->field('pic_id,pic_cover_mid');
                    }]);
                }]);
             }

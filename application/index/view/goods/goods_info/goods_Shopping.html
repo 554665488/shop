@@ -1,0 +1,150 @@
+<!-- 右侧固定购物车 -->
+<script type="text/javascript" src="__PUBLIC_INDEX__/js/shopping_cart_6.js"></script>
+<script src="__PUBLIC_INDEX__/js/ns_collections_6.js" type="text/javascript"></script>
+<!-- common.js 刷新了购物车数据 -->
+<script>
+    //当浏览器窗口大小改变时，设置显示内容的高度
+    window.onresize = function () {
+        $(".sidebar-cartbox").find('.cart-panel-content').height($(window).height() - 90);
+        $(".sidebar-cartbox").find('.bonus-panel-content').height($(window).height() - 40);
+    }
+    $(function () {
+        $(".quick-links").css("top", ($(window).height()) / 2);
+        $.ajax({
+            type: "post",
+            url: "http://tp.23673.com/components/getlogininfo",
+            success: function (data) {
+                if (data != null && data != "") {
+                    var img = data["user_info"]["user_headimg"];
+                    var name = data["user_info"]["nick_name"];
+                    $("#not_logged").css("display", "none");
+                    $("#right_login_info").css("display", "block");
+                    $("#right_login_info_name").text(name);
+                    if (img == '' || img == null) {
+                        $("#login_member_logo").attr('src',
+                            "/template/shop/blue/public/images/temp_default_user_portrait_0.png"
+                        );
+                    } else {
+                        img = '/' + img;
+                        $("#login_member_logo").attr('src', img);
+                    }
+                } else {
+                    $("#not_logged").css("display", "block");
+                    $("#right_login_info").css("display", "none");
+                }
+            }
+        })
+        $('.ajax-login').click(function () {
+            $('#mask-layer-login').show();
+            $('#layui-layer').show();
+        })
+        $('.layui-layer-close.layui-layer-close1').click(function () {
+            $('#mask-layer-login').hide();
+            $('#layui-layer').hide();
+        })
+        refreshShopCart();
+    });
+</script>
+<input type="hidden" id="hidden_uid" value="293" />
+<div class="right-sidebar-con">
+    <div class="right-sidebar-main">
+        <div class="right-sidebar-panel">
+            <div id="quick-links" class="quick-links">
+                <ul>
+                    <li class="quick-area quick-login sidebar-user-trigger">
+                        <a href="javascript:void(0);" class="quick-links-a" title="个人中心">
+                            <i class="user"></i>
+                        </a>
+                        <div class="sidebar-user quick-sidebar">
+                            <i class="arrow-right"></i>
+                            <div class="sidebar-user-info">
+                                <!-- 没有登录的情况 _start -->
+                                <div class="NS-USER-NOT-LOGIN">
+                                    <a href="http://tp.23673.com/member/index">
+                                        <div class="user-pic">
+                                            <div class="user-pic-mask"></div>
+                                            <img id="login_member_logo" src="__PUBLIC_INDEX__/picture/temp_default_user_portrait_0_8.png" />
+                                        </div>
+                                    </a>
+                                    <br>
+                                    <p id="not_logged">你好！请
+                                        <a href="javascript:void(0);" class="quick-login-a color ajax-login">登录</a> |
+                                        <a href="http://tp.23673.com/login/registerbox" class="color">注册</a>
+                                    </p>
+                                    <p id="right_login_info">你好！
+                                        <span id="right_login_info_name"></span>
+                                    </p>
+                                </div>
+                                <!-- 没有登录的情况 _end -->
+                                <!-- 有登录的情况 _start -->
+                                <div class="js-user-already-login" style="display: none;">
+                                    <div class="user-have-login">
+                                        <div class="user-pic">
+                                            <div class="user-pic-mask"></div>
+                                            <img src="" class="NS-USER-PIC">
+                                        </div>
+                                        <div class="user-info">
+                                            <p>
+                                                用&nbsp;&nbsp;&nbsp;户：
+                                                <span class="NS-USER-NAME"></span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <p class="m-t-10">
+                                        <span class="prev-login"> 上次登录时间：
+                                            <span class="NS-USER-LAST-LOGIN"></span>
+                                        </span>
+                                        <a href="http://tp.23673.com/member/index" class="btn account-btn" target="_blank">个人中心</a>
+                                        <a href="http://tp.23673.com/member/orderlist" class="btn order-btn" target="_blank">订单中心</a>
+                                    </p>
+                                </div>
+                                <!-- 有登录的情况 _end -->
+                            </div>
+                        </div>
+                    </li>
+                    <li class="sidebar-tabs" data-ns-flag="shopping_cart">
+                        <!-- 购物车 -->
+                        <div class="cart-list quick-links-a sidebar-cartbox-trigger" title="购物车">
+                            <i class="cart"></i>
+                            <span class="cart_num js-cart-count">0</span>
+                        </div>
+                    </li>
+                    <li id="collectGoods" class="sidebar-tabs" data-ns-flag="collections_goods" title="商品收藏">
+                        <a href="javascript:;" class="mpbtn_collect quick-links-a">
+                            <i class="collection"></i>
+                        </a>
+                    </li>
+                    <li id="collectShops" class="sidebar-tabs" data-ns-flag="collections_shops" title="店铺收藏">
+                        <a href="javascript:;" class="mpbtn_collect quick-links-a">
+                            <i class="shopcollection"></i>
+                        </a>
+                    </li>
+                    <li class="quick-area">
+                        <a class="quick-links-a" href="http://wpa.qq.com/msgrd?v=3&uin=10202706&site=qq&menu=yes" title="联系客服" target="_blank">
+                            <i class="customer-service"></i>
+                        </a>
+                    </li>
+
+                    <li class="quick-area">
+                        <a class="quick-links-a" href="javascript:void(0);" title="商城二维码">
+                            <i class="qr-code"></i>
+                        </a>
+                        <div class="sidebar-code quick-sidebar" style="display: none;">
+                            <i class="arrow-right"></i>
+                            <img src="__PUBLIC_INDEX__/picture/1500630330_8.jpg">
+                        </div>
+                    </li>
+                    <li class="returnTop" style="display: none;background: #0689e1;">
+                        <a href="javascript:void(0);" class="return_top quick-links-a">
+                            <i class="top"></i>
+                        </a>
+                        <div class="popup" style="left: -121px; visibility: hidden;">
+                            返回顶部
+                            <i class="arrow-right"></i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

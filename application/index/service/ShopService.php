@@ -11,6 +11,7 @@
 
 namespace app\index\service;
 
+use app\model\Shop;
 use app\model\ShopNavigation;
 
 /**
@@ -39,6 +40,24 @@ class ShopService
     public function getShopNavigationList($where = 'type=1', $page_index = 1, $page_size = 10)
     {
         return ShopNavigation::where($where)->page($page_index, $page_size)->field('nav_title,nav_url,nav_type,is_blank')->order('sort', 'asc')->select()->toarray();
+    }
+
+    /**
+     * @description:返回商品店部详细的信息
+     * @time:2018年6月11日01:44:53
+     * @Author: yfl
+     * @QQ 554665488
+     * @param string $where
+     * @param int $page_index
+     * @param int $page_size
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function getShopDetailedList( $where = ' 1 = 1',$page_index = 1, $page_size = 0)
+    {
+        return Shop::with('shopGroup,instanceType')->where($where)->page($page_index, $page_size)->select()->toArray();
     }
 
 }

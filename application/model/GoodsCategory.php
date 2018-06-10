@@ -14,6 +14,14 @@ namespace app\model;
 
 use think\Model;
 
+/**
+ * Class GoodsCategory
+ * @package app\model
+ * @description:商品分类
+ * @time:2018年6月10日15:13:273
+ * @Author: yfl
+ * @QQ 554665488
+ */
 class GoodsCategory extends Model
 {
       protected $pk='category_id';

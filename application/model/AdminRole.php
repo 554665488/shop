@@ -3,7 +3,14 @@ namespace app\model;
 
 use think\Model;
 
-//角色表
+/**
+ * Class AdminRole
+ * @package app\model
+ * @description:角色表
+ * @time:
+ * @Author: yfl
+ * @QQ 554665488
+ */
 class AdminRole extends Model
 {
    //指定权限的id字段名

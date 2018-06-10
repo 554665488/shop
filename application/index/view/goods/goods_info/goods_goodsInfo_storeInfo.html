@@ -1,0 +1,104 @@
+<div class="store-info">
+    <dl class="store-logo">
+        <a href="http://tp.23673.com/shop/shopindex?shop_id=41" target="_blank">
+            <img src="__PUBLIC_INDEX__/picture/1500623521.jpg" width="" height="">
+        </a>
+    </dl>
+    <dl class="store-name third-store">
+        <a href="http://tp.23673.com/shop/shopindex?shop_id=41" target="_blank" class="name" title="太原乔丹技有限公司">乔丹旗舰店</a>
+        <input type="hidden" value="41" id="store_shop_id" />
+    </dl>
+    <dl class="store-score">
+        <dd>
+            <!-- 通过分数判断width的宽度-->
+            <div class="score-sum color">2.7
+                <span>综合</span>
+            </div>
+            <ul class="score-part">
+                <li>
+                    <span class="score-desc">描述相符</span>
+                    <span class="score-detail color">4</span>
+                </li>
+                <li>
+                    <span class="score-desc">服务态度</span>
+                    <span class="score-detail color">3</span>
+                </li>
+                <li>
+                    <span class="score-desc">发货速度</span>
+                    <span class="score-detail color">1</span>
+                </li>
+            </ul>
+        </dd>
+    </dl>
+    <dl class="store-other">
+        <dt>所在地：</dt>
+        <dd>山西省太原市</dd>
+    </dl>
+    <!-- 客服 -->
+    <dl class="store-other">
+        <dt class="tool">QQ客服：</dt>
+        <dd class="tool">
+            <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=&site=qq&menu=yes" class="service-btn service-online">
+                <img src="__PUBLIC_INDEX__/picture/openim.png" width="20" height="20" border="0" alt="在线客服">
+                <span>在线客服</span>
+            </a>
+        </dd>
+    </dl>
+    <div class="enter-store">
+        <div class="enter-store-item">
+            <a class="bg-color goto-shop" href="http://tp.23673.com/shop/shopindex?shop_id=41" target="_blank">
+                <i></i> 进入店铺</a>
+            <a class="bg-color shop-add collect-shop" href="javascript:;">
+                <i></i>
+                <span>
+                    收藏本店
+                </span>
+            </a>
+        </div>
+    </div>
+</div>
+<script>
+    var is_member_fav_shop = 0; //获取商品收藏状态
+    // 添加收藏
+    $(".collect-shop").click(function (event) {
+        var target = $(this);
+        var uid = "293";
+        if (uid != null && uid != "") {
+            if (is_member_fav_shop == 0) {
+                //没有收藏，我要收藏
+                $.ajax({
+                    url: "http://tp.23673.com/components/collectiongoodsorshop",
+                    type: "post",
+                    data: {
+                        "fav_id": 41,
+                        "fav_type": "shop",
+                        "log_msg": ""
+                    },
+                    success: function (data) {
+                        if (data.code > 0) {
+                            $(target).find("span").html("取消收藏");
+                            is_member_fav_shop = 1;
+                        }
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: "http://tp.23673.com/components/cancelcollgoodsorshop",
+                    type: "post",
+                    data: {
+                        "fav_id": 41,
+                        "fav_type": "shop"
+                    },
+                    success: function (data) {
+                        if (data.code > 0) {
+                            $(target).find("span").html("收藏本店");
+                            is_member_fav_shop = 0;
+                        }
+                    }
+                });
+            }
+        } else {
+            location.href = "http://tp.23673.com/login/index";
+        }
+    });
+</script>

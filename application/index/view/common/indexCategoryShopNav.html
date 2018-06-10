@@ -1,10 +1,16 @@
+<!--
+QQ554665488
+功能描述:首页导航栏公共部分  单独拿出来  大多数页面要用到
+2018年6月10日15:56:14
+-->
 <div class="category-box">
     <div class="w1210">
         <div class="home-category fl">
             <a href="http://tp.23673.com/goods/category" class="menu-event" title="查看全部商品分类"><i></i>全部商品分类</a>
             <div class="category-layer" style="display: block;">
-                <!-- 公共的菜单栏indexCategoryShopNavStart-->
-                <div class="category-layer">
+                <!-- 商品三级分类开始-->
+                {if isset($categoryShow) && $categoryShow==true}
+                   <div class="category-layer">
                     <span class="category-layer-bg"></span>
                     {volist name="goodsCategoryList" id="categoryStair"}
                     <div class="list">
@@ -42,6 +48,9 @@
                     </div>
                     {/volist}
                 </div>
+                {/if}
+
+                <!-- 商品三级分类结束-->
             </div>
         </div>
         <!-- 公共的菜单栏 end-->

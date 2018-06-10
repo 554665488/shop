@@ -1,0 +1,75 @@
+<!--
+功能描述:推荐商品
+2018年6月10日2018年6月10日00:07:26
+-->
+<div class="w1210 index-sale">
+    <ul class="tabs-nav">
+        {volist name="platformGoodsRecommendList" id="platformGoodsRecommend" key="k"}
+        <li {if ($k == 1)}class="tabs-selected" {/if}>
+        <i class="arrow"></i>
+        <h3>{$platformGoodsRecommend.class_name}</h3>
+        </li>
+        {/volist}
+    </ul>
+    {volist name="platformGoodsRecommendList" id="platformGoodsRecommend" key="k" }
+    {if ($k == 1)}
+    <div class="tabs-panel sale-goods-list">
+        {else/}
+        <div class="tabs-panel sale-goods-list tabs-hide">
+            {/if}
+            <ul>
+                {volist name="platformGoodsRecommend.platform_goods_recommend" id="platform_goods"}
+                {if isset($platform_goods['goods'])}
+                <li>
+                    <dl>
+                        <dt class="goods-name">
+                            <a title="{$platform_goods['goods']['goods_name']}" href="{:URL('index/goods/goodsInfo')}/goods_id/{$platform_goods['goods']['goods_id']}" target="_blank">{$platform_goods['goods']['goods_name']}</a>
+                        </dt>
+                        <dd class="goods-thumb">
+                            <a title="{$platform_goods['goods']['goods_name']}" href="{:URL('index/goods/goodsInfo')}/goods_id/{$platform_goods['goods']['goods_id']}" target="_blank">
+                                <img src="__UPLOAD__{$platform_goods['goods']['album_picture']['pic_cover_mid']}" />
+                            </a>
+                        </dd>
+                        <dd class="goods-price">
+                            <em class="second-color" style="font-size:18px;">￥359.00</em>
+                        </dd>
+                    </dl>
+                </li>
+                {/if}
+                {/volist}
+            </ul>
+        </div>
+        {/volist}
+    </div>
+</div>
+<div class="w1210 ad-groups ad-groups5">
+    <div class="ad-groups5-layout">
+        <div class="ad-groups5-list"></div>
+        <script type="text/javascript">
+            var ap_id = 1054;
+            var data = platformAdvLoad(ap_id);
+            var listhtml = '';
+            if(data != '') {
+                if(data[0]['adv_image'] == "") {
+                    $(".ad-groups5").hide();
+                } else {
+
+                    for(var i = 0; i < data.length; i++) {
+                        if(i == 5) {
+                            break;
+                        }
+                        listhtml += '<div class="item">';
+                        if(data[i]['adv_url'] == "") {
+                            listhtml += '<a class="ad-img" href="' + data[i]['adv_url'] + '" >';
+                        } else {
+                            listhtml += '<a class="ad-img" target="_blank" href="' + data[i]['adv_url'] + '" >';
+                        }
+                        listhtml += '<img class="lazy" src="__PUBLIC_INDEX__/picture/a06d216579cf4e8fb5d53c9530afb59f.gif' + data[i]['adv_image'] + '" style="display: inline;height:140px;width:240px;max-width:100%;">';
+                        listhtml += '</a></div>';
+                    }
+                    $('.ad-groups5-list').html(listhtml);
+                }
+            }
+        </script>
+    </div>
+</div>

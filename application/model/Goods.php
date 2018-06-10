@@ -28,6 +28,16 @@ class Goods extends Base
     use SoftDelete;
     protected $pk = 'goods_id';
     protected $deleteTime = 'delete_time';
+    //商品属性获取器
+    public function getPromotionTypeAttr($value)
+    {
+        $data = [
+            0 => '无促销',
+            1 => '团购',
+            2 => '限时折扣'
+        ];
+        return $data[$value];
+    }
 
     /**
      * @description:一对一关联 一件商品属于一个一级分类
@@ -88,5 +98,17 @@ class Goods extends Base
     public function shop()
     {
         return $this->hasOne('shop', 'shop_id', 'shop_id');
+    }
+
+    /**
+     * @description:关联商品表的sku
+     * @time:2018年6月11日01:49:38
+     * @Author: yfl
+     * @QQ 554665488
+     * @return \think\model\relation\HasMany
+     */
+    public function goodsSku()
+    {
+        return $this->hasMany('GoodsSku','goods_id','goods_id');
     }
 }

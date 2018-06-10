@@ -11,7 +11,14 @@
 
 namespace app\model;
 
-
+/**
+ * Class PlatformBlock
+ * @package app\model
+ * @description:首页促销模块
+ * @time:2018年6月10日13:29:09
+ * @Author: yfl
+ * @QQ 554665488
+ */
 class PlatformBlock extends Base
 {
     protected $pk = 'block_id';

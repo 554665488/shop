@@ -1,0 +1,66 @@
+{extend name="common/father"/}
+{block name="headCss"}
+<link type="text/css" rel="stylesheet" href="__PUBLIC_INDEX__/css/goods.css">
+<script type="text/javascript" src="__PUBLIC_INDEX__/js/jquery.lazyload_1.js"></script>
+<style>
+    .detail-info {
+        width: 530px;
+    }
+</style>
+{/block}
+<!--首页导航栏 start-->
+{block name="indexCategoryShopNav"}
+<!--{include file='common/indexCategoryShopNav'/}-->
+{/block}
+<!--首页导航栏 end-->
+
+<!-- 内容 -->
+{block name="content"}
+<div class="w1210">
+    {include file="goods/goods_info/goods_breadcrumb"/}
+    <!-- 商品详细信息 -->
+    <div class="goods-info">
+        <!-- 商品图片以及相册 _star-->
+        {include file="goods/goods_info/goods_goodsInfo_preview"/}
+        <!-- 商品图片以及相册 _end-->
+        <!-- 商品详细信息 _star-->
+        {include file="goods/goods_info/goods_goodsInfo_detailInfo"/}
+        <!-- 商品详细信息 _end-->
+        <!-- 店铺信息 _star    提出来的    【店铺信息】 -->
+        {include file="goods/goods_info/goods_goodsInfo_storeInfo"/}
+        <!-- 店铺信息 _end-->
+    </div>
+    <!-- 搭配套餐 -->
+    <!-- 内容 -->
+    <div class="clearfix">
+        <!-- 左半部分内容 提出来的  客服-->
+        {include file="goods/goods_info/goods_clearfix_fl"/}
+        <!-- 右半部分内容 -->
+        <div class="right right-con">
+            <div class="wrapper">
+                {include file="goods/goods_info/goods_clearfix_right_wrapper_goodsDetail"/}
+                {include file="goods/goods_info/goods_clearfix_right_wrapper_mainWidget"/}
+                <!-- 常见问题 _end -->
+                <!-- 服务 end -->
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<input id="hidden_goodsid" type="hidden" value="383">
+<input id="hidden_skuid" type="hidden" value="">
+<input id="hidden_skuname" type="hidden" value="">
+<input id="hidden_sku_price" type="hidden" value="">
+<input id="hidden_default_img_id" type="hidden" value="1844" />
+<input id="hidden_max_buy" type="hidden" value="0" />
+<input id="hidden_stock" type="hidden" value="979" />
+<input id="hidden_point_exchange_type" type="hidden" value="0" />
+<input id="hidden_point_exchange" type="hidden" value="0" />
+<input type="hidden" id="hidden_province" value="湖南省" />
+<input type="hidden" id="hidden_city" value="长沙市" />
+<input type="hidden" id="hidden_shipping_fee_name" value="免邮" />
+{/block}
+<!-- 添加js文件 -->
+{block name="page-js"}
+{include file="goods/goods_info/goods_addJs"/}
+{/block}

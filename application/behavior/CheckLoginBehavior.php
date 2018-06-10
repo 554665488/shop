@@ -23,11 +23,11 @@ class CheckLoginBehavior extends Controller
         $controller_action = strtolower($request::controller()) . '/' . $request::action();
         if (!SC::getLoginSessionKey() || is_null(SC::getLoginSessionKey())) {
                //排除一些操作
-            if (!in_array($controller_action, Config::get('except.index'))) {
+            if (!in_array($controller_action, Config::get('except.admin'))) {
                 return $this->error('请登录!', url('/admin/login'));
             }
         } else {
-            if (in_array($controller_action, Config::get('except.index'))) {
+            if (in_array($controller_action, Config::get('except.admin'))) {
                   return $this->error('登录成功!', url('/admin/Aindex'));
             }
 

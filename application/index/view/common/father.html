@@ -10,27 +10,35 @@
 <!--头部广告开始-->
 {block name="top-active"}{/block}
 <!--头部广告结束-->
+
 <!-- 公共的顶部（部分界面不用，例如，商家入驻 登录 卖家中心）start -->
 {block name="header-top"}
 {include file="common/header-top"/}
 {/block}
 <!-- 公共的顶部（部分界面不用，例如，商家入驻 登录 卖家中心） end-->
-<!--菜单搜索工具栏--> <!-- 头部，菜单栏、搜索、导航栏 start-->
+
+<!--菜单搜索工具栏--> <!-- 购物车、搜索 start-->
 {block name="search"}{include file='common/search'/}{/block}
-<!--菜单搜索工具栏--> <!-- 头部，菜单栏、搜索、导航栏 end-->
+<!--菜单搜索工具栏--> <!-- 购物车、搜索 end-->
+
 <!--首页导航-->
-<!--头部商品分类 start-->
-{block name="indexCategoryShopNavStart"}{/block}
-<!--头部商品分类 end-->
+<!--头部商品导航 start-->
+{block name="indexCategoryShopNav"}{/block}
+<!--头部商品导航 end-->
+<!--首页导航-->
+
 <!-- 滚动图片广告位 开始-->
 {block name="template-one"}{/block}
 <!-- 滚动图片广告位 结束-->
-<!-- 内容 start-->
-{block name="content"}
-<!-- 内容 end-->
-<!--首页导航-->
 
+<!-- 内容 start-->
+{block name="content"} {/block}
+<!-- 内容 end-->
+<!--右侧滑动导航开始-->
+{block name="right-nav"}
+{include file="common/right-nav"/}
 {/block}
+<!--右侧滑动导航结束-->
 {block name="footer"}
 {include file="common/footer"/}
 {/block}

@@ -29,7 +29,7 @@ class BaseController extends Controller
 
     public function initialize()
     {
-        parent::initialize();
+//        parent::initialize();
 
     }
 

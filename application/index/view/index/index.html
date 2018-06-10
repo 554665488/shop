@@ -10,6 +10,7 @@
     }
 </style>
 {/block}
+<!--单独的头部CSS结束-->
 <!--头部广告开始-->
 {block name="top-active"}
 <!-- 头部广告 -->
@@ -33,37 +34,46 @@
 </script>
 {/block}
 <!--头部广告结束-->
-<!--单独的头部CSS结束-->
-<!--头部商品分类 start-->
-{block name="indexCategoryShopNavStart"}
-{include file='index/index/indexCategoryShopNavStart'/}
+
+<!--首页导航栏 start-->
+{block name="indexCategoryShopNav"}
+{include file='common/indexCategoryShopNav'/}
 {/block}
-<!-- 滚动图片广告位 开始  首页导航栏、 菜单栏、、商品分类、轮播图-->
+<!--首页导航栏 end-->
+
+<!-- 滚动图片广告位  联动菜单栏、轮播图 开始 -->
 {block name="template-one"}
 {include file="index/index/indexTemplate-one"/}
 {/block}
-<!-- 滚动图片广告位 结束-->
-<!--头部商品分类 end-->
+<!-- 滚动图片广告位  联动菜单栏、轮播图 结束-->
+
+<!-- 内容 start-->
 {block name="content"}
         <div class="floor"></div>
-        <!--限时折扣-->
+        <!--店铺街开始-->
         {include file="index/index/indexShopDiscount"/}
-        <!--店铺街 end-->
-        <!-- 推荐广告位开始 -->
-        {include file="index/index/indexPlatformGoodsStart"/}
-        <!-- 推荐广告位结束-->
-        {include file="index/index/indexPlatformGoodsEnd"/}
-        <!--推荐商品楼层分类 end -->
-        <!-- #tpl_region_end -->
+        <!--店铺街结束-->
+
+        <!-- 推荐商品位开始 -->
+        {include file="index/index/indexPlatformGoodsRecommend"/}
+        <!-- 推荐商品位结束-->
+
+        <!--推荐广告位开始-->
+        {include file="index/index/indexPlatformGoodsAdv"/}
+         <!--推荐广告位结束-->
+
         <!-- 左侧楼层定位 _start-->
         <div class="elevator" style="visibility: hidden;">
             <div class="elevator-floor" style="transform: scale(1.2); opacity: 0;"></div>
         </div>
-        <!--友情链接-->
-        <!--友情链接-->
-        {include file="index/index/indexFriendShipLink"/}
+        <!--友情链接开始-->
+         {include file="index/index/indexFriendShipLink"/}
+        <!--友情链接结束-->
+
 {/block}
-{/block}
+<!-- 内容 end-->
+
+
 <!-- 页面自带js -->
 {block name="page-js"}
 {include file="index/index/indexJs"/}

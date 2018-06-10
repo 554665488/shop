@@ -11,8 +11,15 @@
 
 namespace app\model;
 
-
+/**
+ * Class ShopGroup
+ * @package app\model
+ * @description:店铺分组表
+ * @time:
+ * @Author: yfl
+ * @QQ 554665488
+ */
 class ShopGroup
 {
-
+    protected $pk = 'shop_group_id';
 }

@@ -25,4 +25,29 @@ use think\Model;
 class Shop extends Model
 {
     protected $pk = 'shop_id';
+
+    /**
+     * @description:关联店铺组
+     * @time:2018年6月11日01:36:52
+     * @Author: yfl
+     * @QQ 554665488
+     * @return \think\model\relation\HasOne
+     */
+    public function shopGroup()
+    {
+        return $this->hasOne('ShopGroup','shop_group_id','shop_group_id');
+    }
+
+    /**
+     * @description:店部的入住等级 ： 如直营店铺，加盟店铺
+     * @time:2018年6月11日01:43:39
+     * @Author: yfl
+     * @QQ 554665488
+     * @return \think\model\relation\HasOne
+     */
+    public function ShopInstanceType()
+    {
+
+        return $this->hasOne('ShopInstanceType', 'instance_typeid', 'shop_type');
+    }
 }

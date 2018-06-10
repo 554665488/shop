@@ -10,7 +10,14 @@
  */
 
 namespace app\model;
-
+/**
+ * Class AlbumPicture
+ * @package app\model
+ * @description:平台相册
+ * @time:
+ * @Author: yfl
+ * @QQ 554665488
+ */
 
 class AlbumPicture extends Base
 {

@@ -14,6 +14,14 @@ namespace app\index\service;
 
 use app\model\CmsArticle;
 
+/**
+ * Class CmsService
+ * @package app\index\service
+ * @description:CMS文章
+ * @time:2018年6月10日14:39:38
+ * @Author: yfl
+ * @QQ 554665488
+ */
 class CmsService extends BaseService
 {
     /**

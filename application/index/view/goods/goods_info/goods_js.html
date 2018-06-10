@@ -1,0 +1,260 @@
+<!-- 头部右侧鼠标经过图片放大效果 _start -->
+<script type="text/javascript" src="__PUBLIC_INDEX__/js/bubbleup_1.js"></script>
+<!-- 头部右侧鼠标经过图片放大效果 _end -->
+<!-- 右侧商品信息等定位切换效果 _start -->
+<script type="text/javascript" src="__PUBLIC_INDEX__/js/ns_tabs_totop.js"></script>
+<!-- 右侧商品信息等定位切换效果 _end -->
+<!-- 放大镜 _start -->
+<script type="text/javascript" src="__PUBLIC_INDEX__/js/magiczoom.js"></script>
+<!-- 地址选择 _start -->
+<script type="text/javascript" src="__PUBLIC_INDEX__/js/ns_select_region_3.js"></script>
+<script type="text/javascript" src="__PUBLIC_INDEX__/js/tabs_1.js"></script>
+<script type="text/javascript" src="__PUBLIC_INDEX__/js/goods.js"></script>
+<script type="text/javascript">
+    var shop_main = "http://tp.23673.com";
+    $().ready(function () {
+        initSku(); //加载sku
+        //判断是否有总库存
+        if (parseInt($("#hidden_stock").val()) == 0) {
+            $(".js-buy-now").addClass("disabled");
+            $(".add-cart").addClass("disabled");
+        }
+        if ($("#hidden_shipping_fee_name").val() == "无货") {
+            $(".js-buy-now").addClass("disabled");
+            $(".add-cart").addClass("disabled");
+        }
+        $("#num").keyup(function () {
+            var obj = $(this);
+            var r = /^\d+$/;
+            if (!r.test(obj.val())) {
+                obj.val(1);
+                $.msg("请输入数字");
+            } else {
+                if (parseInt(obj.val()) > parseInt(obj.attr("data-max"))) {
+                    obj.val(obj.attr("data-max"));
+                }
+                if (parseInt(obj.val()) <= 0) {
+                    obj.val(1);
+                }
+            }
+        })
+
+        $(".amount-plus").click(function () {
+            var obj = $("#num");
+            var num = parseInt(obj.val());
+            var max = parseInt(obj.attr("data-max"));
+            num++;
+            if (num > max) {
+                obj.val(max);
+            } else {
+                obj.val(num);
+            }
+        })
+
+        $(".amount-minus").click(function () {
+            var obj = $("#num");
+            var num = parseInt(obj.val());
+            if (num > 1) {
+                num--;
+                obj.val(num);
+            }
+        })
+
+        //加载规格
+        function initSku() {
+            var curr_sku = '';
+            var sku_arr = $(".goods-spec-item");
+            sku_arr.each(function (i) {
+                var $this = $(this);
+                if ($this.hasClass("selected")) {
+                    curr_sku += $this.find("span").attr("id") + ";";
+                }
+            });
+            for (i = 0; i < parseInt($("#goods_sku_count").val()); i++) {
+                sku_id = "#goods_sku" + i;
+                goods_sku_id = $(sku_id).val();
+                if (curr_sku == goods_sku_id) {
+                    select_skuid = $(sku_id).attr("skuid");
+                    select_skuName = $(sku_id).attr("skuname");
+                    select_stock = $(sku_id).attr("stock"); //sku商品库存
+                    original_price = parseFloat($(sku_id).attr("original_price")); //sku商品原价
+                    if (select_stock == 0) {
+                        $(".js-buy-now").addClass("disabled");
+                        $(".add-cart").addClass("disabled");
+                    } else {
+                        $(".js-buy-now").removeClass("disabled");
+                        $(".add-cart").removeClass("disabled");
+                    }
+                    $("#hidden_skuid").val(select_skuid);
+                    $("#hidden_skuname").val(select_skuName);
+                    var price = parseFloat($(sku_id).attr("price"));
+                    var promotion_price = parseFloat($(sku_id).attr("promotion_price"));
+                    var member_price = parseFloat($(sku_id).attr("member_price"));
+                    $("#price").text("￥" + promotion_price.toFixed(2));
+                    $("#member_price").text("￥" + member_price.toFixed(2));
+                    $("#hidden_sku_price").val(price);
+                    $(".js-goods-number").text("库存" + select_stock + "件");
+                    if ($("#hidden_max_buy").val() == 0) {
+                        $(".amount-input").attr("data-max", select_stock);
+                    } else {
+                        $(".amount-input").attr("data-max", $("#hidden_max_buy").val());
+                    }
+                    $(".amount-input").val(1);
+                    // 当只有一个sku时，不用验证
+                    if (parseInt($("#attribute_list").val()) == 1) {
+                        select_specifications = true; //是否选择过规格,来源与shopping_cart.js
+                    }
+                    break;
+                }
+            }
+        }
+
+        //规格选择
+        $(".goods-spec-item").click(function () {
+            if ($("#hidden_shipping_fee_name").val() != "无货") {
+                $(this).siblings(".selected").removeClass("selected").find("i").remove();
+                $(this).addClass("selected");
+                if ($(this).find("a i").length == 0) {
+                    $(this).find("a").append("<i></i>");
+                }
+                initSku();
+            }
+        }).hover(function () {
+            // 		$(this).addClass("selected");
+        }, function () {
+            if ($(this).find("i").size() == 0) {
+                $(this).removeClass("selected");
+            }
+        });
+
+        // 添加购物车
+        $(".add-cart,.js-buy-now").click(function (event) {
+            if ($(this).hasClass("disabled")) {
+                return;
+            }
+            var tag = $(this).attr("data-tag");
+            var image_url = $("#MagnifierWrap .MagnifierMain").find("img").attr("src");
+            var goodsid = 383;
+            $.cart.add(goodsid, $(".amount-input").val(), {
+                is_sku: true,
+                image_url: image_url,
+                event: event,
+                tag: tag
+            });
+        });
+
+        // 添加对比
+        $(".add-compare").click(function (event) {
+            var target = $(this);
+            var goods_id = $(this).data("goods-id");
+            var sku_id = $(this).add("sku-id");
+            var image_url = $(this).data("image-url");
+            $.compare.toggle(goods_id, image_url, event, function (result) {
+                if (result.data == 1) {
+                    $(target).addClass("curr");
+                } else {
+                    $(target).removeClass("curr");
+                }
+            });
+        });
+
+        var is_member_fav_goods = 0;
+        // 添加收藏
+        $(".collect-goods").click(function (event) {
+            var num = $(this).find("span").attr("data-collects");
+            var obj = $(this).find("span");
+            if (is_member_fav_goods == 0) {
+                //点击收藏
+                $.ajax({
+                    url: "http://tp.23673.com/components/collectiongoodsorshop",
+                    type: "post",
+                    data: {
+                        "fav_id": 383,
+                        "fav_type": "goods",
+                        "log_msg": "单鞋细高跟防水台鱼嘴女凉鞋2017春夏季新款复古刺绣高跟鞋40-42"
+                    },
+                    success: function (data) {
+                        if (data.code > 0) {
+                            is_member_fav_goods = 1;
+                            num++;
+                            obj.attr("data-collects", num);
+                            obj.text("收藏商品 (" + num + "人气)");
+                        } else {
+                            $.msg("您已经收藏该商品");
+                        }
+                        $(".collect-goods").find("i").css("background-position",
+                            "-112px -91px");
+                    }
+                });
+            } else if (is_member_fav_goods == 1) {
+                //取消收藏
+                $.ajax({
+                    url: "http://tp.23673.com/components/cancelcollgoodsorShop",
+                    type: "post",
+                    data: {
+                        "fav_id": 383,
+                        "fav_type": "goods",
+                        "log_msg": "单鞋细高跟防水台鱼嘴女凉鞋2017春夏季新款复古刺绣高跟鞋40-42"
+                    },
+                    success: function (data) {
+                        if (data.code > 0) {
+                            num--;
+                            obj.attr("data-collects", num);
+                            obj.text("收藏商品 (" + num + "人气)");
+                            $(".collect-goods").find("i").css("background-position",
+                                "-112px -115px");
+                            is_member_fav_goods = 0;
+                        } else {
+                            $.msg("您已经取消收藏该商品");
+                        }
+                    }
+                });
+            } else {
+                location.href = "http://tp.23673.com/login/index";
+            }
+        });
+
+        //根据地址计算邮费，商品详情中使用
+        $(".region-items[data-region-level='2']").click(function () {
+            getExpressFee($('.js-region').attr("data-province"), $('.js-region').attr("data-city"));
+        })
+
+        //根据地址查询运费
+        function getExpressFee(province, city) {
+            if (city == null || city == '' || province == null || province == '') {
+                return;
+            }
+            $.ajax({
+                url: "http://tp.23673.com/goods/getexpressfee",
+                type: "post",
+                data: {
+                    "goods_id": $("#hidden_goodsid").val(),
+                    "province": province,
+                    "city": city
+                },
+                success: function (res) {
+                    if (res == "无货") {
+                        $(".js-buy-now").addClass("disabled");
+                        $(".add-cart").addClass("disabled");
+                    } else {
+                        $(".js-buy-now").removeClass("disabled");
+                        $(".add-cart").removeClass("disabled");
+                    }
+                    $(".freight-info").text("运费：" + res);
+                }
+            })
+        }
+
+    });
+</script>
+<script>
+    $().ready(function () {
+        try {
+            $('.btn-phone').hover((function () {
+                $('#phone-tan').css('display', 'block');
+            }), (function () {
+                $('#phone-tan').css("display", "none");
+            }));
+        } catch (e) {}
+    })
+</script>
