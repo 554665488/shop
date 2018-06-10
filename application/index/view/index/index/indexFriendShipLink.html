@@ -1,10 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<!--友情链接-->
+<!--
+创建时间：2018年6月10日00:15:01
+功能描述：友情链接
+-->
+<!--友情链接-->
+<div class="links-box w1210">
+    <div class="links-title">
+        <span>友情链接</span>
+    </div>
+    <div class="links-content"></div>
+    <script type="text/javascript">
+        $.ajax({
+            type: "post",
+            url: "http://tp.23673.com/components/linklist",
+            async: false,
+            dataType: 'json',
+            success: function(data) {
+                var linkhtml = '';
+                if(data.length > 0) {
+                    for(var i = 0; i < data.length; i++) {
+                        if(data[i]['is_blank'] == 1) {
+                            linkhtml += '<a href="' + data[i]['link_url'] + '" target="_blank" title="' + data[i]['link_title'] + '">' + data[i]['link_title'] + '</a>';
+                        } else {
+                            linkhtml += '<a href="' + data[i]['link_url'] + '" target="_self" title="' + data[i]['link_title'] + '">' + data[i]['link_title'] + '</a>';
+                        }
+                    }
+                    $('.links-content').html(linkhtml);
+                } else {
+                    $(".links-box").hide();
+                }
+            }
+        });
+    </script>
+</div>

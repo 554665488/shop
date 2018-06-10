@@ -1,10 +1,91 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<!--
+2018年6月9日23:42:25
+功能描述 ：顶部
+-->
+<div class="header-top">
+    <div class="header-box">
+        <font id="login-info" class="login-info"></font>
+        <ul>
+            <li>
+                <a class="menu-hd home" href="http://tp.23673.com" target="_top"><i></i>商城首页</a>
+            </li>
+            <li class="menu-item">
+                <div class="menu">
+                    <a class="menu-hd myinfo" href="http://tp.23673.com/member/index" target="_blank"><i></i> 个人中心 <b></b></a>
+                    <div id="menu-2" class="menu-bd">
+                        <span class="menu-bd-mask"></span>
+                        <div class="menu-bd-panel">
+                            <a href="http://tp.23673.com/member/orderlist" target="_blank">已买到的宝贝</a>
+                            <a href="http://tp.23673.com/member/addresslist" target="_blank">我的地址管理</a>
+                            <a href="http://tp.23673.com/member/goodscollectionlist" target="_blank">我收藏的宝贝</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="menu-item cartbox">
+                <a class="menu-hd cart" href="http://tp.23673.com/goods/cart" target="_top"><i></i>&nbsp;购物车</a>
+            </li>
+            <li>
+                <a class="menu-hd" target="_blank" href="http://tp.23673.com/admin">卖家中心</a>
+            </li>
+            <li class="menu-item">
+                <div class="menu">
+                    <a class="menu-hd we-chat" href="javascript:;" target="_top"> <i></i> 关注商城 <b></b>
+                    </a>
+                    <div id="menu-5" class="menu-bd we-chat-qrcode">
+                        <span class="menu-bd-mask"></span>
+                        <a target="_top"> <img src="__PUBLIC_INDEX__/picture/1500630330_4.jpg" alt="官方微信"></a>
+                        <p class="font-14">关注官方微信</p>
+                    </div>
+                </div>
+            </li>
+            <li class="menu-item">
+                <a href="http://tp.23673.com/wap/" class="menu-hd wap-nav"> <i></i>手机端</a>
+            </li>
+            <li class="menu-item">
+                <a href="http://tp.23673.com/helpcenter/index" class="menu-hd site-nav" target="_blank">帮助中心</a>
+            </li>
+        </ul>
+    </div>
+</div>
 
-</body>
-</html>
+<script type="text/javascript">
+    $.ajax({
+        type: "post",
+        url: "http://tp.23673.com/components/getlogininfo",
+        success: function(data) {
+            var login_info_html = '';
+            if(data != null && data != "") {
+                // 			if(data["user_info"]["nick_name"]!= null && data["user_info"]["nick_name"] != ""){
+                login_info_html = '<a class="sn-login color" href="http://tp.23673.com/member/index" target="_top">' + data["user_info"]["nick_name"] + '</a><em>欢迎您回来！</em><a class="sn-register" href="javascript:logout();" target="_top">退出</a>';
+                $('div.login-info').html(
+                    '<font id="login-info" class="login-info NS-USER-ALREADY-LOGIN"><em><a href="#" target="_blank" class="color NS-USER-NAME"></a></em><a href="javascript:logout();" data-method="post" class="logout bg-color">退出</a></font>');
+                // 			}
+            } else {
+                login_info_html = '<em>欢迎来到六星开源商城</em><a class="login color" href="http://tp.23673.com/login/index" target="_top">请登录</a><a class="register" href="http://tp.23673.com/login/registerbox" target="_top">免费注册</a>';
+                $('div.login-info').html(
+                    '<font id="login-info" class="login-info"><a class="login color" href="http://tp.23673.com/login/index" target="_top">登录</a><a class="register bg-color" href="http://tp.23673.com/login/registerbox" target="_top">免费注册</a></font>');
+            }
+            $('#login-info').html(login_info_html);
+        }
+    });
+
+    //退出登录
+    function logout() {
+        $.ajax({
+            url: "http://tp.23673.com/member/logout",
+            type: "post",
+            success: function(res) {
+                if(res['code'] > 0) {
+                    // 				location.href='http://tp.23673.com';
+                    $.msg("退出成功！");
+                    window.location.reload();
+                } else {
+                    if(res["message"] != null) {
+                        $.msg(res["message"]);
+                    }
+                }
+            }
+        })
+    }
+</script>

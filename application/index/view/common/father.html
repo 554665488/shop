@@ -1,25 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
     <!--公共的头部-->
     {block name="head"}{include file='common/head'/}{/block}
     <!--单独的头部CSS-->
     {block name="headCss"}{/block}
 </head>
 <body>
-<!--头部广告-->
+<!--头部广告开始-->
 {block name="top-active"}{/block}
-<!--公共的顶部:登录-->
-{block name="header-top"}{include file='common/header-top'/}{/block}
-<!--菜单搜索工具栏-->
-{block name="search"}{include file='common/search'/}{/block}
-<!--首页导航-->
-{block name="indexCategoryShopNavStart"}{/block}
-{block name="content"}
-<!--首页导航-->
-{block name="indexTemplate-one"}{/block}
+<!--头部广告结束-->
+<!-- 公共的顶部（部分界面不用，例如，商家入驻 登录 卖家中心）start -->
+{block name="header-top"}
+{include file="common/header-top"/}
 {/block}
+<!-- 公共的顶部（部分界面不用，例如，商家入驻 登录 卖家中心） end-->
+<!--菜单搜索工具栏--> <!-- 头部，菜单栏、搜索、导航栏 start-->
+{block name="search"}{include file='common/search'/}{/block}
+<!--菜单搜索工具栏--> <!-- 头部，菜单栏、搜索、导航栏 end-->
+<!--首页导航-->
+<!--头部商品分类 start-->
+{block name="indexCategoryShopNavStart"}{/block}
+<!--头部商品分类 end-->
+<!-- 滚动图片广告位 开始-->
+{block name="template-one"}{/block}
+<!-- 滚动图片广告位 结束-->
+<!-- 内容 start-->
+{block name="content"}
+<!-- 内容 end-->
+<!--首页导航-->
+
+{/block}
+{block name="footer"}
+{include file="common/footer"/}
+{/block}
+<!-- 页面自带js -->
+{block name="page-js"}{/block}
+<!-- 内容 end-->
 </body>
 </html>

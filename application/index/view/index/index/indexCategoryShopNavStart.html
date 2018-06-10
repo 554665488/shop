@@ -1,10 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<div class="category-box">
+    <div class="w1210">
+        <div class="home-category fl">
+            <a href="http://tp.23673.com/goods/category" class="menu-event" title="查看全部商品分类"><i></i>全部商品分类</a>
+            <div class="category-layer" style="display: block;">
+                <!-- 公共的菜单栏indexCategoryShopNavStart-->
+                <div class="category-layer">
+                    <span class="category-layer-bg"></span>
+                    {volist name="goodsCategoryList" id="categoryStair"}
+                    <div class="list">
+                        <dl class="cat">
+                            <dt class="cat-name">
+                                <a href="http://tp.23673.com/goods/goodslist?category_id={$categoryStair.category_id}" target="_blank" title="{$categoryStair.category_name}">{$categoryStair.category_name}</a>
+                            </dt>
+                            <i class="right-arrow"></i>
+                        </dl>
+                        <div class="categorys" style="display: none;">
+                            <div class="item-left fl">
+                                <div class="subitems">
+                                    {if isset($categoryStair._child)}
+                                    {volist name="categoryStair._child" id="categorySecondary"}
+                                    <dl class="fore1">
+                                        <dt style="width: 5em;">
+                                            <a href="http://tp.23673.com/goods/goodslist?category_id={$categorySecondary.category_id}" target="_blank" title="{$categorySecondary.category_name}">
+                                                <em>{$categorySecondary.category_name}</em>
+                                                <i></i>
+                                            </a>
+                                        </dt>
+                                        {if isset($categorySecondary._child)}
+                                        {volist name="categorySecondary._child" id="categoryThird"}
+                                        <dd>
+                                            <a href="http://tp.23673.com/goods/goodslist?category_id={$categorySecondary.category_id}" target="_blank" title="{$categoryThird.category_name}">{$categoryThird.category_name}</a>
+                                        </dd>
+                                        {/volist}
+                                        {/if}
+                                    </dl>
+                                    {/volist}
+                                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/volist}
+                </div>
+            </div>
+        </div>
+        <!-- 公共的菜单栏 end-->
+        <div class="all-category fl" id="nav">
+            <ul>
+                <!--导航开始循环-->
+                {volist name="shopNavigationList" id="shopNavigation"}
+                <li class="fl">
+                    <a class="nav" target="_blank" href="{$shopNavigation.nav_url}" title="{$shopNavigation.nav_title}">{$shopNavigation.nav_title}</a>
+                </li>
+                {/volist}
+                <!--导航结束循环-->
+            </ul>
+            <div class="wrap-line">
+                <span style="left: 15px;"></span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -13,8 +13,16 @@ use Tree;
 
 class GoodsService extends BaseService
 {
+    /**
+     * @description:获取商品分类信息
+     * @time:2018-6-10 00:27:02
+     * @Author: yfl
+     * @QQ 554665488
+     * @return mixed
+     * @throws \think\exception\DbException
+     */
     public function getGoodsCategory()
     {
-        return Tree::recursiveMakeTree(GoodsCategory::all()->toArray());
+        return Tree::recursiveMakeTree(GoodsCategory::all()->toArray(),'category_id');
    }
 }

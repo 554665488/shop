@@ -12,7 +12,7 @@
 namespace app\model;
 
 //导航
-class ShopNavigation
+class ShopNavigation extends Base
 {
-
+    protected $pk = 'nav_id';
 }

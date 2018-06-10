@@ -1,10 +1,115 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<div class="template-one">
+    <div class="banner">
+        <!--
 
-</body>
-</html>
+创建时间：2018年6月10日05:05:58
+功能描述： 首页导航栏、 菜单栏、、商品分类、轮播图（目前只有首页才拥有这个组件）
+-->
+        <ul id="fullScreenSlides" class="full-screen-slides"></ul>
+        <ul class="full-screen-slides-pagination"></ul>
+        <script type="text/javascript">
+            //轮播图
+            var ap_id = 1053;
+            var data = platformAdvLoad(ap_id);
+            var bannerhtml = '';
+            var slideshtml = '';
+            if(data != null && data.length > 0) {
+
+                for(var i = 0; i < data.length; i++) {
+                    if(data[i]['adv_image'] == '') {
+
+                        if(i == 0) {
+                            bannerhtml += '<li style="display: list-item;background: url(__PUBLIC_INDEX__/images/style_blue_banner.png) no-repeat center;background-size: auto"><a href="javascript:;" target="_blank">&nbsp;</a> </li>';
+                        }
+
+                    } else {
+
+                        if(i == 0) {
+                            bannerhtml += '<li style="display: list-item;background: url(/' + data[i]['adv_image'] + ') no-repeat center;background-color:' + data[i]['background'] + ';background-size: auto"><a href="' + data[i]['adv_url'] +
+                                '" target="_blank" >&nbsp;</a> </li>';
+                        } else {
+                            bannerhtml += '<li style="display: none;background: url(/' + data[i]['adv_image'] + ') no-repeat center;background-color:' + data[i]['background'] + ';background-size: auto"><a href="' + data[i]['adv_url'] +
+                                '" target="_blank" >&nbsp;</a> </li>';
+                        }
+                    }
+                }
+                for(var i = 1; i <= data.length; i++) {
+                    if(i == 1) {
+                        slideshtml += '<li class="current"><a href="javascript:void(0);">' + i + '</a></li>';
+                    } else {
+                        slideshtml += '<li><a href="javascript:void(0);">' + i + '</a></li>';
+                    }
+                }
+            }
+            console.log(bannerhtml);
+            $('#fullScreenSlides').html(bannerhtml);
+            $('.full-screen-slides-pagination').html(slideshtml);
+        </script>
+        <!--滚动图-->
+        <!--滚动图右侧公告及其小菜单
+2017年2月14日12:28:00
+-->
+        <script type="text/javascript">
+            $.ajax({
+                type: "post",
+                url: "http://tp.23673.com/components/getlogininfo",
+                success: function(data) {
+                    var login_info_html = '';
+                    if(data != null && data != "") {
+                        if(data["user_info"]["nick_name"] != null && data["user_info"]["nick_name"] != "") {
+                            if(data["user_info"]["user_headimg"] == "") {
+                                login_info_html += '<div class="login_img"><img src="__PUBLIC_INDEX__/picture/temp_default_user_portrait_0_4.png" alt="默认头像" /></div>';
+                            } else {
+                                login_info_html += '<div class="login_img"><img src="__PUBLIC_INDEX__/picture/a06d216579cf4e8fb5d53c9530afb59f.gif' + data["user_info"]["user_headimg"] + '" alt="默认头像" /></div>';
+                            }
+                            login_info_html += '<div class="login-message" style="line-height:27px;"><p class="message-title">Hi,我是<a href="http://tp.23673.com/member/index" class="member_name" title="' + data["user_info"]["nick_name"] + '">' + data["user_info"][
+                                "nick_name"
+                                ] + '</a></p><p class="message-operation"><a href="javascript:logout();" class="logout" >退出</a></p></div>';
+                        }
+                    } else {
+                        login_info_html += '<div class="login_img">';
+                        login_info_html += '<img src="__PUBLIC_INDEX__/picture/temp_default_user_portrait_0_4.png" alt="默认头像" />';
+                        login_info_html += '</div>';
+                        login_info_html += '<div class="login-message">';
+                        login_info_html += '<p class="message-title">Hi,欢迎登录六星开源商城</p>';
+                        login_info_html += '<p class="message-operation" style="padding: 5px 0;">';
+                        login_info_html += '<a href="javascript:;" class="login ajax-login">登录</a>';
+                        login_info_html += '<a href="http://tp.23673.com/login/registerbox" class="register">注册</a>';
+                        login_info_html += '</p></div>';
+                    }
+                    $('.right-login-message').html(login_info_html);
+                }
+            });
+        </script>
+        <div class="right-sidebar NS-TEMPLATE-NAV-CONTAINER">
+            <!-- 个人信息 -->
+            <div class="right-login-message">
+                <div style="text-align:center;">
+                    <img src="__PUBLIC_INDEX__/picture/load_login.gif" />
+                    <p style="margin-top:10px;">加载中</p>
+                </div>
+            </div>
+
+            <p class="right_title"><span>&nbsp;</span>公告</p>
+            <div class="proclamation1">
+                <!--公告开始-->
+                <ul class="mall-news">
+                    {volist name="cmsArticleList" id="cmsArticle"}
+                    <li>
+                        <a target="_blank" href="http://tp.23673.com/cms/articleclassinfo?article_id=179" title=">{$cmsArticle.title}"><i></i>{$cmsArticle.title}</a>
+                    </li>
+                    {/volist}
+                </ul>
+                <!--公告结束-->
+            </div>
+
+            <p class="right_title"><span>&nbsp;</span>管理</p>
+            <div class="shortcut-menu">
+                <a href="http://tp.23673.com/shop/applyindex" title="申请商家入驻；已提交申请，可查看当前审核状态。" class="store-join-btn" target="_blank">商家加盟</a>
+                <a href="http://tp.23673.com/admin/login" target="_blank" class="store-join-help">
+                    登录商家管理中心</a>
+            </div>
+        </div>
+        <!--滚动图右侧公告-->
+    </div>
+</div>

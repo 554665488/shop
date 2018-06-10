@@ -30,9 +30,11 @@ class Goods extends Base
     protected $deleteTime = 'delete_time';
 
     /**
-     * 关联商品分类
-     *
-     * @return Category       商品分类
+     * @description:一对一关联 一件商品属于一个一级分类
+     * @time:2018年6月10日03:27:263
+     * @Author: yfl
+     * @QQ 554665488
+     * @return \think\model\relation\HasOne
      */
     public function category_1()
     {
@@ -40,9 +42,11 @@ class Goods extends Base
     }
 
     /**
-     * 关联商品分类
-     *
-     * @return Category       商品分类
+     * @description:一对一关联 一件商品属于一个二级分类
+     * @time:2018年6月10日03:27:39
+     * @Author: yfl
+     * @QQ 554665488
+     * @return \think\model\relation\HasOne
      */
     public function category_2()
     {
@@ -50,9 +54,11 @@ class Goods extends Base
     }
 
     /**
-     * 关联商品分类
-     *
-     * @return Category       商品分类
+     * @description:一对一关联 一件商品属于一个三级分类
+     * @time:2018年6月10日03:27:59
+     * @Author: yfl
+     * @QQ 554665488
+     * @return \think\model\relation\HasOne
      */
     public function category_3()
     {
@@ -60,19 +66,24 @@ class Goods extends Base
     }
 
     /**
-     * 关联图片
-     *
-     * @return AlbumPicture
+     * @description:一对一关联  一件商品关联一条相册记录
+     * @time:2018年6月10日03:28:51
+     * @Author: yfl
+     * @QQ 554665488
+     * @return \think\model\relation\HasOne
      */
     public function albumPicture()
     {
         //                      关联表       关联表的主键    当前表的外键
         return $this->hasOne('AlbumPicture', 'pic_id',   'picture');
     }
+
     /**
-     * 关联店铺
-     *
-     * @return Shop        店铺
+     * @description:一对一关联  一件商品属于一个店铺
+     * @time:2018年6月10日03:29:38
+     * @Author: yfl
+     * @QQ 554665488
+     * @return \think\model\relation\HasOne
      */
     public function shop()
     {

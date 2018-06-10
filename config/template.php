@@ -35,6 +35,7 @@ return [
 //        '__PUBLIC__' => dirname($_SERVER['SCRIPT_NAME']) . '/static',
         '__STATIC__'=>'/static',
         '__PUBLIC__'=>'/static',
+        '__PUBLIC_INDEX__'=>'/static/index',
         '__JS__' => '/static/javascript',
         '__VERSION__'=>'?=v_1',
         '__UPLOAD__'=>''

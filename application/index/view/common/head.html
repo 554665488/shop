@@ -1,10 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
 
-</body>
-</html>
+<!--
+2018年6月9日23:42:25
+功能描述 ：head头部
+-->
+<head>
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1" />
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <title>{$head.title}</title>
+    <meta name="keywords" content="{$head.keywords}" />
+    <meta name="description" content="{$head.description}" />
+    <link rel="shortcut  icon" type="image/x-icon" href="/template/shop/blue/public/images/favicon.ico" media="screen" />
+    <!--可共用-->
+    <link type="text/css" rel="stylesheet" href="__PUBLIC_INDEX__/css/ns_common_4.css">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC_INDEX__/css/ns_color_style_4.css">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC_INDEX__/css/iconfont_4.css">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC_INDEX__/css/ns_bottom_4.css">
+    <link rel="stylesheet" href="__PUBLIC_INDEX__/css/layer_4.css" id="layuicss-skinlayercss">
+    <script type="text/javascript" src="__PUBLIC_INDEX__/js/jquery_4.js"></script>
+    <script type="text/javascript">
+        var shop_main = 'http://tp.23673.com'; //外置JS调用
+        var app_main = 'http://tp.23673.com/wap'; //外置JS调用
+        var upload = ""; //外置JS调用
+        var ADMINMAIN = 'http://tp.23673.com/admin';
+        var TEMP_IMG = "/template/shop/blue/public/images";
+        var temp = "/template/"; //外置JS调用
+        $(function() {
+            //一级菜单选中
+            $('#nav li>a').removeClass('current');
+            var path_info = '';
+            if(path_info == '') {
+                $("#nav li>a[href^='http://tp.23673.com/index/index']").addClass('current');
+            } else {
+                $("#nav li>a[href^='http://tp.23673.com/']").addClass('current');
+            }
+        })
+
+        window.onload = function() {
+            $.footer();
+        }
+    </script>
+    <script type="text/javascript" src="__PUBLIC_INDEX__/js/ns_cart_4.js"></script>
+    <script type="text/javascript" src="__PUBLIC_INDEX__/js/common_8.js"></script>
+    <script type="text/javascript" src="__PUBLIC_INDEX__/js/ns_components_4.js"></script>
+    <script type="text/javascript" src="__PUBLIC_INDEX__/js/jquery.fly.min_4.js"></script>
+    <script type="text/javascript" src="__PUBLIC_INDEX__/js/layer_4.js"></script>
+    <script type="text/javascript" src="__PUBLIC_INDEX__/js/jquery.method_4.js"></script>
+    <script type="text/javascript" src="__PUBLIC_INDEX__/js/nav_4.js"></script>
+    <script type="text/javascript" src="__PUBLIC_INDEX__/js/jquery.cookie_4.js"></script>
+    <script src="__PUBLIC_INDEX__/js/ajax_file_upload_7.js" type="text/javascript"></script>
+    <script src="__PUBLIC_INDEX__/js/file_upload_7.js" type="text/javascript"></script>
+    <script>
+        /**
+         *这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和使用。
+         * 任何企业和个人不允许对程序代码以任何形式任何目的再发布。
+         * =========================================================
+         * @author :
+         * @date : 2018年6月9日23:28:17
+         * @version : v1.0.0.0
+         */
+        var PLATFORM_NAME = "";
+        var ADMINIMG = "/public/admin/images"; //后台图片请求路径
+        var ADMINMAIN = "http://tp.23673.com/admin"; //后台请求路径
+        var UPLOAD = ""; //上传文件根目录
+        var PAGESIZE = ""; //分页显示页数
+        var ROOT = ""; //跟目录
+        //上传文件路径
+        var UPLOADGOODS = 'upload/goods/'; //存放商品图片
+        var UPLOADGOODSSKU = 'upload/goods_sku/'; //存放商品SKU
+        var UPLOADGOODSBRAND = 'upload/goods_brand/'; //存放商品品牌图
+        var UPLOADGOODSGROUP = 'upload/goods_group/'; ////存放商品分组图片
+        var UPLOADGOODSCATEGORY = 'upload/goods_category/'; ////存放商品分类图片
+        var UPLOADCOMMON = 'upload/common/'; //存放公共图片、网站logo、独立图片、没有任何关联的图片
+        var UPLOADAVATOR = 'upload/avator/'; //存放用户头像
+        var UPLOADPAY = 'upload/pay/'; //存放支付生成的二维码图片
+        var UPLOADADV = 'upload/advertising/'; //存放广告位图片
+        var UPLOADEXPRESS = 'upload/express/'; //存放物流图片
+        var UPLOADCMS = 'UPLOAD_CMS'; //存放文章图片
+    </script>
+    <script src="__PUBLIC_INDEX__/js/load_task_8.js" type="text/javascript"></script>
+
+
+</head>

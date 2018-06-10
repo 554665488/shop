@@ -1,22 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<!--首页导航-->
-{block name="indexCategoryShopNavStart"}
-{include file='indexCategoryShopNavStart'/}
+{extend name="common/father"/}
+<!--单独的头部CSS开始-->
+{block name="headCss"}
+<!--继承base可重写-->
+<!-- 添加css、字体文件文件 -->
+<link type="text/css" rel="stylesheet" href="__PUBLIC_INDEX__/css/ns_default.css">
+<style>
+    body {
+        background: #F5F5F5;
+    }
+</style>
 {/block}
-<!--首页导航-->
-{block name="indexCategoryShopNavStart"}
-{include file='indexTemplate-one'/}
+<!--头部广告开始-->
+{block name="top-active"}
+<!-- 头部广告 -->
+<div class="top-active1">
+    <div class="top-active1-wrap"></div>
+</div>
+<script type="text/javascript">
+    var ap_id = 1051;
+    var data = platformAdvLoad(ap_id, '{:URL("home/Components/platformadvlist")}');
+    if(data != null && data != '') {
+        var width = data['ap_width'];
+        var height = data['ap_height'];
+        if(data['platform_adv'][0]['adv_image'] != '') {
+            $(".top-active1").css("background-color", data['platform_adv'][0]["background"]);
+            $('.top-active1-wrap').html('<a href="' + data['platform_adv'][0]['adv_url'] + '" target="_blank"><img src="__UPLOAD__' + data['platform_adv'][0]['adv_image'] + '" style="width:' + width + 'px;height:' + height + 'px;"></a><a href="javascript:void(0);" title="关闭" class="top-active1-close"></a>');
+        } else {
+            $(".top-active1").css("background-color", "#0287E1");
+            $('.top-active1-wrap').html('<a href="javascript:;" target="_blank"><img src="__PUBLIC__/picture/style_blue_head_adv.png"></a><a href="javascript:void(0);" title="关闭" class="top-active1-close"></a>');
+        }
+    }
+</script>
 {/block}
+<!--头部广告结束-->
+<!--单独的头部CSS结束-->
+<!--头部商品分类 start-->
+{block name="indexCategoryShopNavStart"}
+{include file='index/index/indexCategoryShopNavStart'/}
+{/block}
+<!-- 滚动图片广告位 开始  首页导航栏、 菜单栏、、商品分类、轮播图-->
+{block name="template-one"}
+{include file="index/index/indexTemplate-one"/}
+{/block}
+<!-- 滚动图片广告位 结束-->
+<!--头部商品分类 end-->
 {block name="content"}
-<!--首页导航-->
-{block name="indexTemplate-one"}
+        <div class="floor"></div>
+        <!--限时折扣-->
+        {include file="index/index/indexShopDiscount"/}
+        <!--店铺街 end-->
+        <!-- 推荐广告位开始 -->
+        {include file="index/index/indexPlatformGoodsStart"/}
+        <!-- 推荐广告位结束-->
+        {include file="index/index/indexPlatformGoodsEnd"/}
+        <!--推荐商品楼层分类 end -->
+        <!-- #tpl_region_end -->
+        <!-- 左侧楼层定位 _start-->
+        <div class="elevator" style="visibility: hidden;">
+            <div class="elevator-floor" style="transform: scale(1.2); opacity: 0;"></div>
+        </div>
+        <!--友情链接-->
+        <!--友情链接-->
+        {include file="index/index/indexFriendShipLink"/}
 {/block}
 {/block}
-</body>
-</html>
+<!-- 页面自带js -->
+{block name="page-js"}
+{include file="index/index/indexJs"/}
+{/block}
+
