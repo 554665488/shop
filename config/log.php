@@ -14,15 +14,22 @@
 // +----------------------------------------------------------------------
 return [
     // 日志记录方式，内置 file socket 支持扩展
-    'type'        => 'File',
+   'type'        => 'File',
     // 日志保存目录
-    'path'        => '',
+   'path'        => '',
     // 日志记录级别
+//   'level'       => ['sql'], //仅用于记录SQL日志（并且仅当开启数据库调试模式有效）。
     'level'       => [],
     // 单文件日志写入
-    'single'      => false,
+   'single'      => false,
     // 独立日志级别
-    'apart_level' => [],
+    'apart_level' => ['error','sql'],
     // 最大日志文件数量
-    'max_files'   => 0,
+   'max_files'   => 0,
+//    'type'                => 'socket',
+//    'host'                => 'slog.thinkphp.cn',
+//    //日志强制记录到配置的client_id
+//    'force_client_ids'    => [],
+//    //限制允许读取日志的client_id
+//    'allow_client_ids'    => [],
 ];
