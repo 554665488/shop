@@ -40,13 +40,14 @@ layui.use(['form', 'ajaxRequest'], function () {
         ajaxRequest.loadTableHtml(that, url);
         $('.js-category-three').empty();
     });
-    //下
+    //监听添加商品开始
     form.on('select(js-category-two)', function (data) {
         var category_two_value = data.value, that = $('.js-category-three');
-        console.log(category_two_value);
+        // console.log(category_two_value);
         var url = urlConfig.goods.getGoodsCategoryAjax + category_two_value;
         ajaxRequest.loadTableHtml(that, url);
     });
+    //监听添加商品接结束
     form.render();
 });
 //商品分类结束
