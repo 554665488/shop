@@ -29,7 +29,7 @@ layui.define(['jquery', 'form'], function (exports) { //提示：模块也可以
                     layer.close(index);
                 },
                 success: function (json) {
-                    console.log(json);
+                    // console.log(json);
                     if (json.status == 'validate') {
                         layer.msg(json.additional.errorMsg.msg);
                         $('#'+json.additional.errorMsg.id).focus()

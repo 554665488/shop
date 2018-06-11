@@ -132,11 +132,14 @@ class GoodsService extends BaseService
         if (strpos($goodIds, ',') === false) {
             //先删除原来的二维码文件
             $delFilePath = Table::getTableField('goods', "goods_id = {$goodIds}", 'QRcode', true);
-            $delFileRealPath = PROJECT_ROOT . '/public' . $delFilePath['QRcode'];
-
-            if (delDirAndFile($delFileRealPath) === false) {
-                return ajaxReturn(false, '删除旧的二维码失败');
+            if(!empty($delFilePath)) {
+                $delFileRealPath = PROJECT_ROOT . '/public' . $delFilePath['QRcode'];
+                if (delFile($delFileRealPath) === false) {
+                    return ajaxReturn(false, '删除旧的二维码失败');
+                }
             }
+
+
             $QrcodeUrl = DOMAIN_NAME_VISIT . WAP_MODEL . '/goods/goodsDetail/goods_id/' . $goodIds;
             $file = QRcodeUtil::make($QrcodeUrl, 'goods_qrcode_' . $goodIds . '_');//生成二维码
             //模型支持调用数据库的方法直接更新数据  //数据库的update方法返回影响的记录数
@@ -150,13 +153,17 @@ class GoodsService extends BaseService
             //处理多个商品
             $data = [];
             //先删除原来的二维码文件
-            $delFilePath = Table::getTableField('goods', "goods_id in ({$goodIds})", 'QRcode');
-            foreach ($delFilePath as $index => $item) {
-                $delFileRealPath = PROJECT_ROOT . '/public' . $item['QRcode'];
-                if (delDirAndFile($delFileRealPath) === false) {
-                    return ajaxReturn(false, '删除旧的二维码失败');
+            $delFilePathArr = Table::getTableField('goods', "goods_id in ({$goodIds})", 'QRcode');
+            if(!empty($delFilePathArr)){
+                foreach ($delFilePathArr as $index => $item) {
+                    $delFileRealPath = PROJECT_ROOT . '/public' . $item['QRcode'];
+
+                    if (delFile($delFileRealPath) === false) {
+                        return ajaxReturn(false, '删除旧的二维码失败');
+                    }
                 }
             }
+
             $goodIdsArr = explode(',', $goodIds);
             foreach ($goodIdsArr as $index => $item) {//批量生成二维码
                 $QrcodeUrl = DOMAIN_NAME_VISIT . WAP_MODEL . '/goods/goodsDetail/goods_id/' . $item;
@@ -229,6 +236,14 @@ class GoodsService extends BaseService
         }
     }
 
+    /**
+     * @description:添加商品 使用验证器验证数据
+     * @time:2018年6月11日23:00:10
+     * @Author: yfl
+     * @QQ 554665488
+     * @param $addGoodsParams
+     * @return array
+     */
     public function addGoods($addGoodsParams)
     {
 

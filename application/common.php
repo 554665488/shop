@@ -228,6 +228,23 @@ function delDirAndFile($path, $delDir = FALSE)
 }
 
 /**
+ * @description:删除一个文件而不是目录
+ * @time:2018-6-11 23:06:30
+ * @Author: yfl
+ * @QQ 554665488
+ * @param $path
+ * @return bool|int
+ */
+function delFile($path)
+{
+    if (file_exists($path) && is_file($path)) {
+        return unlink($path);
+    } else {
+        return 0;
+    }
+}
+
+/**
  * +----------------------------------------------------------
  * 功能：将一个字符串部分字符用*替代隐藏
  * @param string $string 待转换的字符串
