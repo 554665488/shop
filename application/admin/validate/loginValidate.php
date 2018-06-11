@@ -45,20 +45,20 @@ class loginValidate extends Validate
      * @Author: yfl
      * @QQ 554665488
      * @param $value :验证数据
-     * @param $msg :返回的消息
+     * @param $rule :返回的消息
      * @param array $data :全部数据（数组）
      * @return bool
      */
-    protected function checkNoChinese($value, $msg, $data = [])
+    protected function checkNoChinese($value, $rule, $data = [])
     {
 
         if (!preg_match("/^[A-Za-z0-9]+$/", $value)) {
-            return $msg . '不能含有中文';
+            return $rule . '不能含有中文';
         }
         return true;
     }
 
-    protected function checkCaptcha($value, $msg, $data = [])
+    protected function checkCaptcha($value, $rule, $data = [])
     {
 
         if (!captcha_check($value)) {

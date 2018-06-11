@@ -12,6 +12,7 @@
 namespace app\common;
 
 use Endroid\QrCode\QrCode;
+use think\facade\Config;
 
 /**
  * @description:二维码生成工具
@@ -28,7 +29,7 @@ class QRcodeUtil
     //logo图标地址
     private $logoPath = PROJECT_ROOT . '/vendor/endroid/qr-code/assets/symfony.png';
     //保存图片地址
-    private $savePath =  'upload/goods_qrcode';
+    private $savePath;
 
     /**
      * @description:
@@ -62,7 +63,7 @@ class QRcodeUtil
         // Directly output the QR code
         header('Content-Type: ' . $qrCode->getContentType());
         //保存图片
-        $saveQrcodeFile = $this->savePath . '/' . $prefix . time() .'_' .rand(10, 9999) . '.' . $suffix;
+        $saveQrcodeFile = isset($this->savePath)?$this->savePath: Config::get('uploadConfig.goods_qrcode'). '/' . $prefix . time() .'_' .rand(10, 9999) . '.' . $suffix;
 //        echo $qrCode->writeString();
 
         // Save it to a file
@@ -82,7 +83,7 @@ class QRcodeUtil
      */
     public function setSavePath($filePath = '')
     {
-        $this->savePath = $filePath == '' ? $this->savePath : $filePath;
+        $this->savePath = $filePath == '' ? Config::get('uploadConfig.goods_qrcode') : $filePath;
     }
 
     /**
@@ -102,7 +103,7 @@ class QRcodeUtil
      * @time:  2018年6月2日21:18:00
      * @Author: yfl
      * @QQ 554665488
-     * @param $label
+     * @param string $font
      */
     public function setLabel($font = '')
     {

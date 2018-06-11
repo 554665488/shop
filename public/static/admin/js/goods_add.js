@@ -13,6 +13,15 @@ layui.use(['laypage', 'layedit', 'ajaxRequest', 'form', 'laydate'], function () 
     // laydate.render({
     //     elem: '#endTime'
     // });
+
+    //提交数据使用layui的监听submit提交开始
+    form.on('submit(addGoods)', function(data){
+        // console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
+        var url=urlConfig.goods.addGoods;
+        ajaxRequest.ajaxRequest(url,data.field,'json','post');
+        return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+    });
+    //提交数据使用layui的监听submit提交结束
 });
 //商品分类开始
 layui.use(['form', 'ajaxRequest'], function () {
@@ -31,6 +40,7 @@ layui.use(['form', 'ajaxRequest'], function () {
         ajaxRequest.loadTableHtml(that, url);
         $('.js-category-three').empty();
     });
+    //下
     form.on('select(js-category-two)', function (data) {
         var category_two_value = data.value, that = $('.js-category-three');
         console.log(category_two_value);
@@ -39,6 +49,7 @@ layui.use(['form', 'ajaxRequest'], function () {
     });
     form.render();
 });
+//商品分类结束
 //添加商品数据验证  TODO 后期要补全
 layui.use(['form', 'validator'], function () {
     var form = layui.form, validator = layui.validator;
@@ -70,7 +81,9 @@ layui.use(['form', 'validator'], function () {
         ]
     });
 });
-// 文件上传
+
+
+// 文件上传使用百度的web_upload
 
 
 

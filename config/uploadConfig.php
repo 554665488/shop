@@ -20,11 +20,11 @@ return [
     // 存放物流图片
     'express'               => '\\upload\\express\\',
     // 存放商品图片、主图、sku
-    'goods'                 => '\\upload\\goods\\',
+    'goods_img'                 => '/goods_img',  //上传到public/upload/goods_img
     // 存放公共图片、网站logo、独立图片、没有任何关联的图片
     'common'                => '\\upload\\common\\',
     // 商品二维码
-    'goods_qrcode'          => '\\upload\\goods_qrcode\\',
+    'goods_qrcode'          => 'upload/goods_qrcode',//上传到public/upload/goods_qrcode
     // 二维码
     'qrcode'                => '\\upload\\qrcode\\',
 ];

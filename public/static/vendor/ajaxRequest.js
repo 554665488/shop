@@ -23,12 +23,18 @@ layui.define(['jquery', 'form'], function (exports) { //提示：模块也可以
                 cache: false,
                 async: true,
                 beforeSend: function (XMLHttpRequest) {
-                    index = layer.load(2, {time: 5 * 1000}); //又换了种风格，并且设定最长等待10秒
+                    index = layer.load(2, {time: 10 * 1000}); //又换了种风格，并且设定最长等待10秒
                 },
                 complete: function (XMLHttpRequest) { //请求完成时运行的函数（在请求成功或失败之后均调用，即在 success 和 error 函数之后）。
                     layer.close(index);
                 },
                 success: function (json) {
+                    console.log(json);
+                    if (json.status == 'validate') {
+                        layer.msg(json.additional.errorMsg.msg);
+                        $('#'+json.additional.errorMsg.id).focus()
+                        return false;
+                    }
                     if (json.status == false) {
                         layer.msg(json.msg, {icon: 5});//失败的表情
                         return false;
@@ -59,7 +65,7 @@ layui.define(['jquery', 'form'], function (exports) { //提示：模块也可以
             });
             return false;//阻止表单跳转
         },
-        delData: function (url, sendData, dataType, type,tableIns) { //删除 后自动消失
+        delData: function (url, sendData, dataType, type, tableIns) { //删除 后自动消失
             layer.confirm('确定删除吗？', {
                 btn: ['确定', '取消']
             }, function () {
@@ -85,7 +91,7 @@ layui.define(['jquery', 'form'], function (exports) { //提示：模块也可以
                             layer.msg(json.msg, {
                                 icon: 6,//成功的表情
                                 time: 3000 //2秒关闭（如果不配置，默认是3秒）
-                            },function () {
+                            }, function () {
                                 // obj.del();////删除对应行（tr）的DOM结构，并更新缓存
                                 //表格渲染的重载
                                 console.log(tableIns);

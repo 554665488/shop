@@ -14,6 +14,7 @@ namespace app\admin\controller;
 use Service;
 use app\admin\service\GoodsService;
 
+use Config;
 use think\facade\Lang;
 use think\facade\Request;
 use  UploadUtil;
@@ -74,11 +75,14 @@ class GoodsController extends BaseController
      * @Author: yfl
      * @QQ 554665488
      * @param Request $request
+     * @return \think\response\Json
      */
     public function getGoodsCategoryAjax(Request $request)
     {
         if ($request::isGet()) {
-            $this->isHasParam('category_id');
+            if ($this->isAjaxHasParam('category_id')) {
+                return $this->ajaxReturnFail('请选择分类');
+            }
             $category_id = $request::param('category_id', 0);
             $array = $this->goodService->getGoodsCategoryAjax($category_id);
             $html = '';
@@ -94,12 +98,30 @@ class GoodsController extends BaseController
     }
 
 
-    //商品添加
+    /**
+     * @description:商品添加
+     * @time:2018年6月11日22:07:51
+     * @Author: yfl
+     * @QQ 554665488
+     * @param Request $request
+     * @return mixed|\think\response\Json   TODO 商铺 shop_id
+     */
     public function addGoods(Request $request)
     {
+
         $this->setTitle(Lang::get('goods_add_title'));
         if ($request::isPost()) {
-
+            $addGoodsParams = $request::param();
+            $res = $this->goodService->addGoods($addGoodsParams);
+            if ($res['code'] == 'validate') {
+                $errorMsg=explode('@', $res['msg']);
+                return $this->ajaxReturnFail('数据验证失败','validate',['errorMsg'=>['id'=>$errorMsg[0],'msg'=>$errorMsg[1]]]);
+            }
+            if ($res['code']) {
+                return $this->ajaxReturnSuccess($res['msg']);
+            }else{
+                return $this->ajaxReturnFail($res['msg']);
+            }
         }
         $getAllGoodsCategory = $this->goodService->getGoodsCategoryAjax();
         $this->assign('goodsCateGoryList', $getAllGoodsCategory);
@@ -107,7 +129,7 @@ class GoodsController extends BaseController
     }
 
     /**
-     * @description:软删除数据
+     * @description:软删除商品数据
      * @time: 2018年6月3日11:45:06
      * @Author: yfl
      * @QQ 554665488
@@ -156,6 +178,14 @@ class GoodsController extends BaseController
 
     }
 
+    /**
+     * @description:更新二维码
+     * @time:2018年6月11日02:24:23
+     * @Author: yfl
+     * @QQ 554665488
+     * @param Request $request
+     * @return \think\response\Json
+     */
     public function updateQrcode(Request $request)
     {
         if ($request::isAjax()) {
@@ -166,8 +196,8 @@ class GoodsController extends BaseController
         $condition = $request::param('goods_ids');
         $res = $this->goodService->updateGoodsQrcode($condition);
         if ($res['code']) {
-           return $this->ajaxReturnSuccess($res['msg']);
-        }else{
+            return $this->ajaxReturnSuccess($res['msg']);
+        } else {
             return $this->ajaxReturnFail($res['msg']);
         }
     }
@@ -180,9 +210,9 @@ class GoodsController extends BaseController
      */
     public function uploadGoodsImg()
     {
-        UploadUtil::setSavePath('/goods_img');
+        UploadUtil::setSavePath(Config::get('uploadConfig.goods_img'));
         $res = UploadUtil::uploadOne();
         $pic_id = $this->goodService->GoodsImgSaveAlbumPicture($res);
-        echo $pic_id;
+        return $this->ajaxReturnSuccess('上传成功', true, ['album_picture_id' => $pic_id]);
     }
 }
