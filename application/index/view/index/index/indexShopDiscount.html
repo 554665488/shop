@@ -16,6 +16,7 @@
             $('.store-wall2-ad').html('<a href="' + data[0]['adv_url'] + '" target="_blank"><img class="lazy" src="__PUBLIC_INDEX__/picture/a06d216579cf4e8fb5d53c9530afb59f.gif' + data[0]['adv_image'] + '"></a>');
         </script>
         <ul class="store-wall2-list">
+
             <li>
                 <img alt="官方直营店" src="__PUBLIC_INDEX__/picture/temp_14653489106946_2.jpg" />
                 <div class="black-cover" style="display: none;"></div>
@@ -37,111 +38,28 @@
                     <a href="http://tp.23673.com/shop/shopindex?shop_id=41" class="enter" target="_blank">点击进入</a>
                 </div>
             </li>
+            {volist name="shopDetailedList.data" id="shopDetailed" offset="0" length='18'}
+
             <li>
-                <img alt="苏泊尔家电" src="__PUBLIC_INDEX__/picture/1500623721.jpg" />
+                <img alt="官方直营店" src="{$shopDetailed.shop_logo}" />
                 <div class="black-cover" style="display: none;"></div>
                 <div class="cover-content" style="display: none;">
-                    <a href="http://tp.23673.com/shop/shopindex?shop_id=42" class="enter" target="_blank">点击进入</a>
+                    <a href="{:URL('home/shop/shopindex')}?shop_id={$shopDetailed.shop_id}" class="enter" target="_blank">点击进入</a>
                 </div>
             </li>
+            {/volist}
+
+
+            {for start="0" end="$shopDetailedList.residueCount"}
             <li>
-                <img alt="虚位以待" src="__PUBLIC_INDEX__/picture/default_shop_phantom.svg" />
+                <img alt="虚位以待" src="__PUBLIC__/images/shop_index.png" />
                 <div class="black-cover" style="display: none;"></div>
                 <div class="cover-content" style="display: none;">
-                    <a href="http://tp.23673.com/shop/applyindex" class="enter" target="_blank">点击进入</a>
+                    <a href="{:URL('home/shop/applyindex')}" class="enter" target="_blank">点击进入</a>
                 </div>
             </li>
-            <li>
-                <img alt="虚位以待" src="__PUBLIC_INDEX__/picture/default_shop_phantom.svg" />
-                <div class="black-cover" style="display: none;"></div>
-                <div class="cover-content" style="display: none;">
-                    <a href="http://tp.23673.com/shop/applyindex" class="enter" target="_blank">点击进入</a>
-                </div>
-            </li>
-            <li>
-                <img alt="虚位以待" src="__PUBLIC_INDEX__/picture/default_shop_phantom.svg" />
-                <div class="black-cover" style="display: none;"></div>
-                <div class="cover-content" style="display: none;">
-                    <a href="http://tp.23673.com/shop/applyindex" class="enter" target="_blank">点击进入</a>
-                </div>
-            </li>
-            <li>
-                <img alt="虚位以待" src="__PUBLIC_INDEX__/picture/default_shop_phantom.svg" />
-                <div class="black-cover" style="display: none;"></div>
-                <div class="cover-content" style="display: none;">
-                    <a href="http://tp.23673.com/shop/applyindex" class="enter" target="_blank">点击进入</a>
-                </div>
-            </li>
-            <li>
-                <img alt="虚位以待" src="__PUBLIC_INDEX__/picture/default_shop_phantom.svg" />
-                <div class="black-cover" style="display: none;"></div>
-                <div class="cover-content" style="display: none;">
-                    <a href="http://tp.23673.com/shop/applyindex" class="enter" target="_blank">点击进入</a>
-                </div>
-            </li>
-            <li>
-                <img alt="虚位以待" src="__PUBLIC_INDEX__/picture/default_shop_phantom.svg" />
-                <div class="black-cover" style="display: none;"></div>
-                <div class="cover-content" style="display: none;">
-                    <a href="http://tp.23673.com/shop/applyindex" class="enter" target="_blank">点击进入</a>
-                </div>
-            </li>
-            <li>
-                <img alt="虚位以待" src="__PUBLIC_INDEX__/picture/default_shop_phantom.svg" />
-                <div class="black-cover" style="display: none;"></div>
-                <div class="cover-content" style="display: none;">
-                    <a href="http://tp.23673.com/shop/applyindex" class="enter" target="_blank">点击进入</a>
-                </div>
-            </li>
-            <li>
-                <img alt="虚位以待" src="__PUBLIC_INDEX__/picture/default_shop_phantom.svg" />
-                <div class="black-cover" style="display: none;"></div>
-                <div class="cover-content" style="display: none;">
-                    <a href="http://tp.23673.com/shop/applyindex" class="enter" target="_blank">点击进入</a>
-                </div>
-            </li>
-            <li>
-                <img alt="虚位以待" src="__PUBLIC_INDEX__/picture/default_shop_phantom.svg" />
-                <div class="black-cover" style="display: none;"></div>
-                <div class="cover-content" style="display: none;">
-                    <a href="http://tp.23673.com/shop/applyindex" class="enter" target="_blank">点击进入</a>
-                </div>
-            </li>
-            <li>
-                <img alt="虚位以待" src="__PUBLIC_INDEX__/picture/default_shop_phantom.svg" />
-                <div class="black-cover" style="display: none;"></div>
-                <div class="cover-content" style="display: none;">
-                    <a href="http://tp.23673.com/shop/applyindex" class="enter" target="_blank">点击进入</a>
-                </div>
-            </li>
-            <li>
-                <img alt="虚位以待" src="__PUBLIC_INDEX__/picture/default_shop_phantom.svg" />
-                <div class="black-cover" style="display: none;"></div>
-                <div class="cover-content" style="display: none;">
-                    <a href="http://tp.23673.com/shop/applyindex" class="enter" target="_blank">点击进入</a>
-                </div>
-            </li>
-            <li>
-                <img alt="虚位以待" src="__PUBLIC_INDEX__/picture/default_shop_phantom.svg" />
-                <div class="black-cover" style="display: none;"></div>
-                <div class="cover-content" style="display: none;">
-                    <a href="http://tp.23673.com/shop/applyindex" class="enter" target="_blank">点击进入</a>
-                </div>
-            </li>
-            <li>
-                <img alt="虚位以待" src="__PUBLIC_INDEX__/picture/default_shop_phantom.svg" />
-                <div class="black-cover" style="display: none;"></div>
-                <div class="cover-content" style="display: none;">
-                    <a href="http://tp.23673.com/shop/applyindex" class="enter" target="_blank">点击进入</a>
-                </div>
-            </li>
-            <li>
-                <img alt="虚位以待" src="__PUBLIC_INDEX__/picture/default_shop_phantom.svg" />
-                <div class="black-cover" style="display: none;"></div>
-                <div class="cover-content" style="display: none;">
-                    <a href="http://tp.23673.com/shop/applyindex" class="enter" target="_blank">点击进入</a>
-                </div>
-            </li>
+            {/for}
+
         </ul>
     </div>
 </div>

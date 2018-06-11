@@ -57,7 +57,7 @@ class ShopService
      */
     public function getShopDetailedList( $where = ' 1 = 1',$page_index = 1, $page_size = 0)
     {
-        return Shop::with('shopGroup,instanceType')->where($where)->page($page_index, $page_size)->select()->toArray();
+        return Shop::with('shopGroup,ShopInstanceType')->where($where)->page($page_index, $page_size)->select()->toArray();
     }
 
 }

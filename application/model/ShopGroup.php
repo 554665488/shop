@@ -19,7 +19,7 @@ namespace app\model;
  * @Author: yfl
  * @QQ 554665488
  */
-class ShopGroup
+class ShopGroup extends Base
 {
     protected $pk = 'shop_group_id';
 }

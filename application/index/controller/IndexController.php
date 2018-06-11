@@ -26,6 +26,7 @@ class IndexController extends IndexBaseController
     public function index()
     {
         $this->setHead();
+        //平台店铺信息
         $shopDetailedList = $this->shopService->getShopDetailedList();
         //获取公告文章列表 TODO 获取字段待处理
         $cmsArticleList = $this->cmsService->getCmsArticle();
@@ -42,7 +43,7 @@ class IndexController extends IndexBaseController
                 'residueCount'    => 18 - count($shopDetailedList),
             ],
         ]);
-//        _pre($PlatformGoodsRecommendList);
+//        _pre($shopDetailedList);
         return $this->fetch();
     }
 
