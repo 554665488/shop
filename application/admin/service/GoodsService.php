@@ -15,10 +15,10 @@ use app\admin\validate\addGoodsValidate;
 use app\model\AlbumPicture;
 use app\model\Goods;
 use app\model\GoodsCategory;
-use think\Db;
-use Tree;
-use Table;
 use QRcodeUtil;
+use Table;
+use think\db\Query;
+use Tree;
 
 class GoodsService extends BaseService
 {
@@ -75,7 +75,9 @@ class GoodsService extends BaseService
                 unset($where[$index]);
             }
         }
-        return Goods::where($where)->limit(($page_index - 1) * $page_size, $page_size)->select();
+        return Goods::where($where)->with(['albumPicture'=>function(Query $query){
+            $query->field('pic_id,pic_cover_small');
+        }])->field('goods_id,goods_name,market_price,QRcode,picture,price,stock,real_sales,state,sort')->limit(($page_index - 1) * $page_size, $page_size)->order('goods_id desc')->select();
     }
 
     /**
@@ -185,7 +187,7 @@ class GoodsService extends BaseService
      * @Author: yfl
      * @QQ 554665488
      * @param $goods_ids
-     * @param bool $flog
+     * @param bool $flog:是否真正的删除
      * @return int
      */
     public function delGoods($goods_ids, $flog = false)
@@ -209,7 +211,7 @@ class GoodsService extends BaseService
      * @time: 2018年6月4日00:00:35
      * @Author: yfl
      * @QQ 554665488
-     * @param $imgPath
+     * @param $imgPath:上传图片保存的路径用来生成缩略图
      * @return bool
      */
     public function GoodsImgSaveAlbumPicture($imgPath)
@@ -257,7 +259,8 @@ class GoodsService extends BaseService
             'keywords' => $addGoodsParams['keywords'],//1
             'supplier_id' => $addGoodsParams['supplier_id'],//1  TODO 供货商 下拉框要从数据库里拿
             'market_price' => $addGoodsParams['market_price'],//市场价 1
-            'promotion_price' => $addGoodsParams['promotion_price'],//销售价 1
+            'price' => $addGoodsParams['price'],//销售价 1
+            'promotion_price' => $addGoodsParams['promotion_price'],//商品促销价格
             'cost_price' => $addGoodsParams['cost_price'],//成本价1
             'base_sales' => $addGoodsParams['base_sales'],//基础销量1
             'base_clicks' => $addGoodsParams['base_clicks'],//基础点击数1
@@ -294,5 +297,12 @@ class GoodsService extends BaseService
         } else {
             return ajaxReturn(false, '添加商品失败');
         }
+    }
+
+    public function editGoods($goods_id)
+    {
+        $goods = Goods::where('goods_id='.$goods_id)
+            ->with('goodsSku,shop,albumPicture,category_1,category_2,category_3')->find()->toArray();
+        return $goods;
     }
 }

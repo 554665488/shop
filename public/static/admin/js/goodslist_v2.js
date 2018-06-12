@@ -120,7 +120,9 @@ layui.use(['table', 'ajaxRequest', 'form', 'laypage'], function () {
     table.on('tool(goodsListTableFilter)', function (obj) {
         var data = obj.data;
         if (obj.event === 'edit') {
-            layer.msg('ID：' + data.id + ' 的查看操作');
+        ajaxRequest.getHtml(urlConfig.goods.editGoods,{'goods_id':data.goods_id},'编辑商品',90);
+            // layer.msg('ID：' + data.id + ' 的查看操作');
+            // layer.alert('编辑行：<br>' + JSON.stringify(data))
         } else if (obj.event === 'del') {
             //向服务端发送删除指令
             var url = urlConfig.goods.delGoods;
@@ -181,7 +183,11 @@ layui.use(['table', 'ajaxRequest', 'form', 'laypage'], function () {
     });
 });
 
-//二维码点击放大
+/**
+ * 1.功能描述:二维码点击放大
+ * 2.创造者:yfl
+ * 2018年6月12日10:33:48
+ */
 
 $(document).on('click','.QRcode',function () {
     var obj=$(this);

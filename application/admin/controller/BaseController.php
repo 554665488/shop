@@ -150,11 +150,12 @@ class BaseController extends Controller
      */
     final public function isAjaxHasParam($param)
     {
-
-        if (!Request::has($param)) {
-            return true;
-        } else {
-            return false;
+        if(Request::isAjax()){
+            if (!Request::has($param)) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 }

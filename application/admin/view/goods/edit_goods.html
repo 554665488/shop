@@ -1,34 +1,13 @@
 {extend name="common/father"/}
-{block name="headCss"}
+{block name='head'}
+
 {/block}
+<!--页面单独的样式开始-->
+{block name="headCss"}{/block}
+<!--页面单独的样式结束-->
 
-
-
-    <!-- 左边菜单的加载 -->
-        {block name='left'}
-        <div class="LEFT">
-            <div id="accordion2" class="accordion leftmenu">
-                <div class="accordion-group">
-                    <div class="sidebarX">
-                        <img src="../../static/picture/admin_left_logo.png"/>
-                        <h2>商品</h2>
-                    </div>
-                    <div class="accordion-body collapse in" id="collapseOne">
-                        <ul class="nav nav-pills nav-stacked" id="left_menu-small">
-                            <li><a href="http://tp.23673.com/admin/goods/goodslist">商品列表</a></li>
-                            <li class="active"><h1></h1><a href="http://tp.23673.com/admin/goods/addgoods">商品发布</a></li>
-                            <li><a href="http://tp.23673.com/admin/goods/goodsgrouplist">商品标签</a></li>
-                            <li><a href="http://tp.23673.com/admin/saleservice/consultlist">咨询管理</a></li>
-                            <li><a href="http://tp.23673.com/admin/goods/goodscomment">商品评价</a></li>
-                            <li><a href="http://tp.23673.com/admin/system/albumlist">相册管理</a></li>
-                            <li><a href="http://tp.23673.com/admin/goods/recyclelist">商品回收站</a></li>
-                            <li><a href="http://tp.23673.com/admin/goods/supplierlist">供货商</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {/block}
+    {block name='header'}{/block}
+        {block name="rightTop"}{/block}
     <!-- 右边主要内容的加载start -->
         {block name="rightMain"}
         <form class="layui-form" action="">
@@ -46,15 +25,19 @@
                                                 lay-filter="js-category-one">
                                             <option value="">请选择一级分类</option>
                                             {volist name='goodsCateGoryList' id='vo' empty='暂时没有数据'}
-                                            <option value="{$vo.category_id}">{$vo.category_name}</option>
+                                            <option  {eq name="$vo.category_id" value="$data.category_1.category_id"}selected="selected"{/eq}  value="{$vo.category_id}">{$vo.category_name}</option>
                                             {/volist}
                                         </select>
                                     </div>
                                     <div class="layui-input-inline">
-                                        <select name="category_id_2" class="js-category-two" lay-filter="js-category-two"></select>
+                                        <select name="category_id_2" class="js-category-two" lay-filter="js-category-two">
+                                            <option   value="{$data.category_2.category_id}">{$data.category_2.category_name}</option>
+                                        </select>
                                     </div>
                                     <div class="layui-input-inline">
-                                        <select name="category_id_3" class="js-category-three" lay-filter="js-category-three"></select>
+                                        <select name="category_id_3" class="js-category-three" lay-filter="js-category-three">
+                                            <option   value="{$data.category_3.category_id}">{$data.category_3.category_name}</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -79,7 +62,7 @@
                     <dd>
                         <div class="layui-form-item">
                             <div class="layui-input-line">
-                                <input type="text" name="goods_name" id="goods_name" required  lay-verify="required|goods_name"  placeholder="请输入商品名称，不能超过60个字" autocomplete="off" class="layui-input">
+                                <input type="text" name="goods_name" value="{$data.goods_name}" id="goods_name" required  lay-verify="required|goods_name"  placeholder="请输入商品名称，不能超过60个字" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                     </dd>
@@ -89,7 +72,7 @@
                     <dd>
                         <div class="layui-form-item">
                             <div class="layui-input-line">
-                                <input type="text" name="introduction" id="introduction" required  lay-verify="required|introduction"  placeholder="请输入促销语，不能超过60个字符" autocomplete="off" class="layui-input" >
+                                <input type="text" name="introduction" value="{$data.introduction}" id="introduction" required  lay-verify="required|introduction"  placeholder="请输入促销语，不能超过60个字符" autocomplete="off" class="layui-input" >
                             </div>
                         </div>
                     </dd>
@@ -99,7 +82,7 @@
                     <dd>
                         <div class="layui-form-item">
                             <div class="layui-input-line">
-                                <input type="text" name="keywords" id="keywords" required  lay-verify="required"  placeholder="商品关键词用于SEO搜索,不能超过40个字符" autocomplete="off" class="layui-input" >
+                                <input type="text" name="keywords" value="{$data.keywords}" id="keywords" required  lay-verify="required"  placeholder="商品关键词用于SEO搜索,不能超过40个字符" autocomplete="off" class="layui-input" >
                             </div>
                         </div>
 
@@ -111,7 +94,7 @@
                         <div class="layui-form-item">
                             <div class="layui-input-line">
                                 <select name="supplier_id" lay-verify="supplier_id" >
-                                    <option value="">请选择供货商</option>
+                                    <option value="">请选择供货商{$data.supplier_id}</option>
                                     <option value="0">北京</option>
                                     <option value="1">上海</option>
                                     <option value="2">广州</option>
@@ -127,26 +110,17 @@
                     <dd>
                         <div class="layui-form-item">
                             <div class="layui-input-line">
-                        <input class="goods_price" type="number" id="market_price" name="market_price" min="0" placeholder="0" lay-verify="required"/><em
+                        <input class="goods_price" type="number" id="market_price" name="market_price" value="{$data.market_price}" min="0" placeholder="0" lay-verify="required"/><em
                             class="add-on">元</em>
                             </div>
                         </div>
                         <!--<span class="help-inline">商品市场不能为空且需是数字</span>-->
                     </dd>
                 </dl>
-
                 <dl>
                     <dt><i class="required">*</i>销售价：</dt>
                     <dd>
-                        <input class="goods_price" type="number" id="price" name="price" min="0" placeholder="0"/><em
-                            class="add-on">元</em>
-                        <span class="help-inline">商品现价不能为空且需是数字</span>
-                    </dd>
-                </dl>
-                <dl>
-                    <dt><i class="required">*</i>商品促销价格：</dt>
-                    <dd>
-                        <input class="goods_price" type="number" id="promotion_price" name="promotion_price" min="0" placeholder="0"/><em
+                        <input class="goods_price" type="number" id="promotion_price" value="{$data.promotion_price}" name="promotion_price" min="0" placeholder="0"/><em
                             class="add-on">元</em>
                         <span class="help-inline">商品现价不能为空且需是数字</span>
                     </dd>
@@ -154,7 +128,7 @@
                 <dl>
                     <dt>成本价：</dt>
                     <dd>
-                        <input class="goods_price" type="number" id="cost_price" name="cost_price" min="0" placeholder="0"/><em
+                        <input class="goods_price" type="number" id="cost_price" name="cost_price" value="{$data.cost_price}" min="0" placeholder="0"/><em
                             class="add-on">元</em>
                         <span class="help-inline">商品成本不能为空且需是数字</span>
                     </dd>
@@ -162,42 +136,42 @@
                 <dl>
                     <dt>基础销量：</dt>
                     <dd>
-                        <input type="number" class="span1" id="base_sales" name="base_sales" placeholder="0" value="0"/>
+                        <input type="number" class="span1" id="base_sales"  name="base_sales"  placeholder="0" value="{$data.base_sales}"/>
                         <span class="help-inline">基础销量需是数字</span>
                     </dd>
                 </dl>
                 <dl>
                     <dt>基础点击数：</dt>
                     <dd>
-                        <input type="number" class="span1" id="base_clicks" name="base_clicks" placeholder="0"/>
+                        <input type="number" class="span1" id="base_clicks" name="base_clicks" value="{$data.base_clicks}" placeholder="0"/>
                         <span class="help-inline">基础点击数需是数字</span>
                     </dd>
                 </dl>
                 <dl>
                     <dt>基础分享数：</dt>
                     <dd>
-                        <input type="number" class="span1" id="shares" name="shares" placeholder="0"/>
+                        <input type="number" class="span1" id="shares" name="shares" value="{$data.shares}" placeholder="0"/>
                         <span class="help-inline">基础分享数需是数字</span>
                     </dd>
                 </dl>
                 <dl>
                     <dt>商家编码：</dt>
                     <dd>
-                        <input type="text" id="code" name="code" placeholder="请输入商家编码"/>
+                        <input type="text" id="code" name="code" value="{$data.code}" placeholder="请输入商家编码"/>
                         <span class="help-inline">请输入商家编码，不能超过40个字符</span>
                     </dd>
                 </dl>
                 <dl>
                     <dt><i class="required">*</i>总库存：</dt>
                     <dd>
-                        <input type="number" class="goods-stock" id="stock" name="stock" min="0" value="0"/>
+                        <input type="number" class="goods-stock" id="stock"  name="stock" min="0" value="{$data.stock}"/>
                         <span class="help-inline">请输入总库存数量，必须是大于0的整数</span>
                     </dd>
                 </dl>
                 <dl>
                     <dt><i class="required">*</i>库存预警：</dt>
                     <dd>
-                        <input type="number" class="goods-stock" id="min_stock_alarm" name="min_stock_alarm" min="0" value="0"/>
+                        <input type="number" class="goods-stock" id="min_stock_alarm" name="min_stock_alarm" min="0" value="{$data.min_stock_alarm}"/>
                         <span class="help-inline">请输入库存预警数，必须是大于0的整数</span>
                         <p class="hint">设置最低库存预警值。当库存低于预警值时商家中心商品列表页库存列红字提醒。<br>0为不预警。</p>
                     </dd>
@@ -205,7 +179,7 @@
 
                 <h3 class="js-goods-type">商品类型</h3>
                 <dl>
-                    <dt>商品类型：</dt>
+                    <dt>商品类型{$data.goods_attribute_id}：</dt>
                     <dd>
                         <select id="goods_attribute_id" name="goods_attribute_id" lay-verify="required" >
                             <option value="0">请选择商品类型</option>
@@ -246,9 +220,12 @@
                     <!--</dd>-->
                 <!--</dl>-->
 
-                <h3 class="js-goods-img">商品图片</h3>
+                <h3 class="js-goods-img">商品图片{$data.picture}</h3>
                 <dl>
                     <dt><i class="required">*</i>商品图片：</dt>
+                    <dd>
+                        <img src="{$data.album_picture.pic_cover_small}">
+                    </dd>
                     <dd>
                         <div id="goods_picture_box" class="controls"
                              style="background-color:#FFF;border: 1px solid #E9E9E9;">
@@ -297,7 +274,7 @@
                 </dl>
 
 
-                <h3 class="js-goods_detail">商品详情</h3>
+                <h3 class="js-goods_detail">商品详情{$data.brand_id}</h3>
                 <dl>
                     <dt>商品品牌：</dt>
                     <dd>
@@ -314,7 +291,7 @@
                         <div class="controls" id="discripContainer">
                             <!-- 加载编辑器的容器 -->
                             <script id="container" name="description" type="text/plain">
-                                这里写你的商品详情内容
+                                {$data.description}
                             </script>
 
                             <span class="help-inline">请填写商品描述</span>
@@ -327,68 +304,68 @@
                     <dt>所在地：</dt>
                     <dd>
                         <select  id="province_id" name="province_id" onchange="getProvince(this,'#citySelect',-1)">
-                            <option  value="0">请选择省</option>
+                            <option  value="0">请选择省{$data.province_id}</option>
                         </select>
                         <select id="city_id" name="city_id">
-                            <option value="0">请选择市</option>
+                            <option value="0">请选择市{$data.city_id}</option>
                         </select>
                     </dd>
                 </dl>
                 <dl>
-                    <dt><i class="required">*</i>运费：</dt>
+                    <dt><i class="required">*</i>运费{$data.shipping_fee}：</dt>
                     <dd>
                         <div class="controls">
-                            <label class="radio inline normal"><input type="radio" name="shipping_fee" value="0" checked="checked"/>免邮</label>
-                            <label class="radio inline normal"><input type="radio" name="shipping_fee" value="1"/> 买家承担运费</label>
+                            <label class="radio inline normal"><input {eq name="$data.shipping_fee" value="0"} checked="checked"{/eq} type="radio" name="shipping_fee" value="0" />免邮</label>
+                            <label class="radio inline normal"><input {eq name="$data.shipping_fee" value="1"} checked="checked" {/eq} type="radio" name="shipping_fee" value="1"/> 买家承担运费</label>
                             <!--<span class="help-inline">请选择运费类型</span>-->
                         </div>
                     </dd>
                 </dl>
                 <dl id="valuation-method" >
-                    <dt><i class="required">*</i>计价方式：</dt>
+                    <dt><i class="required">*</i>计价方式{$data.shipping_fee_type}：</dt>
                     <dd>
-                        <label class="radio inline normal"><input type="radio" name="shipping_fee_type" value="3"
-                                                                  checked="checked"/>计件</label>
-                        <label class="radio inline normal"><input type="radio" name="shipping_fee_type"
+                        <label class="radio inline normal"><input {eq name="$data.shipping_fee_type" value="3"} checked="checked" {/eq} type="radio" name="shipping_fee_type" value="3"
+                                                                  />计件</label>
+                        <label class="radio inline normal"><input {eq name="$data.shipping_fee_type" value="2"} checked="checked" {/eq} type="radio" name="shipping_fee_type"
                                                                   value="2"/>体积</label>
-                        <label class="radio inline normal"><input type="radio" name="shipping_fee_type"
+                        <label class="radio inline normal"><input {eq name="$data.shipping_fee_type" value="1"} checked="checked" {/eq} type="radio" name="shipping_fee_type"
                                                                   value="1"/>重量</label>
                     </dd>
                 </dl>
                 <dl id="commodity-weight" >
                     <dt><i class="required">*</i>商品重量：</dt>
                     <dd>
-                        <input type="number" id="goods_weight" name="goods_weight" min="0" value="0"/>公斤
+                        <input type="number" id="goods_weight" name="goods_weight" min="0" value="{$data.goods_weight}"/>公斤
                         <span class="help-inline">商品重量必须大于0</span>
                     </dd>
                 </dl>
                 <dl id="commodity-volume">
                     <dt><i class="required">*</i>商品体积：</dt>
                     <dd>
-                        <input type="number" id="goods_volume" name="goods_volume" min="0" value="0"/>立方米
+                        <input type="number" id="goods_volume" name="goods_volume" min="0" value="{$data.goods_volume}"/>立方米
                         <span class="help-inline">商品体积必须大于0</span>
                     </dd>
                 </dl>
                 <dl>
-                    <dt><i class="required">*</i>页面是否显示库存：</dt>
+                    <dt><i class="required">*</i>页面是否显示库存{$data.is_stock_visible}：</dt>
                     <dd>
                         <div class="controls">
-                            <label class="radio inline normal"><input type="radio" name="is_stock_visible" checked="checked"
+                            <label class="radio inline normal"><input {eq name="$data.is_stock_visible" value="1"}checked="checked" {/eq} type="radio" name="is_stock_visible"
                                                                       value="1"/> 是</label>
-                            <label class="radio inline normal"><input type="radio" name="is_stock_visible" value="0"/> 否</label>
+                            <label class="radio inline normal"><input {eq name="$data.is_stock_visible" value="0"}checked="checked" {/eq} type="radio" name="is_stock_visible" value="0"/> 否</label>
                             <!--<span class="help-inline">请选择库存是否显示</span>-->
                         </div>
                     </dd>
                 </dl>
 
-                <h3 class="js-goods-point">积分购买设置</h3>
+                <h3 class="js-goods-point">积分购买设置{$data.point_exchange_type}</h3>
                 <dl>
                     <dt><i class="required">*</i>积分设置：</dt>
                     <dd>
                         <div class="controls">
-                            <label class="radio inline normal"><input type="radio" name="point_exchange_type" value="0"
-                                                                      checked="checked"/> 非积分兑换</label>
-                            <label class="radio inline normal"><input type="radio" name="point_exchange_type"
+                            <label class="radio inline normal"><input type="radio" {eq name="$data.is_stock_visible" value="0"} checked="checked" {/eq} name="point_exchange_type" value="0"
+                                                                      /> 非积分兑换</label>
+                            <label class="radio inline normal"><input {eq name="$data.is_stock_visible" value="1"} checked="checked" {/eq} type="radio" name="point_exchange_type"
                                                                       value="1"/>积分兑换</label>
                         </div>
                     </dd>
@@ -445,18 +422,18 @@
                     <dt>每人限购(0不限购)：</dt>
                     <dd>
                         <div class="controls">
-                            <input type="number" name="max_buy" class="input-mini" min="0" placeholder="0" id="PurchaseSum"/>
+                            <input type="number" name="max_buy" class="input-mini" min="0" placeholder="0" value="{$data.max_buy}" id="PurchaseSum"/>
                             <span class="help-inline">件</span>
                         </div>
                     </dd>
                 </dl>
                 <dl>
-                    <dt><i class="required">*</i>是否上架：</dt>
+                    <dt><i class="required">*</i>是否上架{$data.shelves}：</dt>
                     <dd>
                         <div class="controls">
-                            <label class="radio inline normal"><input type="radio" name="shelves" value="1"
+                            <label class="radio inline normal"><input {eq name="$data.shelves" value="1"} checked="checked" {/eq} type="radio" name="shelves" value="1"
                                                                       checked="checked"/> 立刻上架</label>
-                            <label class="radio inline normal"><input type="radio" name="shelves" value="0"/> 放入仓库</label>
+                            <label class="radio inline normal"><input {eq name="$data.shelves" value="0"} checked="checked" {/eq} type="radio" name="shelves" value="0"/> 放入仓库</label>
                         </div>
                     </dd>
                 </dl>
@@ -466,7 +443,7 @@
                     <div class="layui-form-item">
                         <div class="layui-input-block">
                             <input type="hidden" name="__token__" value="{$Request.token}" />
-                            <button class="layui-btn" lay-submit lay-filter="addGoods">立即提交</button>
+                            <button class="layui-btn" lay-submit lay-filter="editGoods">立即提交</button>
                         </div>
                     </div>
                     <!--<button class="btn btn-info" id="btnSave2" type="button">保存并预览</button>-->
@@ -480,11 +457,10 @@
             </div>
         </form>
         {/block}
-    <!-- 右边主要内容的加载end-->
-
+    <!-- 右边主要内容的加载end -->
 {block name="footerJs"}
 <!--<script src="__PUBLIC__/js/ns_common_base.js"></script>-->
-<script src="__PUBLIC__/admin/js/goods_add.js__VERSION__"></script>
+<script src="__PUBLIC__/admin/js/goods_edit.js__VERSION__"></script>
 <script src="__PUBLIC__/plugin/ueditor1_4_3_3-utf8-php/ueditor.config.js__VERSION__"></script>
 <script src="__PUBLIC__/plugin/ueditor1_4_3_3-utf8-php/ueditor.all.js__VERSION__"></script>
 <!-- 实例化编辑器 -->

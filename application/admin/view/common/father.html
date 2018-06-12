@@ -4,21 +4,27 @@
     {block name='head'}
     {include file='common/head'}
     {/block}
+    <!--页面单独的样式开始-->
     {block name="headCss"}{/block}
+    <!--页面单独的样式结束-->
 </head>
 <body>
+{block name='header'}
 {include file="common/header"/}
+{/block}
 <div class="MAIN" style="min-height: 94vh;">
+<!-- 左边菜单的加载start -->
     {block name='left'}{/block}
-
+<!-- 左边菜单的加载end -->
     <div class="main">
         <!-- 右边主要内容的加载 -->
         <div class="RIGHT">
-        {block name="rightMain"}{include file='common/rightMain'}{/block}
-        {block name="tabMenu"}{/block}
-        {block name="right"}
+        {block name="rightTop"}{include file='common/rightTop'}{/block}<!--右侧顶部-->
+        {block name="tabMenu"}{/block}<!--右侧tab标签 添加-->
+        {block name="search"}{/block}<!--右侧搜索部分有的页面不需要-->
+        {block name="rightMain"}
         {/block}
-        {include file="common/page"/}
+        <!--{include file="common/page"/}-->
         </div>
     </div>
 </div>

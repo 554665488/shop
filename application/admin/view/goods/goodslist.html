@@ -1,36 +1,39 @@
 ﻿{extend name="common/father"/}
+
+<!--页面单独的样式开始-->
 {block name="headCss"}
 <!--<link rel="stylesheet" type="text/css" href="__PUBLIC__/static/css/product.css">-->
 <!--<script type="text/javascript" src="__PUBLIC__/static/js/wdatepicker.js"></script>-->
 {/block}
-<!-- 左边菜单的加载start -->
-{block name='left'}
-<div class="LEFT">
-    <div id="accordion2" class="accordion leftmenu">
-        <div class="accordion-group">
-            <div class="sidebarX">
-                <img src="__PUBLIC__/static/picture/admin_left_logo.png"/>
-                <h2>商品</h2>
-            </div>
-            <div class="accordion-body collapse in" id="collapseOne">
-                <ul class="nav nav-pills nav-stacked" id="left_menu-small">
-                    <li class="active"><h1></h1><a href="http://tp.23673.com/admin/goods/goodslist">商品列表</a></li>
-                    <li><a href="http://tp.23673.com/admin/goods/addgoods">商品发布</a></li>
-                    <li><a href="http://tp.23673.com/admin/goods/goodsgrouplist">商品标签</a></li>
-                    <li><a href="http://tp.23673.com/admin/saleservice/consultlist">咨询管理</a></li>
-                    <li><a href="http://tp.23673.com/admin/goods/goodscomment">商品评价</a></li>
-                    <li><a href="http://tp.23673.com/admin/system/albumlist">相册管理</a></li>
-                    <li><a href="http://tp.23673.com/admin/goods/recyclelist">商品回收站</a></li>
-                    <li><a href="http://tp.23673.com/admin/goods/supplierlist">供货商</a></li>
-                </ul>
+<!--页面单独的样式结束-->
+
+
+    <!-- 左边菜单的加载start -->
+    {block name='left'}
+    <div class="LEFT">
+        <div id="accordion2" class="accordion leftmenu">
+            <div class="accordion-group">
+                <div class="sidebarX">
+                    <img src="__PUBLIC__/static/picture/admin_left_logo.png"/>
+                    <h2>商品</h2>
+                </div>
+                <div class="accordion-body collapse in" id="collapseOne">
+                    <ul class="nav nav-pills nav-stacked" id="left_menu-small">
+                        <li class="active"><h1></h1><a href="http://tp.23673.com/admin/goods/goodslist">商品列表</a></li>
+                        <li><a href="http://tp.23673.com/admin/goods/addgoods">商品发布</a></li>
+                        <li><a href="http://tp.23673.com/admin/goods/goodsgrouplist">商品标签</a></li>
+                        <li><a href="http://tp.23673.com/admin/saleservice/consultlist">咨询管理</a></li>
+                        <li><a href="http://tp.23673.com/admin/goods/goodscomment">商品评价</a></li>
+                        <li><a href="http://tp.23673.com/admin/system/albumlist">相册管理</a></li>
+                        <li><a href="http://tp.23673.com/admin/goods/recyclelist">商品回收站</a></li>
+                        <li><a href="http://tp.23673.com/admin/goods/supplierlist">供货商</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-</div>
-{/block}
-<!-- 左边菜单的加载end -->
-
-<div class="MAIN" style="min-height: 94vh;">
+    {/block}
+    <!-- 左边菜单的加载end -->
     {block name="tabMenu"}
     <div class="tabmenu">
         <ul class="tab pngFix">
@@ -45,7 +48,7 @@
     </div>
     <hr class="tabmenu_hr" style="border:1px solid #00C0FF;margin:0 0px 10px 20px;"  />
     {/block}
-    {block name="right"}
+    {block name="search"}
     <!--搜索开始-->
     <form class="layui-form" action="">
         <div class="layui-form-item goods_search" style="width: 90%">
@@ -89,20 +92,20 @@
                     </div>
                 </li>
                 <!--<li>-->
-                    <!--<div class="layui-inline">-->
-                        <!--<label class="layui-form-label" style="padding: 9px 0">开始时间:</label>-->
-                        <!--<div class="layui-input-block">-->
-                            <!--<input type="text" name="startTime" id="startTime" autocomplete="off" class="layui-input">-->
-                        <!--</div>-->
-                    <!--</div>-->
+                <!--<div class="layui-inline">-->
+                <!--<label class="layui-form-label" style="padding: 9px 0">开始时间:</label>-->
+                <!--<div class="layui-input-block">-->
+                <!--<input type="text" name="startTime" id="startTime" autocomplete="off" class="layui-input">-->
+                <!--</div>-->
+                <!--</div>-->
                 <!--</li>-->
                 <!--<li>-->
-                    <!--<div class="layui-inline">-->
-                        <!--<label class="layui-form-label" style="padding: 9px 0">结束时间:</label>-->
-                        <!--<div class="layui-input-block">-->
-                            <!--<input type="text" name="endTime" id="endTime" autocomplete="off" class="layui-input">-->
-                        <!--</div>-->
-                    <!--</div>-->
+                <!--<div class="layui-inline">-->
+                <!--<label class="layui-form-label" style="padding: 9px 0">结束时间:</label>-->
+                <!--<div class="layui-input-block">-->
+                <!--<input type="text" name="endTime" id="endTime" autocomplete="off" class="layui-input">-->
+                <!--</div>-->
+                <!--</div>-->
                 <!--</li>-->
                 <!--<div class="clear"></div>-->
 
@@ -128,8 +131,10 @@
         </div>
     </form>
     <!--搜索结束-->
+    {/block}
+    <!-- 右边主要内容的加载start -->
+    {block name="rightMain"}
     <!--表格内容开始-->
-    <div class="main">
         <div class="layui-btn-group goods-Table-btn">
             <button class="layui-btn layui-btn-sm layui-btn-danger" data-type="CheckDataDel"><i class="layui-icon">
                 &#xe640;</i>批量删除
@@ -150,13 +155,14 @@
             <table id="goodsListTable" lay-filter="goodsListTableFilter"><!--商品列表数据加载table--></table>
         </div>
         <!--表格内容结束-->
-    </div>
+
     <!-- 公共的操作提示弹出框 common-success：成功，common-warning：警告，common-error：错误，-->
     <div class="common-tip-message js-common-tip">
         <div class="inner"></div>
     </div>
     {/block}
-</div>
+    <!-- 右边主要内容的加载end -->
+
 {block name="footerJs"}
 <!-- ********************【脚本统一写在goodslist.js中】******************** -->
 <script type="text/javascript" src="__PUBLIC__/js/jquery-ui-private.js" charset="utf-8"></script>

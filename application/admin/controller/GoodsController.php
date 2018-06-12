@@ -47,6 +47,8 @@ class GoodsController extends BaseController
     public function goodslist(Request $request)
     {
         $this->setTitle(Lang::get('goods_list_title'));
+//        $getGoodsList = $this->goodService->getGoodsList($request::param('page', 1), $request::param('limit', 10), $where=[]);
+//        halt($getGoodsList);
         if (Request::isPost()) {
             //搜索条件
             $where = [
@@ -64,7 +66,6 @@ class GoodsController extends BaseController
         }
 
         $getAllGoodsCategory = $this->goodService->getGoodsCategoryAjax();
-//        $this->assign('goodsCateGoryJson', json_encode($getAllGoodsCategory, JSON_UNESCAPED_UNICODE));
         $this->assign('goodsCateGoryList', $getAllGoodsCategory);
         return $this->fetch();
     }
@@ -114,18 +115,50 @@ class GoodsController extends BaseController
             $addGoodsParams = $request::param();
             $res = $this->goodService->addGoods($addGoodsParams);
             if ($res['code'] == 'validate') {
-                $errorMsg=explode('@', $res['msg']);
-                return $this->ajaxReturnFail('数据验证失败','validate',['errorMsg'=>['id'=>$errorMsg[0],'msg'=>$errorMsg[1]]]);
+                $errorMsg = explode('@', $res['msg']);
+                return $this->ajaxReturnFail('数据验证失败', 'validate', ['errorMsg' => ['id' => $errorMsg[0], 'msg' => $errorMsg[1]]]);
             }
             if ($res['code']) {
                 return $this->ajaxReturnSuccess($res['msg']);
-            }else{
+            } else {
                 return $this->ajaxReturnFail($res['msg']);
             }
         }
         $getAllGoodsCategory = $this->goodService->getGoodsCategoryAjax();
         $this->assign('goodsCateGoryList', $getAllGoodsCategory);
         return $this->fetch();
+    }
+
+    public function editGoods(Request $request)
+    {
+        if($this->isAjaxHasParam('goods_id')){
+            return $this->ajaxReturnFail(Lang::get('isAjaxParam'));
+        }
+        $goods_id=$request::param('goods_id');
+        $this->setTitle(Lang::get('goods_edit_title'));
+        if ($request::isPost()) {
+            $addGoodsParams = $request::param();
+            $res = $this->goodService->addGoods($addGoodsParams);
+            if ($res['code'] == 'validate') {
+                $errorMsg = explode('@', $res['msg']);
+                return $this->ajaxReturnFail('数据验证失败', 'validate', ['errorMsg' => ['id' => $errorMsg[0], 'msg' => $errorMsg[1]]]);
+            }
+            if ($res['code']) {
+                return $this->ajaxReturnSuccess($res['msg']);
+            } else {
+                return $this->ajaxReturnFail($res['msg']);
+            }
+        }
+        $goodsData=$this->goodService->editGoods($goods_id);
+//        halt($goodsData);
+        $getAllGoodsCategory = $this->goodService->getGoodsCategoryAjax();
+        $this->assign('goodsCateGoryList', $getAllGoodsCategory);
+        $this->assign([
+            'goodsCateGoryList'=>$getAllGoodsCategory,//商品三级分类
+            'data'=>$goodsData,//单件商品信息
+        ]);
+        return $this->fetch();
+
     }
 
     /**
@@ -203,7 +236,7 @@ class GoodsController extends BaseController
     }
 
     /**
-     * @description:ajax异步上传图片添加商品 TODO：待完善
+     * @description:ajax异步上传图片添加商品
      * @time:2018年6月4日00:11:46
      * @Author: yfl
      * @QQ 554665488
