@@ -18,6 +18,7 @@ use app\model\GoodsCategory;
 use QRcodeUtil;
 use Table;
 use think\db\Query;
+use think\facade\Request;
 use Tree;
 
 class GoodsService extends BaseService
@@ -75,7 +76,7 @@ class GoodsService extends BaseService
                 unset($where[$index]);
             }
         }
-        return Goods::where($where)->with(['albumPicture'=>function(Query $query){
+        return Goods::where($where)->with(['albumPicture' => function (Query $query) {
             $query->field('pic_id,pic_cover_small');
         }])->field('goods_id,goods_name,market_price,QRcode,picture,price,stock,real_sales,state,sort')->limit(($page_index - 1) * $page_size, $page_size)->order('goods_id desc')->select();
     }
@@ -134,7 +135,7 @@ class GoodsService extends BaseService
         if (strpos($goodIds, ',') === false) {
             //先删除原来的二维码文件
             $delFilePath = Table::getTableField('goods', "goods_id = {$goodIds}", 'QRcode', true);
-            if(!empty($delFilePath)) {
+            if (!empty($delFilePath)) {
                 $delFileRealPath = PROJECT_ROOT . '/public' . $delFilePath['QRcode'];
                 if (delFile($delFileRealPath) === false) {
                     return ajaxReturn(false, '删除旧的二维码失败');
@@ -156,7 +157,7 @@ class GoodsService extends BaseService
             $data = [];
             //先删除原来的二维码文件
             $delFilePathArr = Table::getTableField('goods', "goods_id in ({$goodIds})", 'QRcode');
-            if(!empty($delFilePathArr)){
+            if (!empty($delFilePathArr)) {
                 foreach ($delFilePathArr as $index => $item) {
                     $delFileRealPath = PROJECT_ROOT . '/public' . $item['QRcode'];
 
@@ -187,7 +188,7 @@ class GoodsService extends BaseService
      * @Author: yfl
      * @QQ 554665488
      * @param $goods_ids
-     * @param bool $flog:是否真正的删除
+     * @param bool $flog :是否真正的删除
      * @return int
      */
     public function delGoods($goods_ids, $flog = false)
@@ -206,37 +207,7 @@ class GoodsService extends BaseService
         }
     }
 
-    /**
-     * @description:处理上传商品的图片并制作缩略图保存到相册表
-     * @time: 2018年6月4日00:00:35
-     * @Author: yfl
-     * @QQ 554665488
-     * @param $imgPath:上传图片保存的路径用来生成缩略图
-     * @return bool
-     */
-    public function GoodsImgSaveAlbumPicture($imgPath)
-    {
-        $data = [
-            'pic_name' => $imgPath['uploadFileInfo']['old_file_name'],//原图名字
-            'pic_cover' => '/upload/goods_img/' . $imgPath['uploadFileInfo']['path'],//上传的图片路径
-        ];
-        $absolutePath = PROJECT_ROOT . '/public' . $data['pic_cover'];//文件的绝对路径用来制作缩略图 TODO
-        $data['pic_cover_big'] = $this->makeImgThumb($absolutePath, 700, 700, '/upload/goods_img/');//大图路径;
-        $data['pic_size_big'] = '700,700';//大图大小
-        $data['pic_cover_mid'] = $this->makeImgThumb($absolutePath, 360, 360, '/upload/goods_img/');//中图路径
-        $data['pic_size_mid'] = '360,360';//中图大小
-        $data['pic_cover_small'] = $this->makeImgThumb($absolutePath, 240, 240, '/upload/goods_img/');//小图路径
-        $data['pic_size_small'] = '240,240';//小图大小
-        $data['pic_cover_micro'] = $this->makeImgThumb($absolutePath, 60, 60, '/upload/goods_img/');//微图路径
-        $data['pic_size_micro'] = '60,60';//微图大小
-        $data['upload_time'] = getDateTime();
-        $res = AlbumPicture::create($data);//create方法返回的是当前模型的对象实例 静态新增数据
-        if ($res) {
-            return $res->pic_id;
-        } else {
-            return false;
-        }
-    }
+
 
     /**
      * @description:添加商品 使用验证器验证数据
@@ -248,7 +219,6 @@ class GoodsService extends BaseService
      */
     public function addGoods($addGoodsParams)
     {
-
         $data = [
             'goods_name' => $addGoodsParams['goods_name'],//1
             'category_id_1' => $addGoodsParams['category_id_1'],//1
@@ -272,7 +242,7 @@ class GoodsService extends BaseService
             'picture' => isset($addGoodsParams['album_picture_id']) ? $addGoodsParams['album_picture_id'][0] : '',//2 TODO 商品主图 商品图片保存id
             'img_id_array' => isset($addGoodsParams['album_picture_id']) ? implode(',', $addGoodsParams['album_picture_id']) : '',//2 商品图片序列  100,200,201 逗号分开
             'brand_id' => $addGoodsParams['brand_id'],//1 TODO 商品品牌下拉框要从数据库里拿
-            'description' => $addGoodsParams['description'],//商品详情内容 1
+            'description' => htmlentities($addGoodsParams['description']),//商品详情内容 1
             'province_id' => $addGoodsParams['province_id'],// 商品物流信息 一级地区id 下拉框要从数据库里拿 1
             'city_id' => $addGoodsParams['city_id'],// 商品物流信息 二级地区id ajax下拉框要从数据库里拿 1
             'shipping_fee' => $addGoodsParams['shipping_fee'],// 运费 0为免运费 1
@@ -299,10 +269,78 @@ class GoodsService extends BaseService
         }
     }
 
-    public function editGoods($goods_id)
+    /**
+     * @description:获得编辑商品的信息
+     * @time:2018-6-12 16:40:13
+     * @Author: yfl
+     * @QQ 554665488
+     * @param $goods_id
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function getEditGoods($goods_id)
     {
-        $goods = Goods::where('goods_id='.$goods_id)
+        $goods = Goods::where('goods_id=' . $goods_id)
             ->with('goodsSku,shop,albumPicture,category_1,category_2,category_3')->find()->toArray();
         return $goods;
+    }
+
+    /**
+     * @description:编辑更新
+     * @time:2018年6月12日16:46:47
+     * @Author: yfl
+     * @QQ 554665488
+     * @param $updateGoodsParams
+     * @return array
+     */
+    public function editResSave($updateGoodsParams)
+    {
+        $data = [
+            'goods_id' => $updateGoodsParams['goods_id'],//1
+            'goods_name' => $updateGoodsParams['goods_name'],//1
+            'category_id_1' => $updateGoodsParams['category_id_1'],//1
+            'category_id_2' => $updateGoodsParams['category_id_2'],//1
+            'category_id_3' => $updateGoodsParams['category_id_3'],//1
+            'shop_id' => isset($updateGoodsParams['shop_id']) ? $updateGoodsParams['shop_id'] : 0,//0平台商品
+            'introduction' => $updateGoodsParams['introduction'],//商品简介，促销语 1
+            'keywords' => $updateGoodsParams['keywords'],//1
+            'supplier_id' => $updateGoodsParams['supplier_id'],//1  TODO 供货商 下拉框要从数据库里拿
+            'market_price' => $updateGoodsParams['market_price'],//市场价 1
+            'price' => $updateGoodsParams['price'],//销售价 1
+            'promotion_price' => $updateGoodsParams['promotion_price'],//商品促销价格
+            'cost_price' => $updateGoodsParams['cost_price'],//成本价1
+            'base_sales' => $updateGoodsParams['base_sales'],//基础销量1
+            'base_clicks' => $updateGoodsParams['base_clicks'],//基础点击数1
+            'shares' => $updateGoodsParams['shares'],//基础分享数1
+            'code' => $updateGoodsParams['code'],//商家编码1
+            'stock' => $updateGoodsParams['stock'],//总库存1
+            'min_stock_alarm' => $updateGoodsParams['min_stock_alarm'],//库存预警值1
+            'goods_attribute_id' => $updateGoodsParams['goods_attribute_id'],//1 TODO 商品类型 下拉框要从数据库里拿
+            'picture' => isset($updateGoodsParams['album_picture_id']) ? $updateGoodsParams['album_picture_id'][0] : '',//2 TODO 商品主图 商品图片保存id
+            'img_id_array' => isset($updateGoodsParams['album_picture_id']) ? implode(',', $updateGoodsParams['album_picture_id']) : '',//2 商品图片序列  100,200,201 逗号分开
+            'brand_id' => $updateGoodsParams['brand_id'],//1 TODO 商品品牌下拉框要从数据库里拿
+//            'description' =>$updateGoodsParams['description']?? htmlentities($updateGoodsParams['description']),//商品详情内容 1
+            'province_id' => $updateGoodsParams['province_id'],// 商品物流信息 一级地区id 下拉框要从数据库里拿 1
+            'city_id' => $updateGoodsParams['city_id'],// 商品物流信息 二级地区id ajax下拉框要从数据库里拿 1
+            'shipping_fee' => $updateGoodsParams['shipping_fee'],// 运费 0为免运费 1
+            'shipping_fee_type' => $updateGoodsParams['shipping_fee_type'],// '计价方式1.重量2.体积3.计件',
+            'goods_weight' => $updateGoodsParams['goods_weight'],// 商品重量 1
+            'goods_volume' => $updateGoodsParams['goods_volume'],// 商品体积 1
+            'is_stock_visible' => $updateGoodsParams['is_stock_visible'],// 页面是否显示库存 1
+            'point_exchange_type' => $updateGoodsParams['point_exchange_type'],// '积分兑换类型 0 非积分兑换 1 只能积分兑换 ', 1
+//                'point_exchange' => $addGoodsParams['point_exchange'],// 积分兑换 TODO 使用了ajax 2
+            'give_point' => $updateGoodsParams['give_point'],// 购买商品赠送积分 1
+            'max_buy' => $updateGoodsParams['max_buy'],// 每人限购(0不限购) 1
+            'shelves' => $updateGoodsParams['shelves'],//1立即上架2放入仓库 1
+            'sort' => $updateGoodsParams['sort'] ?? 0,//排序 2
+        ];
+        $res = Goods::update($data);
+        if (is_object($res)) {
+            return ajaxReturn(true,'更新成功');
+        }else{
+            return ajaxReturn(false,'更新失败');
+        }
     }
 }

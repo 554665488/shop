@@ -15,9 +15,9 @@ layui.use(['laypage', 'layedit', 'ajaxRequest', 'form', 'laydate'], function () 
     // });
 
     //提交数据使用layui的监听submit提交开始
-    form.on('submit(addGoods)', function(data){
-        // console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
-        var url=urlConfig.goods.addGoods;
+    form.on('submit(editGoods)', function(data){
+        console.log(data.field);//当前容器的全部表单字段，名值对形式：{name: value}
+        var url=urlConfig.goods.editGoods;
         ajaxRequest.ajaxRequest(url,data.field,'json','post');
         return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
     });

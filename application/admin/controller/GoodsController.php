@@ -30,12 +30,14 @@ use  UploadUtil;
 class GoodsController extends BaseController
 {
     private $goodService;
+    private $albumPictureService;
 
     public function initialize()
     {
         parent::initialize();
 
         $this->goodService = new  GoodsService();
+        $this->albumPictureService=\app\common\Service::access(ADMIN_MODEL,'AlbumPictureService');
     }
 
     /**
@@ -109,13 +111,14 @@ class GoodsController extends BaseController
      */
     public function addGoods(Request $request)
     {
-
         $this->setTitle(Lang::get('goods_add_title'));
         if ($request::isPost()) {
             $addGoodsParams = $request::param();
             $res = $this->goodService->addGoods($addGoodsParams);
-            if ($res['code'] == 'validate') {
+
+            if ($res['code'] === 'validate') {
                 $errorMsg = explode('@', $res['msg']);
+
                 return $this->ajaxReturnFail('数据验证失败', 'validate', ['errorMsg' => ['id' => $errorMsg[0], 'msg' => $errorMsg[1]]]);
             }
             if ($res['code']) {
@@ -129,17 +132,25 @@ class GoodsController extends BaseController
         return $this->fetch();
     }
 
+    /**
+     * @description:编辑商品 TODO 商品主图没有完善
+     * @time:2018年6月13日19:42:15
+     * @Author: yfl
+     * @QQ 554665488
+     * @param Request $request
+     * @return mixed|\think\response\Json
+     */
     public function editGoods(Request $request)
     {
-        if($this->isAjaxHasParam('goods_id')){
+        if ($this->isAjaxHasParam('goods_id')) {
             return $this->ajaxReturnFail(Lang::get('isAjaxParam'));
         }
-        $goods_id=$request::param('goods_id');
+        $goods_id = $request::param('goods_id');
         $this->setTitle(Lang::get('goods_edit_title'));
         if ($request::isPost()) {
-            $addGoodsParams = $request::param();
-            $res = $this->goodService->addGoods($addGoodsParams);
-            if ($res['code'] == 'validate') {
+            $updateGoodsParams = $request::param();
+            $res = $this->goodService->editResSave($updateGoodsParams);
+            if ($res['code'] === 'validate') {
                 $errorMsg = explode('@', $res['msg']);
                 return $this->ajaxReturnFail('数据验证失败', 'validate', ['errorMsg' => ['id' => $errorMsg[0], 'msg' => $errorMsg[1]]]);
             }
@@ -149,13 +160,13 @@ class GoodsController extends BaseController
                 return $this->ajaxReturnFail($res['msg']);
             }
         }
-        $goodsData=$this->goodService->editGoods($goods_id);
-//        halt($goodsData);
+        $goodsData = $this->goodService->getEditGoods($goods_id);
+//halt($goodsData);
         $getAllGoodsCategory = $this->goodService->getGoodsCategoryAjax();
-        $this->assign('goodsCateGoryList', $getAllGoodsCategory);
+        $goodsData['img_id_array'] = $this->albumPictureService->getGoodsPicture('pic_id in ('.$goodsData['img_id_array'].')','pic_id,pic_cover_mid');//处理上商品和相册关联
         $this->assign([
-            'goodsCateGoryList'=>$getAllGoodsCategory,//商品三级分类
-            'data'=>$goodsData,//单件商品信息
+            'goodsCateGoryList' => $getAllGoodsCategory,//商品三级分类
+            'data' => $goodsData,//单件商品信息
         ]);
         return $this->fetch();
 
@@ -245,7 +256,7 @@ class GoodsController extends BaseController
     {
         UploadUtil::setSavePath(Config::get('uploadConfig.goods_img'));
         $res = UploadUtil::uploadOne();
-        $pic_id = $this->goodService->GoodsImgSaveAlbumPicture($res);
+        $pic_id = $this->albumPictureService->GoodsImgSaveAlbumPicture($res);
         return $this->ajaxReturnSuccess('上传成功', true, ['album_picture_id' => $pic_id]);
     }
 }

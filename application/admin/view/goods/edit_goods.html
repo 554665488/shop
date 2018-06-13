@@ -1,11 +1,8 @@
 {extend name="common/father"/}
-{block name='head'}
 
-{/block}
 <!--页面单独的样式开始-->
 {block name="headCss"}{/block}
 <!--页面单独的样式结束-->
-
     {block name='header'}{/block}
         {block name="rightTop"}{/block}
     <!-- 右边主要内容的加载start -->
@@ -120,6 +117,14 @@
                 <dl>
                     <dt><i class="required">*</i>销售价：</dt>
                     <dd>
+                        <input class="goods_price" type="number" id="price" value="{$data.price}" name="price" min="0" placeholder="0"/><em
+                            class="add-on">元</em>
+                        <span class="help-inline">商品现价不能为空且需是数字</span>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt><i class="required">*</i>商品促销价格：</dt>
+                    <dd>
                         <input class="goods_price" type="number" id="promotion_price" value="{$data.promotion_price}" name="promotion_price" min="0" placeholder="0"/><em
                             class="add-on">元</em>
                         <span class="help-inline">商品现价不能为空且需是数字</span>
@@ -183,7 +188,7 @@
                     <dd>
                         <select id="goods_attribute_id" name="goods_attribute_id" lay-verify="required" >
                             <option value="0">请选择商品类型</option>
-                            <option value="28">衣服</option>
+                            <option selected value="28">衣服</option>
                             <option value="30">手机</option>
                             <option value="32">鞋子</option>
                         </select>
@@ -220,12 +225,10 @@
                     <!--</dd>-->
                 <!--</dl>-->
 
-                <h3 class="js-goods-img">商品图片{$data.picture}</h3>
+                <h3 class="js-goods-img">商品图片</h3>
                 <dl>
                     <dt><i class="required">*</i>商品图片：</dt>
-                    <dd>
-                        <img src="{$data.album_picture.pic_cover_small}">
-                    </dd>
+
                     <dd>
                         <div id="goods_picture_box" class="controls"
                              style="background-color:#FFF;border: 1px solid #E9E9E9;">
@@ -255,7 +258,7 @@
                                         <!--<a class="ncsc-btn mt5" id="img_box" nctype="show_image" href="javascript:void(0);">从图片空间选择</a>-->
                                     <!--</div>-->
                                 <!--</div>-->
-                                <a class="ncsc-btn mt5" id="img_box" nctype="show_image" href="javascript:void(0);">从图片空间选择</a>
+                                <!--<a class="ncsc-btn mt5" id="img_box" nctype="show_image" href="javascript:void(0);">从图片空间选择</a>-->
                             </div>
                         </div>
                         <span class="help-inline">最少需要一张图片作为商品主图第一张图片将作为商品主图</font>,支持同时上传多张图片,多张图片之间可随意调整位置；支持jpg、gif、png格式上传或从图片空间中选择，建议使用尺寸800x800像素以上、大小不超过1M的正方形图片，上传后的图片将会自动保存在图片空间的默认分类中</span>
@@ -290,8 +293,8 @@
                     <dd>
                         <div class="controls" id="discripContainer">
                             <!-- 加载编辑器的容器 -->
-                            <script id="container" name="description" type="text/plain">
-                                {$data.description}
+                            <script id="container_edit" name="description" type="text/plain">
+                                      {:htmlspecialchars_decode($data.description)}
                             </script>
 
                             <span class="help-inline">请填写商品描述</span>
@@ -437,12 +440,12 @@
                         </div>
                     </dd>
                 </dl>
-                <script type='text/javascript' src='../../static/js/sample.js'></script>
                 <input type="hidden" id="sort" value="0"/>
                 <div class="btn-submit">
                     <div class="layui-form-item">
                         <div class="layui-input-block">
                             <input type="hidden" name="__token__" value="{$Request.token}" />
+                            <input type="hidden" name="goods_id" value="{$data.goods_id}" />
                             <button class="layui-btn" lay-submit lay-filter="editGoods">立即提交</button>
                         </div>
                     </div>
@@ -465,6 +468,9 @@
 <script src="__PUBLIC__/plugin/ueditor1_4_3_3-utf8-php/ueditor.all.js__VERSION__"></script>
 <!-- 实例化编辑器 -->
 <script type="text/javascript">
-    var ue = UE.getEditor('container');
+    var editor = UE.getEditor('container_edit');
+    editor.ready(function(){
+        // editor.setContent("{$data.description}");
+    })
 </script>
 {/block}

@@ -150,6 +150,36 @@ layui.define(['jquery', 'form'], function (exports) { //提示：模块也可以
                 form.render();
             });
         },
+        iframeOpen: function (url, sendData, title, Width,Height) {  //编辑信息 get请获得页面
+                var open_index = layer.open({
+                    title: title,
+                    type: 2,
+                    skin: 'layui-layer-rim', //加上边框
+                    shadeClose: true,
+                    offset: '50px',//只定义top坐标，水平保持居中
+                    fixed: false,//即鼠标滚动时，层是否固定在可视区域。如果不想，设置fixed: false即可
+                    shade: 0.8,
+                    area: [Width + '%',Height+'%'],
+                    cancel: function (index, layero) {
+                        // if(confirm('确定要关闭么')){ //只有当点击confirm框的确定时，该层才会关闭
+                        //     layer.close(index)
+                        // }
+                        layer.confirm('确定要关闭么', {icon: 3, title: '提示'}, function (index) {
+                            //do something
+
+                            layer.close(index);
+                            layer.close(open_index);
+                        });
+                        return false;
+                    },
+                    moveOut: true,//是否允许拖拽到窗口外
+                    maxmin: true,//默认不显示最大小化按钮。需要显示配置maxmin: true即可
+                    content: url+'/goods_id/'+sendData.goods_id
+                });
+                var form = layui.form;
+                form.render();
+
+        },
         addGetHtml: function (url, title, Width, Height) {  //添加信息 get请获得页面
             $.get(url, function (data) {
                 if (data.status == 'error') {

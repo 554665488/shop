@@ -1,0 +1,39 @@
+<script type="text/javascript" src="__PUBLIC__/vendor/uploadImgV2/webuploader.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="__PUBLIC__/vendor/uploadImgV2/diyUpload.js" charset="utf-8"></script>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/vendor/uploadImgV2/css/globle.css">
+
+<div style="padding: 100px;">
+    <ul class="upload-ul clearfix">
+        <li class="upload-pick">
+            <div class="webuploader-container clearfix goods_edit_img" id="goodsUpload"></div>
+        </li>
+    </ul>
+</div>
+<script>
+    $(function(){
+
+        //上传图片
+        var $tgaUpload = $('#goodsUpload').diyUpload({
+            url:urlConfig.goods.uploadGoodsImg,
+            success:function( data ) {
+                _console(data);
+            },
+            error:function( err ) { },
+            buttonText : '',
+            accept: {
+                title: "Images",
+                extensions: 'gif,jpg,jpeg,bmp,png'
+            },
+            thumb:{
+                width:120,
+                height:90,
+                quality:100,
+                allowMagnify:true,
+                crop:true,
+                type:"image/jpeg"
+            }
+        });
+
+
+    });
+</script>

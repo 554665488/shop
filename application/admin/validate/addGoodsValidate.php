@@ -96,8 +96,8 @@ class addGoodsValidate extends Validate
         'goods_volume' => ['require', 'number', 'gt' => 0, 'between' => '1,99999999'],
         'is_stock_visible' => ['require','number'],
         'point_exchange_type' => ['require','number'],
-        'give_point' => ['require','number','between' => '0,99999999'],
-        'max_buy' => ['require','number','between' => '0,99999999'],
+        'give_point' => ['number','between' => '0,99999999'],
+        'max_buy' => ['number','between' => '0,99999999'],
         'shelves' => ['require','number','between' => '0,2'],
 //        'description' => ['number'],
     ];
@@ -225,12 +225,12 @@ class addGoodsValidate extends Validate
             'number' => 'point_exchange_type@积分设置类型不正确',
         ],
         'give_point' => [
-            'require' => 'give_point@购买可赠送设置必须',
+//            'require' => 'give_point@购买可赠送设置必须',
             'number' => 'give_point@购买可赠送必须是数字',
             'between' => 'give_point@商品体积必须是0,99999999之间'
         ],
         'max_buy' => [
-            'require' => 'max_buy@每人限购设置必须',
+//            'require' => 'max_buy@每人限购设置必须',
             'number' => 'max_buy@每人限购必须是数字',
             'between' => 'max_buy@每人限购必须是0,99999999之间'
         ],

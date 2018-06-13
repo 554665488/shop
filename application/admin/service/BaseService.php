@@ -23,18 +23,19 @@ class BaseService
      * @param $imgPath :文件的绝对路径
      * @param int $width :等比例缩放宽度
      * @param int $height :等比例缩放设置高度
-     * @param string $saveDir :文件保存到项目的目录/public/upload/
      * @param int $type //缩放模式看手册
      * @return mixed 返回文件到项目的路径
      */
-    final  protected function makeImgThumb($imgPath, $width = 700, $height = 700, $saveDir = '/upload/', $type = Image::THUMB_SCALING)
+    final  protected function makeImgThumb($imgPath,$width = 700, $height = 700, $type = Image::THUMB_SCALING)
     {
-        if (isset($imgPath) && file_exists($imgPath)) {
-            $image = Image::open($imgPath);
-            $fileInfoArr = filePathToArr($imgPath);
-            $thumbName = $fileInfoArr['filename'] . "_{$width},{$height}." . $fileInfoArr['extension'];//缩略图名字拼接规则原文件名子._宽，高.ext
+        $absolutePath = PROJECT_ROOT . '/public' . $imgPath;//文件的绝对路径用来制作缩略图 TODO
+        if (isset($absolutePath) && file_exists($absolutePath)) {
+            $image = Image::open($absolutePath);
+            $fileInfoArr = filePathToArr($absolutePath);
+            $thumbNameArr=filePathToArr($imgPath);
+            $thumbName = $thumbNameArr['filename'] . "_{$width},{$height}." . $fileInfoArr['extension'];//缩略图名字拼接规则原文件名子._宽，高.ext
             $image->thumb($width, $height, $type)->save($fileInfoArr['dirname'] . '/' . $thumbName);
-            return $saveDir . $thumbName;
+            return $thumbNameArr['dirname'].'/' . $thumbName;
         }
     }
 

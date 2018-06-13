@@ -39,7 +39,22 @@
         <ul class="tab pngFix">
             <li class="active"><a href="#">商品列表</a></li>
         </ul>
-
+        <div class="layui-btn-group goods-Table-btn">
+            <button class="layui-btn layui-btn-sm layui-btn-danger" data-type="CheckDataDel"><i class="layui-icon">
+                &#xe640;</i>批量删除
+            </button>
+            <button class="layui-btn layui-btn-sm layui-btn-primary" data-type="getCheckData"><i class="layui-icon">
+                &#xe619;</i>上架
+            </button>
+            <button class="layui-btn layui-btn-sm layui-btn-primary" data-type="getCheckData"><i class="layui-icon">
+                &#xe61a;</i>下架
+            </button>
+            <button class="layui-btn layui-btn-sm layui-btn-normal" data-type="updateQrcode"><i class="layui-icon">
+                &#xe63d;</i>更新二维码
+            </button>
+            <!--<button class="layui-btn" data-type="getCheckLength">获取选中数目</button>-->
+            <!--<button class="layui-btn" data-type="isAll">验证是否全选</button>-->
+        </div>
         <div class="right_side_operation">
             <ul>
                 <li><a class="nscs-table-handle_green" href="{:url('/admin/goods/addGoods')}"><i class="fa fa-plus-circle"></i>&nbsp;发布商品</a></li>
@@ -135,22 +150,7 @@
     <!-- 右边主要内容的加载start -->
     {block name="rightMain"}
     <!--表格内容开始-->
-        <div class="layui-btn-group goods-Table-btn">
-            <button class="layui-btn layui-btn-sm layui-btn-danger" data-type="CheckDataDel"><i class="layui-icon">
-                &#xe640;</i>批量删除
-            </button>
-            <button class="layui-btn layui-btn-sm layui-btn-primary" data-type="getCheckData"><i class="layui-icon">
-                &#xe619;</i>上架
-            </button>
-            <button class="layui-btn layui-btn-sm layui-btn-primary" data-type="getCheckData"><i class="layui-icon">
-                &#xe61a;</i>下架
-            </button>
-            <button class="layui-btn layui-btn-sm layui-btn-normal" data-type="updateQrcode"><i class="layui-icon">
-                &#xe63d;</i>更新二维码
-            </button>
-            <!--<button class="layui-btn" data-type="getCheckLength">获取选中数目</button>-->
-            <!--<button class="layui-btn" data-type="isAll">验证是否全选</button>-->
-        </div>
+
         <div id="myTabContent">
             <table id="goodsListTable" lay-filter="goodsListTableFilter"><!--商品列表数据加载table--></table>
         </div>
