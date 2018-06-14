@@ -13,24 +13,30 @@
                 {if isset($data.img_id_array) && !empty($data.img_id_array)}
                 <ul class="filelist">
                     {volist name='$data.img_id_array' id='img_id_array' key='k'}
-                    <li id="WU_FILE_"{$k}><p class="title">1500601152701.jpg</p>
-                        <p class="imgWrap"><img
-                                src="{$img_id_array.pic_cover_mid}">
-                        </p>
-                        <p class="progress"><span></span></p>
-                        <div class="file-panel" style="height: 0px; overflow: hidden;"><span class="cancel">删除</span><span
-                                class="rotateRight">向右旋转</span><span class="rotateLeft">向左旋转</span></div>
-                    </li>
+                       <li style="height: 200px">
+                           <img src="{$img_id_array.pic_cover_mid}">
+                           <div class="layui-upload">
+                               <button type="button" class="layui-btn layui-btn-normal layui-btn-xs img-modify" id="test{$k}">修改图片</button>
+                               <button type="button" class="layui-btn layui-btn-normal layui-btn-xs" id="start{$k}">开始上传</button>
+                               <div class="layui-upload-list">
+                                   <img class="layui-upload-img" id="thumb{$k}">
+                                   <p id="demoText"></p>
+                               </div>
+                           </div>
+                       </li>
+
                     {/volist}
                 </ul>
                 {/if}
             </div>
+            {if !isset($data.img_id_array) && empty($data.img_id_array)}
             <div  class="webuploader-container filePicker">
                 <!--<div class="webuploader-pick">-->
 
                 <!--</div>-->
             </div>
             <div class="layui-btn uploadBtn layui-btn-danger">开始上传</div>
+            {/if}
         </div>
     <div class="statusBar" style="display:none;">
         <div class="progress" style="display: none;">
@@ -45,11 +51,11 @@
         <!--</div>-->
     </div>
     <div style="display: none" id="album_picture_id" class="album_picture_id">
-        <!--{if isset($data.img_id_array) && !empty($data.img_id_array)}-->
-        <!--{volist name='$data.img_id_array' id='img_id_array'}-->
-        <!--<input type="hidden" name="album_picture_id[]" value="{$img_id_array.pic_id}">-->
-        <!--{/volist}-->
-        <!--{/if}-->
+        {if isset($data.img_id_array) && !empty($data.img_id_array)}
+        {volist name='$data.img_id_array' id='img_id_array'}
+        <input type="hidden" name="album_picture_id[]" value="{$img_id_array.pic_id}">
+        {/volist}
+        {/if}
 
     </div> <!--用来存放上传图片的隐藏域表单--->
 </div>

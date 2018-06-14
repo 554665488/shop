@@ -208,7 +208,6 @@ class GoodsService extends BaseService
     }
 
 
-
     /**
      * @description:添加商品 使用验证器验证数据
      * @time:2018年6月11日23:00:10
@@ -338,9 +337,31 @@ class GoodsService extends BaseService
         ];
         $res = Goods::update($data);
         if (is_object($res)) {
-            return ajaxReturn(true,'更新成功');
-        }else{
-            return ajaxReturn(false,'更新失败');
+            return ajaxReturn(true, '更新成功');
+        } else {
+            return ajaxReturn(false, '更新失败');
+        }
+    }
+
+    /**
+     * @description: 再一次添加商品图片
+     * @time:2018年6月15日00:37:223
+     * @Author: yfl
+     * @QQ 554665488
+     * @param $goods_id:商品的id
+     * @param $newAlbumPicId:相册的主键ID
+     * @return array
+     * @throws \think\exception\DbException
+     */
+    public function againAddGoodsImgService($goods_id, $newAlbumPicId)
+    {
+        $goodsObj = Goods::get($goods_id);
+        $goodsObj->img_id_array = $goodsObj->img_id_array . ','.$newAlbumPicId;
+//        dump($goodsObj->img_id_array . ','.$newAlbumPicId);
+        if ($goodsObj->save()) {
+            return ajaxReturn(true, '添加成功');
+        } else {
+            return ajaxReturn(false, '添加失败');
         }
     }
 }

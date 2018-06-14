@@ -37,7 +37,7 @@ class GoodsController extends BaseController
         parent::initialize();
 
         $this->goodService = new  GoodsService();
-        $this->albumPictureService=\app\common\Service::access(ADMIN_MODEL,'AlbumPictureService');
+        $this->albumPictureService = \app\common\Service::access(ADMIN_MODEL, 'AlbumPictureService');
     }
 
     /**
@@ -161,15 +161,65 @@ class GoodsController extends BaseController
             }
         }
         $goodsData = $this->goodService->getEditGoods($goods_id);
-//halt($goodsData);
+
         $getAllGoodsCategory = $this->goodService->getGoodsCategoryAjax();
-        $goodsData['img_id_array'] = $this->albumPictureService->getGoodsPicture('pic_id in ('.$goodsData['img_id_array'].')','pic_id,pic_cover_mid');//处理上商品和相册关联
+        $goodsData['img_id_array'] = $this->albumPictureService->getGoodsPicture('pic_id in (' . $goodsData['img_id_array'] . ')', 'pic_id,pic_cover_mid');//处理上商品和相册关联
+//        halt($goodsData);
         $this->assign([
             'goodsCateGoryList' => $getAllGoodsCategory,//商品三级分类
             'data' => $goodsData,//单件商品信息
+            'img_id_array_count' => 5 - count($goodsData['img_id_array']),//5- 已经上传图片的数量 剩余可以上传图片的数量
         ]);
         return $this->fetch();
 
+    }
+
+    /**
+     * @description:修改商品的图片
+     * @time:2018年6月14日22:13:42
+     * @Author: yfl
+     * @QQ 554665488
+     * @param Request $request
+     * @return \think\response\Json
+     */
+    public function modifyGoodsImg(Request $request)
+    {
+        if ($this->isAjaxHasParam('pic_id')) {
+            return $this->ajaxReturnFail(Lang::get('isAjaxParam'));
+        }
+        UploadUtil::setSavePath(Config::get('uploadConfig.goods_img'));
+        $uploadRes = UploadUtil::uploadOne();
+
+        $res = $this->albumPictureService->GoodsImgModifyAlbumPicture($uploadRes, $request::param('pic_id'));
+        if ($res['code'] === false) {
+            return $this->ajaxReturnFail($res['msg'], false);
+        } else {
+            return $this->ajaxReturnSuccess($res['msg'], true);
+        }
+    }
+
+    /**
+     * @description:再一次添加商品图片 修改goods 表的 img_id_array 字段
+     * @time:2018年6月15日00:59:15
+     * @Author: yfl
+     * @QQ 554665488
+     * @param Request $request
+     * @return \think\response\Json
+     */
+    public function againAddGoodsImg(Request $request)
+    {
+        if ($this->isAjaxHasParam('goods_id')) {
+            return $this->ajaxReturnFail(Lang::get('isAjaxParam'));
+        }
+        UploadUtil::setSavePath(Config::get('uploadConfig.goods_img'));
+        $uploadRes = UploadUtil::uploadOne();
+        $newAlbumPicId = $this->albumPictureService->GoodsImgSaveAlbumPicture($uploadRes);
+        $res=$this->goodService->againAddGoodsImgService($request::param('goods_id'),$newAlbumPicId);
+        if ($res['code'] === false) {
+            return $this->ajaxReturnFail($res['msg'], false);
+        } else {
+            return $this->ajaxReturnSuccess($res['msg'], true);
+        }
     }
 
     /**

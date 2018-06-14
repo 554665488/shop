@@ -1,0 +1,136 @@
+<div class="layui-upload">
+    <button type="button" class="layui-btn" id="add-img-goods">多图片上传</button>
+    <button type="button" class="layui-btn" id="startUp">开始上传</button>
+    <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px; height: 200px;line-height: 200px">
+        <div class="layui-upload-list" id="uploadList"></div>
+    </blockquote>
+    <div style="display: none" id="album_picture_id" class="album_picture_id">
+        <!--用来存放上传图片的隐藏域表单--->
+    </div>
+</div>
+
+<script>
+    layui.use(['upload'], function () {
+        var upload = layui.upload;
+        //选完文件后不自动上传
+        var demoListView = $('#uploadList'), num = 0
+            , uploadListIns = upload.render({
+              elem: '#add-img-goods'
+            , url: urlConfig.goods.uploadGoodsImg
+            , accept: 'images'
+            , acceptMime: 'image/jpg, image/png,image/jpeg'
+            , field: 'file'
+            , size: 1024 * 1024 //1M//0（即不限制）
+            , data: {} //可选项。额外的参数，如：{id: 123, abc: 'xxx'}
+            , number: 5//设置同时可上传的文件数量 0（即不限制）
+            , multiple: true//是否允许多文件上传。设置 true即可开启。不支持ie8/9
+            , drag: false //是否接受拖拽的文件上传，设置 false 可禁用。不支持ie8/9
+            , exts: 'jpg|png|jpeg'
+            , auto: false
+            , bindAction: '#startUp' //指向一个按钮触发上传，一般配合 auto: false 来使用。值为选择器或DOM对象，如：bindAction: '#btn'
+            , choose: function (obj) {
+                // console.log(obj);
+                if (num < 5) {
+                    var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
+                } else {
+                    // return false;
+                }
+                //读取本地文件
+                //预读本地文件示例，不支持ie8
+                // obj.preview(function(index, file, result){
+                //     $('#demo2').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
+                // });
+
+                obj.preview(function (index, file, result) {
+                    // _console(index);
+                    // _console(file);
+                    // _console(result);
+                    num = num + 1;
+                    if (num > 5) {
+                        layer.msg('最多上传五张图片');
+                        // return false;
+                    } else {
+                        layer.msg('还可以选择' + (5 - num) + '张图片');
+                    }
+                    var tr = $(['<tr style="float: left" id="upload-' + index + '">'
+                        , '<td>' +
+                        '<div style="line-height: 0;margin-left: 20px">' +
+                        '<img style="width: 120px;height: 120px" src="' + result + '" alt="' + file.name + '" class="layui-upload-img">' +
+                        // '<p style="font-size: 12px;max-width: 15px" class="file-name">' + file.name + '</p>' +
+                        '<p style="font-size: 12px" class="file-size">' + (file.size / 1014).toFixed(1) + 'kb</p>' +
+                        '<p style="font-size: 12px;color: red;" class="msg">等待上传</p>' +
+                        '<div style="position: relative;height: 0;background: rgba( 0, 0, 0, 0.5 );width: 100%;bottom: 50px;left: 0;overflow: visible;z-index: 300;" class="file-panel">' +
+                        '<span class="layui-btn del-img  layui-btn-primary" style="width: 20px;height: 20px;padding: 0 2px"><i title="删除" style="position: relative;bottom: 10px" class="layui-icon"></i></span>' +
+                        '<span class="layui-btn reload-img layui-hide layui-btn-primary" style="width: 20px;height: 20px;padding: 0 2px"><i title="重新上传" style="position: relative;bottom: 10px" class="layui-icon">&#xe669;</i> </span>' +
+                        '</div>' +
+                        '</div>' +
+                        '</tr>'].join(''));
+                    //单个重传
+                    tr.find('.reload-img').on('click', function () {
+                        obj.upload(index, file);
+                        demoListView.find('tr#upload-' + index).find('.reload-img').addClass('layui-hide');//关闭重新下载
+                    });
+                    //删除
+                    tr.find('.del-img').on('click', function () {
+                        delete files[index]; //删除对应的文件
+                        num = num - 1;
+                        tr.remove();
+                        uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
+                    });
+                    demoListView.append(tr);
+                });
+            }
+            , before: function (obj) {   //obj参数包含的信息，跟 choose回调完全一致  服务端响应信息、当前文件的索引、重新上传的方法
+                _console('shangchuanzhiqian' + num);
+                if (num == 0) {
+                    layer.msg('没有选择文件');
+                    return false;
+                }
+                if (num >= 5) {
+                    layer.msg('最多上传五张图片');
+                    return false;
+                }
+                layer.load(); //上传loading
+            }
+            , allDone: function (obj) { //当文件全部被提交后，才触发
+                // console.log(obj.total); //得到总文件数
+                // console.log(obj.successful); //请求成功的文件数
+                // console.log(obj.aborted); //请求失败的文件数
+                // num += obj.successful;
+            }
+            , done: function (response, index, upload) {  //上传接口请求成功的回调  服务端响应信息、当前文件的索引、重新上传的方法  //每个文件提交一次触发一次。详见“请求成功的回调”
+
+                if (response.status == true) { //上传成功
+                    // _console(num);
+                    if (num >= 5) {
+                        $('#add-img-goods').attr('disabled', 'disabled').addClass('layui-btn-disabled');
+                    }
+                    var msg = demoListView.find('tr#upload-' + index).find('.msg');
+                    // var del = demoListView.find('tr#upload-' + index).find('.del-img').addClass('layui-hide');
+                    msg.html('<span style="color: #5FB878;">上传成功</span>');
+                    // tr.eq(3).html(''); //清空操作
+                    layer.closeAll('loading'); //关闭loading
+                    var div = document.getElementById('album_picture_id');//隐藏域存放的div
+                    // console.log(div);
+                    var o = document.createElement('input');
+                    o.setAttribute('type', 'hidden');
+                    o.setAttribute('name', 'album_picture_id[]');
+                    o.setAttribute('value', response.additional.album_picture_id);
+                    div.appendChild(o);
+                    return delete this.files[index]; //删除文件队列已经上传成功的文件
+                }
+                this.error(index, upload);
+            }
+            , error: function (index, upload) {  //当前文件的索引、重新上传的方法
+                var msg = demoListView.find('tr#upload-' + index).find('.msg');
+                var reload = demoListView.find('tr#upload-' + index).find('.reload-img');
+                // ,tds = tr.children();
+                msg.html('<span style="color: #FF5722;">上传失败</span>');
+                reload.removeClass('layui-hide'); //显示重传
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+
+    });
+
+</script>

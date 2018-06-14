@@ -226,15 +226,7 @@
 }
 
 #uploader .filelist div.file-panel {
-    position: absolute;
-    height: 0;
-    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#80000000', endColorstr='#80000000')\0;
-    background: rgba( 0, 0, 0, 0.5 );
-    width: 100%;
-    top: 0;
-    left: 0;
-    overflow: hidden;
-    z-index: 300;
+    position: absolute;height: 0;filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#80000000', endColorstr='#80000000')\0;background: rgba( 0, 0, 0, 0.5 );width: 100%;top: 0;left: 0;overflow: hidden;z-index: 300;
 }
 
 #uploader .filelist div.file-panel span {

@@ -2,9 +2,9 @@
  * Created by 554665488 on 2018-6-2.
  */
 
-layui.use(['laypage', 'layedit', 'ajaxRequest', 'form', 'laydate'], function () {
+layui.use(['laypage', 'layedit', 'ajaxRequest', 'form', 'upload'], function () {
     var laypage = layui.laypage
-        , layedit = layui.layedit, ajaxRequest = layui.ajaxRequest, form = layui.form, laydate = layui.laydate;
+        , layedit = layui.layedit, ajaxRequest = layui.ajaxRequest, form = layui.form, upload = layui.upload;
     form.render();
     //日期
     // laydate.render({
@@ -22,6 +22,36 @@ layui.use(['laypage', 'layedit', 'ajaxRequest', 'form', 'laydate'], function () 
         return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
     });
     //提交数据使用layui的监听submit提交结束
+
+    //选完文件后不自动上传
+    upload.render({
+        elem: '.img-modify'
+        ,url: urlConfig.goods.uploadGoodsImg
+        ,accept:'images'
+        ,acceptMime: 'image/jpg, image/png,image/jpeg'
+        ,field:'file'
+        ,size:1024*1024*2
+        ,data: {} //可选项。额外的参数，如：{id: 123, abc: 'xxx'}
+        ,number:1
+        ,multiple:false//是否允许多文件上传。设置 true即可开启。不支持ie8/9
+        ,drag:false //是否接受拖拽的文件上传，设置 false 可禁用。不支持ie8/9
+        ,before: function(obj){
+            //预读本地文件示例，不支持ie8
+            _console(obj);
+            // obj.preview(function(index, file, result){
+            //     $('#demo1').attr('src', result); //图片链接（base64）
+            // });
+        }
+        ,exts:'jpg|png|jpeg'
+        ,auto: false
+        ,bindAction: '#test9' //指向一个按钮触发上传，一般配合 auto: false 来使用。值为选择器或DOM对象，如：bindAction: '#btn'
+        ,done: function(res,index){
+            console.log(res)
+        }
+        ,error:function(res){
+
+        }
+    });
 });
 //商品分类开始
 layui.use(['form', 'ajaxRequest'], function () {

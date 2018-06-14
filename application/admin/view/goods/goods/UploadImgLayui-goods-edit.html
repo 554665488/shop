@@ -1,0 +1,210 @@
+{if isset($data.img_id_array) && !empty($data.img_id_array)}
+<div class="layui-upload">
+    <div class="layui-upload">
+        <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px; height: 200px;line-height: 200px">
+            <div class="layui-upload-list" id="uploadList">
+                {volist name='$data.img_id_array' id='img_id_array' key='k'}
+                <div style="line-height: 0;float: left;margin-left: 20px">
+                    <div class="aaa">
+                        <img style="width: 120px;height: 120px" id="thumb{$k}" src="{$img_id_array.pic_cover_mid}"
+                             class="layui-upload-img">
+                        <!--<p style="font-size: 12px" class="file-size layui-hide"></p>-->
+
+                        <div style="position: relative;height: 0;background: rgba( 0, 0, 0, 0.5 );width: 100%;bottom: 20px;left: 0;overflow: visible;z-index: 300;" class="file-panel">
+                        <span class="layui-btn del-img-{$k} layui-hide layui-btn-primary" style="width: 20px;height: 20px;padding: 0 2px"><i title="删除" style="position: relative;bottom: 10px" class="layui-icon"></i></span>
+                        <!--<span class="layui-btn del-img{$k} layui-hide layui-btn-primary" style="width: 20px;height: 20px;padding: 0 2px"><i title="删除" style="position: relative;bottom: 10px" class="layui-icon">&#xe669;</i> </span>-->
+                        </div>
+                    </div>
+                    <div style="width: 60px;height: 21px;line-height: 21px;text-align: center;font-size: 12px"
+                         class="layui-btn layui-btn-xs" id="add-img-goods-{$k}">修改图片
+                    </div>
+                    <div style="width: 60px;height: 21px;line-height: 21px;text-align: center;font-size: 12px"
+                         class="layui-btn layui-btn-xs" id="startUp{$k}">开始上传
+                    </div>
+                </div>
+
+                <script>
+                    layui.use(['upload'], function () {
+                        var upload = layui.upload, thnumsDiv = $('#uploadList');
+                        //选完文件后不自动上传
+                        //普通图片上传
+                        var uploadInst = upload.render({
+                            elem: '#add-img-goods-{$k}'
+                            , url: urlConfig.goods.modifyGoodsImg
+                            , accept: 'images'
+                            , acceptMime: 'image/jpg, image/png,image/jpeg'
+                            , field: 'file'
+                            , size: 1024 * 1024 //1M//0（即不限制）
+                            , data: {pic_id: "{$img_id_array.pic_id}"} //可选项。额外的参数，如：{id: 123, abc: 'xxx'}
+                            , number: 1//设置同时可上传的文件数量 0（即不限制）
+                            // , multiple: true//是否允许多文件上传。设置 true即可开启。不支持ie8/9
+                            , drag: false //是否接受拖拽的文件上传，设置 false 可禁用。不支持ie8/9
+                            , exts: 'jpg|png|jpeg'
+                            , auto: false
+                            , bindAction: '#startUp{$k}' //指向一个按钮触发上传，一般配合 auto: false 来使用。值为选择器或DOM对象，如：bindAction: '#btn'
+                            , choose: function (obj) {
+                                //将每次选择的文件追加到文件队列
+                                var files = obj.pushFile();
+                                obj.preview(function (index, file, result) {
+                                    // _console(index);
+                                    // _console(file);
+                                    // _console(result);
+                                    // $('#thumb{$k}').attr('src', result).attr('id', 'upload-' + index); //图片链接（base64）
+                                    $('#thumb{$k}').attr('src', result); //图片链接（base64）
+                                    $('.del-img-{$k}').removeClass('layui-hide');
+                                    // $('#thumb{$k}').after('<p style="font-size: 12px;color: red;" id="msg-' + index + '">等待上传<span><a style="cursor: pointer" class="del-' + index + '">删除</a></span></p>');
+
+                                    $('#add-img-goods-{$k}').addClass('layui-hide');
+                                    $('.del-img-{$k}').on('click', function () {
+                                        // console.log(index);
+                                        // _console(files);
+                                        delete files[index]; //删除对应的文件
+                                        $('#add-img-goods-{$k}').removeClass('layui-hide');
+                                        // _console(files);
+                                        layer.msg('删除选择的文件成功,请重新选择文件');
+                                        $('#thumb{$k}').attr('src','');
+                                        // $('#msg-'+index).remove();
+                                        uploadInst.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
+                                    });
+                                    // return delete file[index]; //删除文件队列已经上传成功的文件
+                                    // var del='<span  class="layui-btn del-img  layui-btn-primary" id="'+index+'" style="width: 20px;height: 20px;padding: 0 2px"><i title="删除" style="position: relative;bottom: 10px" class="layui-icon"></i></span>';
+
+                                    // del.on('click', function () {
+                                    //     // delete files[index]; //删除对应的文件
+                                    //     _console(files[index]);
+                                    //     // tr.remove();
+                                    //     // uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
+                                    // });
+                                });
+                            }
+                            , before: function (obj) {
+                                layer.load(); //上传loading
+                            }
+                            , done: function (response) {
+                                if (response.status == true) { //上传成功
+                                    layer.msg(response.msg);
+                                    // $("#msg-" + index).html('<span style="color: #5FB878;">上传成功</span>');
+                                    $('.del-img-{$k}').addClass('layui-hide');
+                                    $('#startUp{$k}').addClass('layui-hide');
+                                    layer.closeAll('loading'); //关闭loading
+                                    // return delete this.files[index]; //删除文件队列已经上传成功的文件
+                                    return false;
+                                }
+                                // this.error(index, upload);
+                            }
+                            , error: function () {
+                                layer.msg('上传失败');
+                                layer.closeAll('loading'); //关闭loading
+                            }
+                        });
+
+                    });
+
+                </script>
+                {/volist}
+                {for start="0" end="$img_id_array_count" }
+                <div style="line-height: 0;float: left;margin-left: 20px">
+                    <div class="aaa">
+                        <img style="width: 120px;height: 120px" id="thumb-new-{$i}" src=""
+                             class="layui-upload-img">
+                        <!--<p style="font-size: 12px" class="file-size layui-hide"></p>-->
+
+                        <div style="position: relative;height: 0;background: rgba( 0, 0, 0, 0.5 );width: 100%;bottom: 20px;left: 0;overflow: visible;z-index: 300;" class="file-panel">
+                            <span class="layui-btn del-img-new-{$i} layui-hide layui-btn-primary" style="width: 20px;height: 20px;padding: 0 2px"><i title="删除" style="position: relative;bottom: 10px" class="layui-icon"></i></span>
+                            <!--<span class="layui-btn del-img{$k} layui-hide layui-btn-primary" style="width: 20px;height: 20px;padding: 0 2px"><i title="删除" style="position: relative;bottom: 10px" class="layui-icon">&#xe669;</i> </span>-->
+                        </div>
+                    </div>
+                    <div style="width: 60px;height: 21px;line-height: 21px;text-align: center;font-size: 12px"
+                         class="layui-btn layui-btn-xs" id="add-img-goods-new{$i}">选择图片
+                    </div>
+                    <div style="width: 60px;height: 21px;line-height: 21px;text-align: center;font-size: 12px"
+                         class="layui-btn layui-btn-xs" id="startUp-new{$i}">开始上传
+                    </div>
+                </div>
+                <script>
+                    layui.use(['upload'], function () {
+                        var upload = layui.upload, thnumsDiv = $('#uploadList');
+                        //选完文件后不自动上传
+                        //普通图片上传
+                        var uploadInst = upload.render({
+                            elem: '#add-img-goods-new{$i}'
+                            , url: urlConfig.goods.againAddGoodsImg
+                            , accept: 'images'
+                            , acceptMime: 'image/jpg, image/png,image/jpeg'
+                            , field: 'file'
+                            , size: 1024 * 1024 //1M//0（即不限制）
+                            , data: {goods_id:"{$data.goods_id}"} //可选项。额外的参数，如：{id: 123, abc: 'xxx'}
+                            , number: 1//设置同时可上传的文件数量 0（即不限制）
+                            // , multiple: true//是否允许多文件上传。设置 true即可开启。不支持ie8/9
+                            , drag: false //是否接受拖拽的文件上传，设置 false 可禁用。不支持ie8/9
+                            , exts: 'jpg|png|jpeg'
+                            , auto: false
+                            , bindAction: '#startUp-new{$i}' //指向一个按钮触发上传，一般配合 auto: false 来使用。值为选择器或DOM对象，如：bindAction: '#btn'
+                            , choose: function (obj) {
+                                //将每次选择的文件追加到文件队列
+                                var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
+                                obj.preview(function (index, file, result) {
+                                    // _console(index);
+                                    // _console(file);
+                                    // _console(result);
+                                    // $('#thumb{$k}').attr('src', result).attr('id', 'upload-' + index); //图片链接（base64）
+                                    $('#thumb-new-{$i}').attr('src', result); //图片链接（base64）
+                                    $('.del-img-new-{$i}').removeClass('layui-hide');
+                                    // $('#thumb{$k}').after('<p style="font-size: 12px;color: red;" id="msg-' + index + '">等待上传<span><a style="cursor: pointer" class="del-' + index + '">删除</a></span></p>');
+                                    $('#add-img-goods-new{$i}').addClass('layui-hide');
+                                    $('.del-img-new-{$i}').on('click', function () {
+                                        // console.log(index);
+                                        // _console(files);
+                                        delete files[index]; //删除对应的文件
+                                        // _console(files);
+                                        layer.msg('删除选择的文件成功,请重新选择文件');
+                                        $('#add-img-goods-new{$i}').removeClass('layui-hide');
+                                        $('#thumb-new-{$i}').attr('src','');
+                                        $('#msg-new-'+index).remove();
+                                        uploadInst.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
+                                    });
+                                });
+                            }
+                            , before: function (obj) {
+                                layer.load(); //上传loading
+                            }
+                            , done: function (response) {
+                                if (response.status == true) { //上传成功
+                                    // $("#msg-" + index).html('<span style="color: #5FB878;">上传成功</span>');
+                                    layer.msg(response.msg);
+                                    $('.del-img-new-{$i}').addClass('layui-hide');
+                                    $('#startUp-new{$i}').addClass('layui-hide');
+                                    layer.closeAll('loading'); //关闭loading
+                                    // var div = document.getElementById('album_picture_id');//隐藏域存放的div
+                                    // // console.log(div);
+                                    // var o = document.createElement('input');
+                                    // o.setAttribute('type', 'hidden');
+                                    // o.setAttribute('name', 'album_picture_id[]');
+                                    // o.setAttribute('value', response.additional.album_picture_id);
+                                    // div.appendChild(o);
+                                    // return delete this.files[index]; //删除文件队列已经上传成功的文件
+                                    return false;
+                                }
+                                // this.error(index, upload);
+                            }
+                            , error: function () {
+                                layer.msg('上传失败');
+                                layer.closeAll('loading'); //关闭loading
+                            }
+                        });
+
+                    });
+
+                </script>
+                {/for}
+            </div>
+        </blockquote>
+
+    </div>
+    <div style="display: none" id="album_picture_id" class="album_picture_id">
+        <!--用来存放上传图片的隐藏域表单--->
+    </div>
+</div>
+{/if}
+
+
