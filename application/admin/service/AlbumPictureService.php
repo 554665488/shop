@@ -14,7 +14,7 @@ use app\model\AlbumPicture;
 
 
 /**
- * Class PlatformService
+ * Class AlbumPictureService
  * @package app\index\service
  * @description:后台相册的服务层
  * @time:2018-6-10 03:03:47

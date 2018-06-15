@@ -38,6 +38,7 @@ return [
         '__PUBLIC_INDEX__'=>'/static/index',
         '__JS__' => '/static/javascript',
         '__VERSION__'=>'?=v_1',
-        '__UPLOAD__'=>''
+        '__UPLOAD__'=>'',
+        '__HTTP_HOST'=>__HTTP_HOST
     ]
 ];

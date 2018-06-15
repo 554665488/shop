@@ -12,14 +12,14 @@ class IndexController extends IndexBaseController
 
     //公告业务
     private $cmsService;
-    //广告业务
-    private $platformService;
+    //推荐商品业务
+    private $PlatformGoodsRecommendService;
 
     public function initialize()
     {
 
         $this->cmsService = Service::access(INDEX_MODEL, 'CmsService');
-        $this->platformService = Service::access(INDEX_MODEL, 'PlatformService');
+        $this->PlatformGoodsRecommendService = Service::access(INDEX_MODEL, 'PlatformGoodsRecommendService');
 
     }
 
@@ -31,7 +31,7 @@ class IndexController extends IndexBaseController
         //获取公告文章列表 TODO 获取字段待处理
         $cmsArticleList = $this->cmsService->getCmsArticle();
         //获取首页推荐的商品
-        $PlatformGoodsRecommendList = $this->platformService->getPlatformGoodsRecommendList('class_type=2');//class_type 系统固有模块
+        $PlatformGoodsRecommendList = $this->PlatformGoodsRecommendService->getPlatformGoodsRecommendList('class_type=2');//class_type 系统固有模块
 //        _pre($PlatformGoodsRecommendList);
         $this->assign([
             'cmsArticleList' => $cmsArticleList,

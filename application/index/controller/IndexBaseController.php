@@ -20,7 +20,7 @@ use think\facade\Config;
 /**
  * Class IndexBaseController
  * @package app\index\controller
- * @description:前台首页
+ * @description:前台基类
  * @time:2018年6月10日00:16:43
  * @Author: yfl
  * @QQ 554665488
@@ -55,7 +55,7 @@ class IndexBaseController extends Controller
     {
         $this->goodsService = Service::access(INDEX_MODEL, 'GoodsService');
         $this->shopService = Service::access(INDEX_MODEL, 'ShopService');
-        $this->NavAndAdvGlobal();
+        $this->GoodsNavAndCategoryGlobal();
         $this->isShowGoodsCateGory();
     }
 
@@ -65,7 +65,7 @@ class IndexBaseController extends Controller
      * @Author: yfl
      * @QQ 554665488
      */
-    final protected function NavAndAdvGlobal()
+    final protected function GoodsNavAndCategoryGlobal()
     {
         $this->assign([
             //获取商品分类 TODO 获取字段待处理

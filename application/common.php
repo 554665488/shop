@@ -21,7 +21,7 @@ define('TEST_MODEL', 'test');
 define('ADMIN_MODEL', 'admin');
 // 项目文件指定根目录
 define('PROJECT_ROOT', __DIR__ . '/..');  //项目根目录地址
-
+define('__HTTP_HOST','http://'.\think\facade\Request::server('HTTP_HOST'));
 // 应用公共文件
 function ajaxReturn($code, $msg = '处理成功')
 {
