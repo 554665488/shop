@@ -100,19 +100,19 @@ class AlbumPictureService extends BaseService
         $res = AlbumPicture::get($pic_id);//create方法返回的是当前模型的对象实例 静态新增数据
 
         if (delFile(PROJECT_ROOT . '/public' . $res->pic_cover) === false) {
-            return ajaxReturn(false, '删除旧的二维码失败');
+            return ajaxReturn(false, '删除图片失败');
         }
         if (delFile(PROJECT_ROOT . '/public' . $res->pic_size_big) === false) {
-            return ajaxReturn(false, '删除旧的二维码失败');
+            return ajaxReturn(false, '删除图片失败');
         }
         if (delFile(PROJECT_ROOT . '/public' . $res->pic_cover_mid) === false) {
-            return ajaxReturn(false, '删除旧的二维码失败');
+            return ajaxReturn(false, '删除图片失败');
         }
         if (delFile(PROJECT_ROOT . '/public' . $res->pic_cover_small) === false) {
-            return ajaxReturn(false, '删除旧的二维码失败');
+            return ajaxReturn(false, '删除图片失败');
         }
         if (delFile(PROJECT_ROOT . '/public' . $res->pic_cover_micro) === false) {
-            return ajaxReturn(false, '删除旧的二维码失败');
+            return ajaxReturn(false, '删除图片失败');
         }
         $res->pic_name=$data['pic_name'];
         $res->pic_cover=$data['pic_cover'];
