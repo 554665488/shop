@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+      模块名：<input type="text" value='home' id='module1'><br>
+      service名：<input type="text" id='service'><br>
+      测试方法名：<input type="text" id='action'><br>
+      <br>
+      <input type="button" name="" value="测试" onclick="test()">
+  </body>
+  <script type="text/javascript">
+
+      function test() {
+          var module1 = $("#module1").val();
+          var service = $("#service").val();
+          var action = $("#action").val();
+          window.location.href = `{:URL('test/index/execute')}?module=${module1}&service=${service}&action=${action}`;
+      }
+  </script>
+</html>
