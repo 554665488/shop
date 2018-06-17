@@ -42,7 +42,16 @@ class UploadUtil
     public function uploadOne()
     {
         $file = Request::file($this->fileName);
+        // 检测文件夹是否存在，不存在则创建文件夹
+        if (! file_exists($this->uploadPath)) {
+            $mode = intval('0777',8);
+            mkdir($this->uploadPath, $mode, true);
+        }
         if (isset($this->savePath)) {
+            if (! file_exists($this->uploadPath . $this->savePath)) {
+                $mode = intval('0777',8);
+                mkdir($this->uploadPath . $this->savePath, $mode, true);
+            }
             $info = $file->validate(['size' => $this->size, 'ext' => $this->ext])->move($this->uploadPath . $this->savePath, $this->isSaveOldName);
         } else {
             $info = $file->validate(['size' => $this->size, 'ext' => $this->ext])->move($this->uploadPath, $this->isSaveOldName);
