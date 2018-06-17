@@ -40,11 +40,13 @@ function ajaxReturn($code, $msg = '处理成功')
 function makeFacade()
 {
     \think\Facade::bind([
-        'app\common\facade\SCFacade' => 'app\common\SC',
-        'app\common\facade\TreeFacade' => 'app\common\Tree',
+        'app\common\facade\SCFacade' => 'app\common\SC', //session
+        'app\common\facade\TreeFacade' => 'app\common\Tree',//递归处理数据 无限极分类
         'app\common\facade\TableFacade' => 'app\common\Table',
-        'app\common\facade\QRcodeFacade' => 'app\common\QRcodeUtil',
-        'app\common\facade\UploadFacade' => 'app\common\UploadUtil',
+        'app\common\facade\QRcodeFacade' => 'app\common\QRcodeUtil',//二维码
+        'app\common\facade\UploadFacade' => 'app\common\UploadUtil',//upload封装
+        'app\common\facade\SendCodeFacade\EmailSendFacade'=> 'app\SendCodeUtil\EmailSendUtil',//发送邮件
+        'app\common\facade\SendCodeFacade\SmsSendFacade'=> 'app\SendCodeUtil\SmsSendUtil',//发送短信
     ]);
     //类的映射
     \think\Loader::addClassAlias([
@@ -53,6 +55,8 @@ function makeFacade()
         'Table' => 'app\common\facade\TableFacade',
         'QRcodeUtil' => 'app\common\facade\QRcodeFacade',
         'UploadUtil' => 'app\common\facade\UploadFacade',
+        'EmailSendService'=>'app\common\facade\SendCodeFacade\EmailSendFacade',
+        'SmsSendService'=>'app\common\facade\SendCodeFacade\SmsSendFacade',
     ]);
 }
 
