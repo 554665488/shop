@@ -20,6 +20,12 @@ var urlConfig = {
         'uploadGoodsImg': '/admin/goods/uploadGoodsImg',  //上传商品图片
         'updateQrcode':'/admin/goods/updateQrcode', //更新二维码支持批量更新
         'addGoods':'/admin/goods/addGoods', //添加商品
-
+    },
+    'user':{
+        'ajaxIsUserExist':'/index/Register/ajaxIsUserExist',//注册检测用户是否存在
+        'Register':'/index/Register/register',//手机提交注册
+        'sendCode':'/index/Register/sendCode',//发送验证码
+        'emailRegister':'/index/Register/emailRegister',//邮箱提交注册
+        'login':'/index/Login/login',//邮箱提交注册
     }
 };

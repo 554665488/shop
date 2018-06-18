@@ -1,0 +1,100 @@
+<div class="member-menu">
+    <div class="user-info">
+        <header>
+            <span class="level-name">普通会员</span>
+            <span class="exit" onclick="logout()" title="退出登录">
+                <i class="icon i-exit"></i>退出</span>
+        </header>
+        <div class="logo" onclick="location.href='{:URL(\'home/member/person\')}';" title="查看个人资料">
+            <img id="headImagePath" src="__PUBLIC__/picture/temp_default_user_portrait.png" />
+        </div>
+        <strong onclick="location.href='{:URL(\'home/member/person\')}';" title="查看个人资料">admin</strong>
+    </div>
+    <article class="list">
+        <div class="item">
+            <h3>
+                <i class="icon i-member-center"></i>
+                <span>会员中心</span>
+            </h3>
+            <ul>
+                <li onclick="location.href='{:URL(\'home/member/index\')}';" data-href="{:URL('home/member/index')}">
+                    <span>欢迎页</span>
+                    <i class="icon i-arrow"></i>
+                </li>
+                <li onclick="location.href='{:URL(\'home/member/person\')}';" data-href="{:URL('home/member/person')}">
+                    <span>个人资料</span>
+                    <i class="icon i-arrow"></i>
+                </li>
+                <li onclick="location.href='{:URL(\'home/member/usersecurity\')}';" data-href="{:URL('home/member/usersecurity')}">
+                    <span>账户安全</span>
+                    <i class="icon i-arrow"></i>
+                </li>
+                <li onclick="location.href='{:URL(\'home/member/addresslist\')}';" data-href="{:URL('home/member/addresslist')}">
+                    <span>收货地址</span>
+                    <i class="icon i-arrow"></i>
+                </li>
+                <li onclick="location.href='{:URL(\'home/member/balancelist\')}';" data-href="{:URL('home/member/balancelist')}">
+                    <span>账户余额</span>
+                    <i class="icon i-arrow"></i>
+                </li>
+                <li onclick="location.href='{:URL(\'home/member/balancewithdrawlist\')}';" data-href="{:URL('home/member/balancewithdrawlist')}">
+                    <span>提现记录</span>
+                    <i class="icon i-arrow"></i>
+                </li>
+                <li onclick="location.href='{:URL(\'home/member/vouchers\')}';" data-href="{:URL('home/member/vouchers')}">
+                    <span>我的优惠券</span>
+                    <i class="icon i-arrow"></i>
+                </li>
+                <li onclick="location.href='{:URL(\'home/member/integral\')}';" data-href="{:URL('home/member/integrallist')}">
+                    <span>我的积分</span>
+                    <i class="icon i-arrow"></i>
+                </li>
+            </ul>
+        </div>
+        <div class="item">
+            <h3>
+                <i class="icon i-trading-center"></i>
+                <span>交易中心</span>
+            </h3>
+            <ul>
+                <li onclick="location.href='{:URL(\'home/member/orderlist\')}';" data-href="{:URL('home/member/orderlist')}">
+                    <span>我的订单</span>
+                    <i class="icon i-arrow"></i>
+                </li>
+                <li onclick="location.href='{:URL(\'home/member/backlist\')}';" data-href="{:URL('home/member/backlist')}">
+                    <span>退款/退货及维修</span>
+                    <i class="icon i-arrow"></i>
+                </li>
+                <li onclick="location.href='{:URL(\'home/member/goodsevaluationlist\')}';" data-href="{:URL('home/member/goodsevaluationlist')}">
+                    <span>商品评价/晒单</span>
+                    <i class="icon i-arrow"></i>
+                </li>
+                <li onclick="location.href='{:URL(\'home/member/goodscollectionlist\')}';" data-href="{:URL('home/member/goodscollectionlist')}">
+                    <span>商品收藏</span>
+                    <i class="icon i-arrow"></i>
+                </li>
+                <li onclick="location.href='{:URL(\'home/member/shopcollectionlist\')}';" data-href="{:URL('home/member/shopcollectionlist')}">
+                    <span>店铺收藏</span>
+                    <i class="icon i-arrow"></i>
+                </li>
+            </ul>
+        </div>
+    </article>
+</div>
+<script type="text/javascript">
+    $(function () {
+        //选中
+        var path_info = 'member/index';
+        if (path_info == '' || path_info == "member") {
+            $("li[data-href^='{:URL(\"home/member/index\")}']").addClass('current');
+            $(".js-bread-crumb").attr("href", $("li[data-href^='{:URL(\"home/member/index\")}']").attr(
+                "data-href"));
+            $(".js-bread-crumb").text($("li[data-href^='{:URL(\"home/member/index\")}']").text());
+        } else {
+            $("li[data-href^='{:URL(\"home/member/index\")}']").addClass('current');
+            $(".js-bread-crumb").attr("href", $("li[data-href^='{:URL(\"home/member/index\")}']").attr(
+                "data-href"));
+            $(".js-bread-crumb").text($("li[data-href^='{:URL(\"home/member/index\")}']").text());
+        }
+    });
+</script>

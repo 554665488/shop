@@ -24,8 +24,8 @@ class PlatformAdvPosition extends Base
     protected $pk = 'ap_id';
 
     //关联广告的具体信息
-    public function paltformAdv()
+    public function platformAdv()
     {
-          return $this->hasOne('PaltformAdv','adv_id','ap_id');
+          return $this->hasOne('PlatformAdv','ap_id','ap_id');
     }
 }

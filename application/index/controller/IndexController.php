@@ -6,6 +6,7 @@ use app\common\Service;
 
 use Request;
 use think\Db;
+use think\facade\Session;
 
 class IndexController extends IndexBaseController
 {
@@ -25,6 +26,8 @@ class IndexController extends IndexBaseController
 
     public function index()
     {
+//        dump(Session::get('USER_INFO_SESSION.user_name','index'));
+//        dump(session('USER_INFO_SESSION.user_name','','index'));
         $this->setHead();
         //平台店铺信息
         $shopDetailedList = $this->shopService->getShopDetailedList();

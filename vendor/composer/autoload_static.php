@@ -29,6 +29,10 @@ class ComposerStaticInit615d85c8ea57e8f9418d2b6ba8a6ab35
             'Symfony\\Component\\PropertyAccess\\' => 33,
             'Symfony\\Component\\OptionsResolver\\' => 34,
         ),
+        'P' => 
+        array (
+            'PHPMailer\\PHPMailer\\' => 20,
+        ),
         'M' => 
         array (
             'MyCLabs\\Enum\\' => 13,
@@ -67,6 +71,10 @@ class ComposerStaticInit615d85c8ea57e8f9418d2b6ba8a6ab35
         'Symfony\\Component\\OptionsResolver\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/options-resolver',
+        ),
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
         'MyCLabs\\Enum\\' => 
         array (

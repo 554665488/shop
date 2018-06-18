@@ -7,7 +7,7 @@ function platformAdvLoad(ap_id) {
 	var result = '';
 	$.ajax({
 		type : "post",
-		url : shop_main + "/components/platformadvlist",
+		url : shop_main + "/index/Components/platformAdvList",
 		async : false,
 		data : {
 			'ap_id' : ap_id

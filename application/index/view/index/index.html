@@ -19,13 +19,15 @@
 </div>
 <script type="text/javascript">
     var ap_id = 1051;
-    var data = platformAdvLoad(ap_id, '{:URL("index/Components/platformadvlist")}');
+    var data = platformAdvLoad(ap_id);
+    _console(data);
     if(data != null && data != '') {
         var width = data['ap_width'];
         var height = data['ap_height'];
-        if(data['platform_adv'][0]['adv_image'] != '') {
-            $(".top-active1").css("background-color", data['platform_adv'][0]["background"]);
-            $('.top-active1-wrap').html('<a href="' + data['platform_adv'][0]['adv_url'] + '" target="_blank"><img src="__UPLOAD__' + data['platform_adv'][0]['adv_image'] + '" style="width:' + width + 'px;height:' + height + 'px;"></a><a href="javascript:void(0);" title="关闭" class="top-active1-close"></a>');
+        // if(data['platform_adv']['adv_image'] != '') {
+        if(false) {
+            // $(".top-active1").css("background-color", data['platform_adv']["background"]);
+            // $('.top-active1-wrap').html('<a href="' + data['platform_adv']['adv_url'] + '" target="_blank"><img src="__UPLOAD__' + data['platform_adv']['adv_image'] + '" style="width:' + width + 'px;height:' + height + 'px;"></a><a href="javascript:void(0);" title="关闭" class="top-active1-close"></a>');
         } else {
             $(".top-active1").css("background-color", "#0287E1");
             $('.top-active1-wrap').html('<a href="javascript:;" target="_blank"><img src="__PUBLIC__/picture/style_blue_head_adv.png"></a><a href="javascript:void(0);" title="关闭" class="top-active1-close"></a>');

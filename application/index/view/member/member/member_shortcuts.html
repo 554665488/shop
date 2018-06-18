@@ -1,0 +1,55 @@
+<div class="shortcuts">
+    <!-- 关注中 -->
+    <article class="item focus-on">
+        <h4>关注中</h4>
+        <ul>
+            <li onclick="location.href='{(home/member/goodscollectionlist)}'">
+                <i class="icon i-goods"></i>
+                <span>商品</span>
+            </li>
+            <li>
+                <i class="icon i-footprint"></i>
+                <span>足迹</span>
+            </li>
+        </ul>
+    </article>
+
+    <!-- 交易进行 -->
+    <article class="item trading">
+        <h4>交易进行</h4>
+        <ul>
+            <li onclick='location.href="{:URL(\"home/member/orderlist\")}?status=0"'>
+                <i class="icon i-obligation"></i>
+                <span>待付款</span>
+            </li>
+            <li onclick='location.href="{:URL(\"home/member/orderlist\")}?status=1"'>
+                <i class="icon i-send-the-goods"></i>
+                <span>待发货</span>
+            </li>
+            <li onclick='location.href="{:URL(\"home/member/orderlist\")}?status=2"'>
+                <i class="icon i-for-the-goods"></i>
+                <span>待收货</span>
+            </li>
+            <li onclick='location.href="{:URL(\"home/member/orderlist\")}?status=5"'>
+                <i class="icon i-evaluate"></i>
+                <span>待评价</span>
+            </li>
+        </ul>
+    </article>
+
+    <!-- 售后服务 -->
+    <article class="item after-sales-service">
+        <h4>售后服务</h4>
+        <ul>
+            <li onclick='location.href="{:URL(\"home/member/backlist\")}"'>
+                <i class="icon i-refund"></i>
+                <span>退款</span>
+            </li>
+            <li onclick='location.href="{:URL(\"home/member/backlist\")}"'>
+                <i class="icon i-return-the-goods"></i>
+                <span>退货</span>
+            </li>
+        </ul>
+    </article>
+
+</div>

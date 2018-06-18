@@ -1,0 +1,288 @@
+<!--<script type="text/javascript" src="__PUBLIC_INDEX__/js/ns_components.js"></script>-->
+<!--<script type="text/javascript" src="__PUBLIC_INDEX__/js/ns_index.js"></script>-->
+<script type="text/javascript">
+var global = {
+	h:$(window).height(),
+	st: $(window).scrollTop(),
+	backTop:function(){
+		global.st > (global.h*0.5) ? $("#backtop").show() : $("#backtop").hide();
+	}
+}
+$('#backtop').on('click',function(){
+	$("html,body").animate({"scrollTop":0},500);
+});
+
+global.backTop();
+
+$(window).scroll(function(){
+	global.h = $(window).height();
+	global.st = $(window).scrollTop();
+	global.backTop();
+});
+
+$(window).resize(function(){
+	global.h = $(window).height();
+	global.st = $(window).scrollTop();
+	global.backTop();
+})
+
+$(function() {
+	$.pie = function(name, v){
+		// 如果没有加载 PIE 则直接终止
+		if (! PIE) return false;
+		// 是否 jQuery 对象或者选择器名称
+		var obj = typeof name == 'object' ? name : $(name);
+		// 指定运行插件的 IE 浏览器版本
+		var version = 9;
+		// 未指定则默认使用 ie10 以下全兼容模式
+		if (typeof v != 'number' && v < 9) {
+			version = v;
+		}
+		// 可对指定的多个 jQuery 对象进行样式兼容
+		if ($.browser.msie && obj.size() > 0) {
+			if ($.browser.version*1 <= version*1) {
+				obj.each(function(){
+					PIE.attach(this);
+				});
+			}
+		}
+	}
+	if ($.browser.msie) {
+		$.pie('.pie_about');
+	};
+	var url = window.location.host;
+	if (url.indexOf('autoscript') != -1) {
+			$("#hm_img").remove();
+	}
+	// 显示隐藏 请输入密码、请输入帐号
+	innitEvent();
+	var Sys = {};
+	var ua = navigator.userAgent.toLowerCase();
+	var s;
+	(s = ua.match(/(msie |trident\/)([\d.]+)/)) ? Sys.ie = s[1] : (s = ua.match(/firefox\/([\d.]+)/)) ? Sys.firefox = s[1] : (s = ua.match(/chrome\/([\d.]+)/)) ? Sys.chrome = s[1] : (s = ua.match(/opera.([\d.]+)/)) ? Sys.opera = s[1] : (s = ua.match(/version\/([\d.]+).*safari/)) ? Sys.safari = s[1] : 0;
+	if (Sys.chrome) {
+		//$("#chromealert").hide();
+		$("#chromealert").css("display", "none");
+	} else {
+		//$("#chromealert").show();
+		$("#chromealert").css("display", "block");
+	}
+	if (Sys.ie) {
+		$("#explorer").text("Internet Explorer");
+	} else if (Sys.firefox) {
+		$("#explorer").text("Firefox");
+	} else if (Sys.opera) {
+		$("#explorer").text("Opera");
+	} else if (Sys.safari) {
+		$("#explorer").text("Safari");
+	} else {
+		$("#explorer").text("其他");
+	}
+});
+
+// 显示隐藏 请输入密码、请输入帐号
+function innitEvent() {
+	$("#btnLogin").removeAttr("disabled");
+	var $hidpwd = $("#hidpwd");
+	var $pwd = $("#txtPWD");
+	var $txtName = $("#txtName");
+	var $hidpwd = $("#hidpwd");
+	$txtName.focusin(function() {
+	$("#namedel").css("display", "block");
+		$("#pwddel").css("display", "none");
+	})
+	$hidpwd.focusin(function() {
+		$("#namedel").css("display", "none");
+		$("#pwddel").css("display", "block");
+	})
+	$pwd.focusin(function() {
+		$("#pwddel").css("display", "block");
+		$("#namedel").css("display", "none");
+	})
+	$("#namedel").click(function() {
+		$(this).siblings("input").val("");
+	});
+	$("#pwddel").click(function() {
+		$(this).siblings("input").val("");
+	});
+	$("#hidpwd").focus(function() {
+		$("#hidpwd").css("display", "none");
+		$("#txtPWD").css("display", "block");
+		$("#txtPWD").focus();
+	})
+};
+
+// enter 键登录
+document.onkeypress = function() {
+	var iKeyCode = -1;
+	if (arguments[0]) {
+		iKeyCode = arguments[0].which;
+	} else {
+		iKeyCode = event.keyCode;
+	}
+	if (iKeyCode == 13) {
+		$("#btnLogin").click();// 登录
+	}
+}
+
+// 登陆 登录时 登录按钮"变暗"
+function btnlogin() {
+	ClearCookie(); //登录时清除之前的cookie
+	if($("#txtName").val() == "请输入账号" || $("#txtName").val() == "") {
+		$("#hint").css("display", "block");
+		$("#hint").text("请输入账号");
+		$("#txtName").focus();
+		return false;
+	}else if ($("#txtPWD").val() == "") {
+		$("#hint").css("display", "block");
+		$("#hint").text("请输入密码");
+		$("#hidpwd").focus();
+		return false;
+	}
+
+	var userName = $('#txtName').val();
+	var password = $('#txtPWD').val();
+	// 后台验证
+	$.post("{:URL('home/login/login')}", {
+		"username" : userName,
+		"password" : password,
+	}, function(data) {
+		if (data['status']) {
+			window.location.href ="{:URL('home/index/index')}";
+		}else {
+			$("#hint").css("display", "block");
+			$("#hint").text(data['message']); //  用户名密码提示
+		}
+	});
+};
+
+function ClearCookie() {
+	var expires = new Date();
+	expires.setTime(expires.getTime() - 1000);
+	document.cookie = "appCode='';path=/;expires=" + expires.toGMTString() + "";
+	document.cookie = "roleID='';path=/;expires=" + expires.toGMTString() + "";
+	document.cookie = "parentMenuID='';path=/;expires=" + expires.toGMTString() + "";
+	document.cookie = "currentMenuName='';path=/;expires=" + expires.toGMTString() + "";
+}
+
+//生成快捷方式
+function shortcut() {
+	$.ajax({
+		url : "/login/shortcut",
+		type : "post",
+		success : function(data) {
+		}
+	});
+}
+
+//加入收藏
+function AddFavorite(sURL, sTitle) {
+	try {
+		window.external.addFavorite(sURL, sTitle);
+	} catch (e) {
+		try {
+			window.sidebar.addPanel(sTitle, sURL, "");
+		} catch (e) {
+			alert("加入收藏失败，请使用Ctrl+D进行添加");
+		}
+	}
+}
+
+//生成快捷方式
+function toDesktop(sUrl, sName) {
+	try {
+		var WshShell = new ActiveXObject("WScript.Shell");
+		var oUrlLink = WshShell.CreateShortcut(WshShell.SpecialFolders("Desktop") + "\\" + sName + ".url");
+		oUrlLink.TargetPath = sUrl;
+		oUrlLink.Save();
+	} catch (e) {
+		alert("当前IE安全级别不允许操作！");
+	}
+}
+
+//给所有J_hoverbut的元素增加hover样式
+$(".J_hoverbut").hover(function(){
+		$(this).addClass("hover");
+	},function(){
+		$(this).removeClass("hover");
+	}
+);
+
+//会员登录手机登录和二维码的路切换
+$(".J_mob,.J_qr_code").click( function () {
+	$(".j_mob_show").toggle();
+	$(".J_qr_code_show").toggle();
+});
+$('.J_mob,#J_weixinQrCode').click(function(){
+	get_weixin_qrcode();
+});
+var qrcode_time,
+waiting_weixin_scan = function(){
+	$.getJSON(qscms.root + '?m=Home&c=Members&a=waiting_weixin_login',function(result){
+		if(result.status == 1){
+			window.location.href = result.data;
+		}
+	});
+},
+
+get_weixin_qrcode = function(){
+	clearInterval(qrcode_time);
+	$.getJSON(qscms.root + '?m=Home&c=Qrcode&a=get_weixin_qrcode',{type:'login'},function(result){
+		if(result.status == 1){
+			$('#J_weixinQrCode').empty().append(result.data);
+			qrcode_time=setInterval(waiting_weixin_scan,5000);
+		}else{
+			$('#J_weixinQrCode').empty().html(result.msg);
+		}
+	});
+};
+
+//个人注册方式选项卡切换
+$(".regtab .tabli").click( function () {
+	$(this).addClass("select").siblings(".tabli").removeClass("select");
+	var index = $(".regtab .tabli").index(this);
+	$('.tabshow').eq(index).show().siblings(".tabshow").hide();
+	$('.tabshow').eq(index).find('input').eq(0).focus().addClass('input_focus');
+});
+
+//给符合条件的的文本框增加获取焦点的边框和背景变化
+$(".J_focus input[type='text'][dir!='no_focus'],.J_focus textarea[dir!='no_focus'],.J_focus input[type='password']").focus(function(){
+	$(this).addClass("input_focus");
+});
+
+$(".J_focus input[type='text'][dir!='no_focus'],.J_focus textarea[dir!='no_focus'],.J_focus input[type='password']").blur(function(){
+	$(this).removeClass("input_focus");
+});
+
+//轮播图广告位
+var ap_id=1103;
+var data=platformAdvLoad(ap_id,'{:URL("home/Components/platformadvlist")}')['platform_adv'];
+var str="";
+var flag = false;
+if(data[0]['adv_image'] == ''){
+	$(".js-login").attr("style","background:url(__PUBLIC_INDEX__/images/blue_login_banner.png) no-repeat 0 30px;");
+}else{
+	$(".js-login").css("background","transparent");
+	for(var i=0;i<data.length;i++){
+		if(data[i]['adv_image']!==''){
+			if(i==0){
+				str+='<li style="display: list-item;background: url(__UPLOAD__/'+data[i]['adv_image']+') no-repeat center;background-color:'+data[i]['background']+';background-size: auto">';
+				if(data[i]['adv_url']!==''){
+					str+='<a href="'+data[i]['adv_url']+'" target="_blank" title="">&nbsp;</a>';
+				}
+				str+='</li>';
+			}else{
+				str+='<li style="display: none;background: url(__UPLOAD__/'+data[i]['adv_image']+') no-repeat center;background-color:'+data[i]['background']+';background-size: auto">';
+				if(data[i]['adv_url']!==''){
+					str+='<a href="'+data[i]['adv_url']+'" target="_blank" title="">&nbsp;</a>';
+				}
+				str+='</li>';
+			}
+			flag = true;
+		}
+	}
+	$('#fullScreenSlides').html(str);
+}
+</script>
+</body>
+</html>

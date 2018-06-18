@@ -1,0 +1,22 @@
+{extend name="member/base/father"/}
+
+{block name="article"}
+    <article class="member-main">
+        <!-- 快捷方式 -->
+        {include file="member/member/member_shortcuts"/}
+        <!-- 用户公告 -->
+        <div class="user-notice">
+            <h4>用户中心公告</h4>
+        </div>
+
+        {include file="member/member/member_block_info"/}
+
+        {include file="member/member/member_block_trading"/}
+        <!-- 商品收藏 -->
+        {include file="member/member/member_goodsCollection"/}
+    </article>
+{/block}
+
+{block name="page-js"}
+  {include file="member/member/member_js"/}
+{/block}

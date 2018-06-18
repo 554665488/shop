@@ -1,0 +1,14 @@
+<div class="reg-type">
+  <p class="login-info">
+    我已经注册，现在就<a href="#" title="去登录" class="color">&nbsp;登录</a>
+  </p>
+  <ul class="clearfix">
+    {if ($regType == 'register')/}
+        <li class="active"><a href="javascript:void(0);">手机注册</a></li>
+        <li><a href="{:URL('index/register/email')}">邮箱注册</a></li>
+    {elseif  ($regType == 'email')/}
+          <li ><a href="{:URL('index/register/register')}">手机注册</a></li>
+          <li class="active" ><a href="javascript:void(0);">邮箱注册</a></li>
+    {/if}
+  </ul>
+</div>

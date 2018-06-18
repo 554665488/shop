@@ -27,6 +27,11 @@ class BaseController extends Controller
 {
     protected $head = [];
 
+    public function initialize()
+    {
+
+        $this->setHead();
+    }
     /**
      * @description:ajax请求参数验证
      * @time:2018年6月9日16:23:033
@@ -59,5 +64,44 @@ class BaseController extends Controller
         $this->head['keywords'] = isset($data['keywords']) ? $data['keywords'] : '商城-个人学习使用';
         $this->head['description'] = isset($data['description']) ? $data['description'] : '商城-个人学习使用';
         $this->assign('head', $this->head);
+    }
+    /**
+     * @description:成功返回
+     * @time:2018年5月21日00:04:57
+     * @Author: yfl
+     * @QQ 554665488
+     * @param string $msg
+     * @param bool $status
+     * @param array $additional :额外返回的数据
+     * @return \think\response\Json
+     */
+    final protected function ajaxReturnSuccess($msg = '', $status = true, array $additional = [])
+    {
+        $returnArray = [
+            'msg' => $msg,
+            'additional' => $additional,
+            'status' => $status
+        ];
+        return json($returnArray);
+    }
+
+    /**
+     * @description:失败返回
+     * @time:2018年5月21日00:05:31
+     * @Author: yfl
+     * @QQ 554665488
+     * @param string $msg
+     * @param bool $status
+     * @param array $additional :额外返回的数据
+     * @return \think\response\Json
+     */
+    final protected function ajaxReturnFail($msg = '', $status = false, array $additional = [])
+    {
+        $returnArray = [
+            'msg' => $msg,
+            'additional' => $additional,
+            'status' => $status
+        ];
+        return json($returnArray);
     }
 }

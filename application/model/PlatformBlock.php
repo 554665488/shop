@@ -25,6 +25,56 @@ class PlatformBlock extends Base
 
     public function goodsCategory_1()
     {
-        return $this->hasOne('Goods','category_id_1','recommend_id');
+        return $this->hasOne('Goods', 'category_id_1', 'recommend_id');
+    }
+
+    /**
+     * 关联商品
+     *
+     * @return Goods       商品分类
+     */
+    public function goodsCategory_1_2()
+    {
+        return $this->hasOne('Goods', 'category_id_2', 'recommend_goods_category_1');
+    }
+
+    /**
+     * 关联商品
+     *
+     * @return Goods
+     */
+    public function goodsCategory_1_3()
+    {
+        return $this->hasOne('Goods', 'category_id_3', 'recommend_goods_category_1');
+    }
+
+    /**
+     * 关联广告 ：： 单广告位详情
+     *
+     * @return PlatformAdvPosition
+     */
+    public function apImage()
+    {
+        return $this->hasOne('PlatformAdvPosition', 'ap_id', 'recommend_ad_image');
+    }
+
+    /**
+     * 关联广告 ：： 幻灯广告位
+     *
+     * @return PlatformAdvPosition
+     */
+    public function apSlide()
+    {
+        return $this->hasOne('PlatformAdvPosition', 'ap_id', 'recommend_ad_slide');
+    }
+
+    /**
+     * 关联广告 ：： 多图广告位
+     *
+     * @return PlatformAdvPosition
+     */
+    public function apImages()
+    {
+        return $this->hasOne('PlatformAdvPosition', 'ap_id', 'recommend_ad_images');
     }
 }

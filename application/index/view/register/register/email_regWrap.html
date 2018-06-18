@@ -1,0 +1,72 @@
+<div class="reg-wrap">
+    <div class="reg-wrap-con" >
+        <form class="layui-form" action="" onsubmit="return false">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">邮箱:<span class="spark" style="color: red">*</span></label>
+                    <div class="layui-input-inline">
+                        <input type="email" id="email" name="email" lay-verify="required|email" placeholder="请输入您的邮箱"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">验证码:<span class="spark" style="color: red">*</span></label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="code" id="code" lay-verify="required|number" maxlength="4" placeholder="请输入4位验证码"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                    <button class="layui-btn layui-btn-primary layui-btn-sm layui-btn-disabled" disabled="disabled"  id="sendEmailCode">获取验证码</button>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">密码:<span class="spark" style="color: red">*</span></label>
+                    <div class="layui-input-inline">
+                        <input type="password" name="password" id="password" lay-verify="required" minlength="6" maxlength="20" placeholder="请输入密码长度6-20字符"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">确认密码:<span class="spark" style="color: red">*</span></label>
+                    <div class="layui-input-inline">
+                        <input type="password" name="repassword" id="repassword" maxlength="20" lay-verify="required" placeholder="请输入确认密码长度6-20字符"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">用户名:<span class="spark" style="color: red">*</span></label>
+                    <div class="layui-input-inline">
+                        <input type="tel" name="user_name" id="user_name" lay-verify="required|username" maxlength="10" placeholder="请输入用户名长度5-10字符"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="input-left">&nbsp;</label>
+                <div class="form-control-box">
+                    <label for="remember1">
+                        <input type="checkbox" name="remember" id="remember1" class="checkbox  m-b-6"/>
+                        <span>我已阅读并同意<a href="#"
+                                        class="user_protocol" target="_blank">《用户注册协议》</a></span>
+                        <span id="yzremember"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="reg-btn">
+                <div class="form-group form-group-spe">
+                    <div class="form-control-box">
+                        <button class="layui-btn layui-btn-normal" lay-submit="" id="email-register" lay-filter="email-register">同意协议并注册</button>
+                    </div>
+                    <div class="invalid"></div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

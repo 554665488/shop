@@ -1,0 +1,13 @@
+{extend name="father"/}
+{block name="content"}
+<div class="margin-w1210">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/user.css" />
+    <div class="breadcrumb">
+        <a href="http://tp.23673.com" class="index">首页</a>
+        <span class="crumbs-arrow">&gt;</span>
+        <a href="{:URL('home/member/index')}" class="js-bread-crumb"></a>
+    </div>
+    {include file="member/member/member_memberMenu"/}
+{/block}
+
+</div>

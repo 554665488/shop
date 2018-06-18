@@ -1,0 +1,47 @@
+<div class="block">
+    <!-- 余额、积分、优惠券(资产) -->
+    <div class="assets">
+        <ul>
+            <li onclick="location.href='{:URL(\'home/member/balancelist\')}'" title="查看余额" data-flag="i-balance">
+                <header>
+                    <i class="icon i-balance"></i>
+                    <span>余额</span>
+                </header>
+                <strong>0元</strong>
+            </li>
+            <li onclick="location.href='{:URL(\'home/member/integral\')}'" title="查看积分" data-flag="i-integral">
+                <header>
+                    <i class="icon i-integral"></i>
+                    <span>积分</span>
+                </header>
+                <strong>0积分</strong>
+            </li>
+            <li onclick="location.href='{:URL(\'home/member/vouchers\')}'" title="查看优惠券" data-flag="i-coupons">
+                <header>
+                    <i class="icon i-coupons"></i>
+                    <span>优惠券</span>
+                </header>
+                <strong>0张</strong>
+            </li>
+        </ul>
+    </div>
+    <!-- 安全等级 -->
+    <div class="security">
+        <div class="security-level">
+            <h4>安全等级</h4>
+            <span>一般</span>
+            <i class="icon i-security-level">
+                <em class="general" data-level="100"></em>
+            </i>
+            <a href="{:URL('home/member/usersecurity')}" title="提升账户安全等级">提升 &gt;</a>
+        </div>
+        <div class="info">
+            <label style="margin-right:10px;">手机</label>
+            <a href="{:URL('home/member/usersecurity')}?atc=user_mobile">未绑定</a>
+        </div>
+        <div class="info">
+            <label style="margin-right:10px;">邮箱</label>
+            <a href="{:URL('home/member/usersecurity')}?atc=user_email">未绑定</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,78 @@
+<div class="block">
+    <!-- 交易提醒 -->
+    <div class="trading-to-remind">
+
+        <h4>交易提醒
+            <span onclick="location.href='{:URL(\'home/member/orderlist\')}';">查看全部订单
+                <i class="icon i-arrow"></i>
+            </span>
+        </h4>
+        <header>
+            <ul>
+                <li onclick="location.href='{:URL(\'home/member/orderlist\')}?status=0';">待付款
+                    <span>(1)</span>
+                </li>
+                <li onclick="location.href='{:URL(\'home/member/orderlist\')}?status=5';">待评价
+                    <span>(0)</span>
+                </li>
+            </ul>
+        </header>
+        <article class="order-list">
+            <table>
+                <colgroup>
+                    <col width="15%">
+                    <col width="40%">
+                    <col width="30%">
+                    <col width="10%">
+                </colgroup>
+
+                <tr>
+                    <td>
+                        <a href="{:URL('home/goods/goodsinfo')}?goodsid=383" class="img">
+                            <img src="__PUBLIC__/picture/1500601152703.jpg" />
+                            <span class="order-num">10</span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{:URL('home/goods/goodsinfo')}?goodsid=383" title="单鞋细高跟防水台鱼嘴女凉鞋2017春夏季新款复古刺绣高跟鞋40-42" target="_blank">单鞋细高跟防水台鱼嘴女凉鞋2017春夏季新款复古刺绣高跟鞋40-42</a>
+                    </td>
+                    <td>
+                        <a href="{:URL('home/goods/goodsinfo')}?goodsid=383" title="单鞋细高跟防水台鱼嘴女凉鞋2017春夏季新款复古刺绣高跟鞋40-42" target="_blank"></a>
+                    </td>
+                    <td>
+                        <a class="cancel-order" href="javascript:;" onclick="cancel_order(4)">取消订单</a>
+                    </td>
+                    <td>
+                        <a href="{:URL('home/member/orderdetail')}?orderid=4" title="查看订单" target="_blank">查看</a>
+                    </td>
+                </tr>
+            </table>
+        </article>
+    </div>
+    <!-- 我的购物车 -->
+    <div class="my-shopping-cart">
+        <h4>我的购物车</h4>
+        <hr class="divider" />
+        <div class="list">
+            <ul>
+                <li>
+                    <a href="{:URL('home/goods/goodsinfo')}?goodsid=383" target="_blank" title="单鞋细高跟防水台鱼嘴女凉鞋2017春夏季新款复古刺绣高跟鞋40-42" class="pic">
+                        <img src="__PUBLIC__/picture/1500601152703.jpg" alt="单鞋细高跟防水台鱼嘴女凉鞋2017春夏季新款复古刺绣高跟鞋40-42" />
+                    </a>
+                    <div class="item">
+                        <a href="{:URL('home/goods/goodsinfo')}?goodsid=383" target="_blank" title="单鞋细高跟防水台鱼嘴女凉鞋2017春夏季新款复古刺绣高跟鞋40-42" class="name">单鞋细高跟防水台鱼嘴女凉鞋2017春夏季新款复古刺绣高跟鞋40-42</a>
+                        <p>售价：
+                            <strong>￥345</strong>
+                        </p>
+                    </div>
+                </li>
+            </ul>
+            <p style="text-align: center;font-size: 12px;margin: 10px 0;padding-bottom: 5px;">
+                <a href="{:URL('home/goods/cart')}" target="_blank" title="查看购物车所有商品">查看购物车所有商品
+                    <i class="icon i-arrow"></i>
+                </a>
+            </p>
+        </div>
+
+    </div>
+</div>

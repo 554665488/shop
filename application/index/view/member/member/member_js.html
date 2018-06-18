@@ -1,0 +1,52 @@
+<script type="text/javascript">
+    $(function () {
+        //给安全等级添加动画效果
+        $(".security-level em").animate({
+            width: $(".security-level em").attr("data-level")
+        }, 1200);
+        $(".assets li").hover(function () {
+            var flag = $(this).attr("data-flag");
+            $(this).find("i").removeClass(flag).addClass(flag + "-hover");
+            $(this).find("span").css("color", "#0689e1");
+            $(this).find("strong").css("color", "#0689e1");
+        }, function () {
+            var flag = $(this).attr("data-flag");
+            $(this).find("i").removeClass(flag + "-hover").addClass(flag);
+            $(this).find("span").css("color", "#333333");
+            $(this).find("strong").css("color", "#333333");
+        });
+    });
+
+    function cancel_order(order_id) {
+        $.ajax({
+            url: 'http://tp.23673.com/member/orderclose',
+            type: 'post',
+            data: {
+                'order_id': order_id
+            },
+            dataType: "json",
+            success: function (res) {
+                if (res['code'] > 0) {
+                    $.msg("取消订单成功");
+                    location.href = "http://tp.23673.com/member/index";
+                } else {
+                    $.msg(res['message']);
+                }
+            }
+        })
+    }
+</script>
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>

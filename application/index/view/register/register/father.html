@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {include file="register\register\head"/}
+</head>
+<body>
+{block name="headJs"}{/block}
+
+<div class="header w990">
+    <div class="logo-info">
+        <a href="#" class="logo">
+            <img alt="logo" src="__PUBLIC_INDEX__/picture/logo2.png" />
+        </a>
+    </div>
+</div>
+<div class="reg-content">
+    <div class="w990">
+        <div class="reg-form">
+            <div class="reg-con">
+                {include file="register\register\regType"/}
+                {block name="regWrap"}{/block}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 用户协议 -->
+{include file="register\register\userProtocol"/}
+<!-- 底部 _start-->
+<div class="site-footer">
+    <div class="footer-related">
+        <div class="footer-info">
+            <div class="info-text">
+                <!-- 底部导航 -->
+                <div class="txt">
+                    <p>Copyright © 2018-2025 个人学习使用
+                        <br>
+                        <a href="http://www.sixstaredu.com" target="_blank" style="text-decoration: none;color:#333333;">个人学习使用</a>
+                        <span>@.QQ554665488</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 底部 _end-->
+</body>
+</html>

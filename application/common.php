@@ -21,7 +21,7 @@ define('TEST_MODEL', 'test');
 define('ADMIN_MODEL', 'admin');
 // 项目文件指定根目录
 define('PROJECT_ROOT', __DIR__ . '/..');  //项目根目录地址
-define('__HTTP_HOST','http://'.\think\facade\Request::server('HTTP_HOST'));
+define('__HTTP_HOST', 'http://' . \think\facade\Request::server('HTTP_HOST'));
 // 应用公共文件
 function ajaxReturn($code, $msg = '处理成功')
 {
@@ -45,8 +45,8 @@ function makeFacade()
         'app\common\facade\TableFacade' => 'app\common\Table',
         'app\common\facade\QRcodeFacade' => 'app\common\QRcodeUtil',//二维码
         'app\common\facade\UploadFacade' => 'app\common\UploadUtil',//upload封装
-        'app\common\facade\SendCodeFacade\EmailSendFacade'=> 'app\SendCodeUtil\EmailSendUtil',//发送邮件
-        'app\common\facade\SendCodeFacade\SmsSendFacade'=> 'app\SendCodeUtil\SmsSendUtil',//发送短信
+        'app\common\facade\SendCodeFacade\EmailSendFacade' => 'app\common\SendCodeUtil\EmailSendUtil',//发送邮件
+        'app\common\facade\SendCodeFacade\SmsSendFacade' => 'app\common\SendCodeUtil\SmsSendUtil',//发送短信
     ]);
     //类的映射
     \think\Loader::addClassAlias([
@@ -55,8 +55,8 @@ function makeFacade()
         'Table' => 'app\common\facade\TableFacade',
         'QRcodeUtil' => 'app\common\facade\QRcodeFacade',
         'UploadUtil' => 'app\common\facade\UploadFacade',
-        'EmailSendService'=>'app\common\facade\SendCodeFacade\EmailSendFacade',
-        'SmsSendService'=>'app\common\facade\SendCodeFacade\SmsSendFacade',
+        'EmailSendUtil' => 'app\common\facade\SendCodeFacade\EmailSendFacade',
+        'SmsSendUtil' => 'app\common\facade\SendCodeFacade\SmsSendFacade',
     ]);
 }
 
@@ -748,6 +748,42 @@ function getDateTime($time = 0)
 {
     $time = $time == 0 ? time() : $time;
     return date('Y-m-d H:i:s', $time);
+}
+
+/**
+ * @description:正则验证手机号码  "^"匹配文本的开头，"$"匹配文本的结尾。
+ * @time:2018年6月18日15:09:31
+ * @Author: yfl
+ * @QQ 554665488
+ * @param $input
+ * @return bool
+ */
+function isMobile($input)
+{
+    if (preg_match("/^1[345678]{1}\d{9}$/", $input)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/**
+ * @description:验证邮箱
+ * @time:2018年6月18日15:12:35
+ * @Author: yfl
+ * @QQ 554665488
+ * @param $input
+ * @return bool
+ */
+function isEmail($input)
+{
+    $isEmail = '/^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/';
+
+    if (preg_match($isEmail, $input)) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 
