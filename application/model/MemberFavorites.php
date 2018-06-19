@@ -27,4 +27,17 @@ class MemberFavorites extends Base
      * @var string
      */
     protected $pk = "log_id";
+
+    //关联搜藏的店铺  这里不是一对一吗
+    public function shop()
+    {
+        return $this->hasMany('Shop', 'shop_id', 'fav_id');
+    }
+
+    //关联收藏的商品
+    public function goods()
+    {
+        return $this->hasMany('Goods', 'goods_id', 'fav_id');
+    }
+
 }

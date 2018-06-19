@@ -38,4 +38,28 @@ class User extends Base
     {
         return $this->hasOne('Member', 'uid', 'uid');
     }
+
+    /**
+     * @description:关联优惠券表
+     * @time:2018年6月19日10:41:05
+     * @Author: yfl
+     * @QQ 554665488
+     * @return \think\model\relation\HasMany
+     */
+    public function coupon()
+    {
+        return $this->hasMany('Coupon', 'coupon_id', 'uid');
+    }
+
+    /**
+     * @description:关联会员账户统计
+     * @time:2018年6月19日14:36:46
+     * @Author: yfl
+     * @QQ 554665488
+     * @return \think\model\relation\HasMany
+     */
+    public function memberAccount()
+    {
+        return $this->hasMany('MemberAccount', 'uid', 'uid');
+    }
 }

@@ -27,4 +27,16 @@ class Coupon extends Base
      * @var string
      */
     protected $pk = "coupon_id";
+
+    /**
+     * @description:关联优惠券类型表
+     * @time:2018年6月19日10:44:06
+     * @Author: yfl
+     * @QQ 554665488
+     * @return \think\model\relation\HasOne
+     */
+    public function couponType()
+    {
+        return $this->hasOne('CouponType','coupon_type_id','coupon_type_id');
+    }
 }

@@ -11,8 +11,23 @@
 
 namespace app\index\service;
 
+use SC;
 
 class BaseService
 {
+    protected $userInfo;
+
+    public function __construct()
+    {
+
+    }
+
+    public function init()
+    {
+        $user = SC::getUserInfoSession('index');
+        if (!empty($user)) {
+            $this->userInfo = $user;
+        }
+    }
 
 }

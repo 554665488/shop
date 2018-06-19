@@ -111,4 +111,16 @@ class Goods extends Base
     {
         return $this->hasMany('GoodsSku','goods_id','goods_id');
     }
+
+    /**
+     * @description:关联优惠券使用商品表
+     * @time:2018年6月19日10:50:30
+     * @Author: yfl
+     * @QQ 554665488
+     * @return \think\model\relation\HasOne
+     */
+    public function couponGoods()
+    {
+        return $this->hasOne('CouponGoods','goods_id','goods_id');
+    }
 }

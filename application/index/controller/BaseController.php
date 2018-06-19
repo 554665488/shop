@@ -29,7 +29,6 @@ class BaseController extends Controller
 
     public function initialize()
     {
-
         $this->setHead();
     }
     /**
