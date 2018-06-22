@@ -5,7 +5,7 @@
   <ul class="clearfix">
     {if ($regType == 'register')/}
         <li class="active"><a href="javascript:void(0);">手机注册</a></li>
-        <li><a href="{:URL('index/register/email')}">邮箱注册</a></li>
+        <li><a href="{:URL('index/register/emailRegister')}">邮箱注册</a></li>
     {elseif  ($regType == 'email')/}
           <li ><a href="{:URL('index/register/register')}">手机注册</a></li>
           <li class="active" ><a href="javascript:void(0);">邮箱注册</a></li>
