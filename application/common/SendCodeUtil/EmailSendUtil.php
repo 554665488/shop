@@ -55,7 +55,7 @@ class EmailSendUtil extends RegisterSendCode
         $this->mail = new PHPMailer();                            // PHPMailer对象
         $this->mail->CharSet = 'UTF-8';                           // 设定邮件编码，默认ISO-8859-1，如果发中文此项必须设置，否则乱码
         $this->mail->IsSMTP();                                    // 设定使用SMTP服务
-        $this->mail->SMTPDebug = $this->smtpDebug;                // 关闭SMTP调试功能
+        $this->mail->SMTPDebug = 2;                // 关闭SMTP调试功能
         $this->mail->SMTPAuth = true;                             // 启用 SMTP 验证功能
         $this->mail->SMTPSecure = 'ssl';
         $this->mail->SMTPSecure = '';                             // 使用安全协议
