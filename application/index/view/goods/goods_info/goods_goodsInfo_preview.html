@@ -5,21 +5,17 @@
         <script type="text/javascript" src="__PUBLIC_INDEX__/js/gallery.js"></script>
         <div id="MagnifierWrap">
             <div class="MagnifierMain">
-                <img class="MagTargetImg" src="__PUBLIC_INDEX__/picture/1500601152701.jpg" />
+                <img class="MagTargetImg" src="{$goods_info['picture']}" />
             </div>
             <span class="spe_leftBtn on">&lt;</span>
             <span class="spe_rightBtn on">&gt;</span>
             <div class="spec-items">
                 <ul>
-                    <li class="on">
-                        <img src="__PUBLIC_INDEX__/picture/1500601152701.jpg" />
+                    {volist name = "$goods_info['img_id_array']" id='vo' key ='k'}
+                    <li {eq name="$k" value="0" }class ="on"{/eq}>
+                        <img src="{$vo.pic_cover_big}" />
                     </li>
-                    <li>
-                        <img src="__PUBLIC_INDEX__/picture/1500601154711.jpg" />
-                    </li>
-                    <li>
-                        <img src="__PUBLIC_INDEX__/picture/1500601156721.jpg" />
-                    </li>
+                    {/volist}
                 </ul>
             </div>
         </div>
