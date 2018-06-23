@@ -73,6 +73,7 @@ class EmailSendUtil extends RegisterSendCode
     }
 
     public function sendResult($code){
+        dump($this->mail->ErrorInfo);
         ($this->smtpDebug == 2 ) ? Log::write($this->mail->ErrorInfo) : '';
 
         return ($code) ? [
