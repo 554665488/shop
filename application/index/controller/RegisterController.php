@@ -139,7 +139,6 @@ class RegisterController extends BaseController
      */
     public function sendCode()
     {
-        echo 'aaaaaa';
         if (Request::isPost()) {
             $sendTo = Request::param('sendTo');
             if (isMobile($sendTo)) {//发送手机号
