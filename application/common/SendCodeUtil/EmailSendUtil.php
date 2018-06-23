@@ -57,7 +57,7 @@ class EmailSendUtil extends RegisterSendCode
        try{
            $this->mail->CharSet = 'UTF-8';                           // 设定邮件编码，默认ISO-8859-1，如果发中文此项必须设置，否则乱码
            $this->mail->IsSMTP();                                    // 设定使用SMTP服务
-           $this->mail->SMTPDebug = 2;                // 关闭SMTP调试功能
+           $this->mail->SMTPDebug = $this->smtpDebug;                // 关闭SMTP调试功能
            $this->mail->SMTPAuth = true;                             // 启用 SMTP 验证功能
            $this->mail->SMTPSecure = 'ssl';                             // 使用安全协议
            $this->mail->Host = $this->host;                          // SMTP 服务器
@@ -77,7 +77,6 @@ class EmailSendUtil extends RegisterSendCode
     }
 
     public function sendResult($code){
-        dump($this->mail->ErrorInfo);
         ($this->smtpDebug == 2 ) ? Log::write($this->mail->ErrorInfo) : '';
 
         return ($code) ? [
