@@ -332,7 +332,7 @@ class SMTP
                 self::DEBUG_CONNECTION
             );
             set_error_handler([$this, 'errorHandler']);
-            $this->smtp_conn = fsockopen(
+            $this->smtp_conn = pfsockopen(
                 $host,
                 $port,
                 $errno,
