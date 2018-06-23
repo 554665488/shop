@@ -19,7 +19,7 @@ class EmailSendUtil extends RegisterSendCode
     private $username = "13589233319@163.com";
 
     // SMTP服务器密码
-    private $password = "wangyi554665488";
+    private $password = "Wangyi554665488";
 
     // SMTP 服务器
     private $host = "smtp.163.com";
