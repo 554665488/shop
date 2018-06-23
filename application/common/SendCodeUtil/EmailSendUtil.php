@@ -57,6 +57,7 @@ class EmailSendUtil extends RegisterSendCode
         $this->mail->IsSMTP();                                    // 设定使用SMTP服务
         $this->mail->SMTPDebug = $this->smtpDebug;                // 关闭SMTP调试功能
         $this->mail->SMTPAuth = true;                             // 启用 SMTP 验证功能
+        $this->mail->SMTPSecure = 'ssl';
         $this->mail->SMTPSecure = '';                             // 使用安全协议
         $this->mail->Host = $this->host;                          // SMTP 服务器
         $this->mail->Port = $this->port;                          // SMTP服务器的端口号
