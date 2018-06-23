@@ -149,7 +149,6 @@ class RegisterController extends BaseController
                     return $this->ajaxReturnSuccess($result['msg']);
                 }
             } else if (isEmail($sendTo)) {//发送邮箱
-                echo $sendTo;
                 $result = EmailSendUtil::sendVerification($sendTo);
                 if ($result['status'] === false) {
                     return $this->ajaxReturnFail($result['msg']);
