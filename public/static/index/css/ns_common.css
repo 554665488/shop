@@ -2780,7 +2780,7 @@ a.btn-primary:active, .btn-primary:active {
 }
 
 .right-sidebar-panel li i {
-	background: url(../images/icon.png) no-repeat;
+	background: url(../images/right_sidebar/icon.png) no-repeat;
 	display: inline-block;
 	cursor: pointer;
 	vertical-align: top;
