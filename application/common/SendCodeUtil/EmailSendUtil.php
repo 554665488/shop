@@ -26,7 +26,7 @@ class EmailSendUtil extends RegisterSendCode
     private $host = "smtp.163.com";
 
     // SMTP服务器的端口号
-    private $port = 587;
+    private $port = 465;
 
     // 邮件标题
     private $subject = "测试发送-邮件标题";
@@ -59,7 +59,7 @@ class EmailSendUtil extends RegisterSendCode
            $this->mail->IsSMTP();                                    // 设定使用SMTP服务
            $this->mail->SMTPDebug = 2;                // 关闭SMTP调试功能
            $this->mail->SMTPAuth = true;                             // 启用 SMTP 验证功能
-           $this->mail->SMTPSecure = 'tls';                             // 使用安全协议
+           $this->mail->SMTPSecure = 'ssl';                             // 使用安全协议
            $this->mail->Host = $this->host;                          // SMTP 服务器
            $this->mail->Port = $this->port;                          // SMTP服务器的端口号
            $this->mail->Username = $this->username;                  // SMTP服务器用户名
