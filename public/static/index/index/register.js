@@ -238,7 +238,7 @@ layui.use(['form'], function () {
                 data: data.field,
                 beforeSend: function () {
                     $('#sms-register').addClass('layui-btn-disabled').attr('disabled', 'disabled');
-                    index = layer.load(1, {time: 2 * 1000});
+                    index = layer.load(1);
                 },
                 complete: function () {
                     $('#sms-register').removeClass('layui-btn-disabled').removeAttr('disabled');
