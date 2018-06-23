@@ -183,7 +183,7 @@ layui.use(['form'], function () {
                 url: urlConfig.user.ajaxIsUserExist,
                 data: {"account": email},
                 beforeSend: function () {
-                    index = layer.load(1, {time: 2 * 1000});
+                    index = layer.load(1);
                 },
                 complete: function () {
                     layer.close(index);
