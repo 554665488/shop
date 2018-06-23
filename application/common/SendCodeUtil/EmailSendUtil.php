@@ -25,7 +25,7 @@ class EmailSendUtil extends RegisterSendCode
     private $host = "smtp.163.com";
 
     // SMTP服务器的端口号
-    private $port = "25";
+    private $port = 465;
 
     // 邮件标题
     private $subject = "测试发送-邮件标题";
