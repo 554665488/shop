@@ -2,6 +2,7 @@
 
 namespace app\common\SendCodeUtil;
 use app\common\RegisterSendCode;
+use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use think\facade\Log;
 
@@ -25,7 +26,7 @@ class EmailSendUtil extends RegisterSendCode
     private $host = "smtp.163.com";
 
     // SMTP服务器的端口号
-    private $port = 465;
+    private $port = 587;
 
     // 邮件标题
     private $subject = "测试发送-邮件标题";
@@ -53,23 +54,26 @@ class EmailSendUtil extends RegisterSendCode
         $content = ($content == '') ? sprintf($this->temp, $this->createCode()) : $content ;
 
         $this->mail = new PHPMailer();                            // PHPMailer对象
-        $this->mail->CharSet = 'UTF-8';                           // 设定邮件编码，默认ISO-8859-1，如果发中文此项必须设置，否则乱码
-        $this->mail->IsSMTP();                                    // 设定使用SMTP服务
-        $this->mail->SMTPDebug = 2;                // 关闭SMTP调试功能
-        $this->mail->SMTPAuth = true;                             // 启用 SMTP 验证功能
-        $this->mail->SMTPSecure = 'ssl';
-        $this->mail->SMTPSecure = '';                             // 使用安全协议
-        $this->mail->Host = $this->host;                          // SMTP 服务器
-        $this->mail->Port = $this->port;                          // SMTP服务器的端口号
-        $this->mail->Username = $this->username;                  // SMTP服务器用户名
-        $this->mail->Password = $this->password;                  // SMTP服务器密码
-        $this->mail->Subject = $this->subject;                    // 邮件标题
-        $this->mail->SetFrom($this->username, "测试发送1");
-        $this->mail->MsgHTML($content);
-        $this->mail->AddAddress($sendTo, "测试发送2");
-        //使用HTML格式发送邮件
-        $this->mail->IsHTML(true);
-        return $this->sendResult($this->mail->Send());
+       try{
+           $this->mail->CharSet = 'UTF-8';                           // 设定邮件编码，默认ISO-8859-1，如果发中文此项必须设置，否则乱码
+           $this->mail->IsSMTP();                                    // 设定使用SMTP服务
+           $this->mail->SMTPDebug = 2;                // 关闭SMTP调试功能
+           $this->mail->SMTPAuth = true;                             // 启用 SMTP 验证功能
+           $this->mail->SMTPSecure = 'tls';                             // 使用安全协议
+           $this->mail->Host = $this->host;                          // SMTP 服务器
+           $this->mail->Port = $this->port;                          // SMTP服务器的端口号
+           $this->mail->Username = $this->username;                  // SMTP服务器用户名
+           $this->mail->Password = $this->password;                  // SMTP服务器密码
+           $this->mail->Subject = $this->subject;                    // 邮件标题
+           $this->mail->SetFrom($this->username, "测试发送1");
+           $this->mail->MsgHTML($content);
+           $this->mail->AddAddress($sendTo, "测试发送2");
+           //使用HTML格式发送邮件
+           $this->mail->IsHTML(true);
+           return $this->sendResult($this->mail->Send());
+       }catch (Exception $exception){
+           echo 'Message could not be sent. Mailer Error: ', $this->mail->ErrorInfo;
+       }
     }
 
     public function sendResult($code){
