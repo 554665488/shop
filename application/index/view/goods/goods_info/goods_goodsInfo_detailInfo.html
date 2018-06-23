@@ -9,12 +9,12 @@
             <!-- 商品不同的价格 -->
             <div class="show-price">
                 <span class="price">原&nbsp;&nbsp;&nbsp;价</span>
-                <font class="market-price">￥345.00</font>
+                <font class="market-price">{$goods_info['price']}</font>
             </div>
             <div class="realy-price">
                 <div class="now-prices">
                     <span class="price">销售价</span>
-                    <strong class="p-price second-color" id="price">￥345.00</strong>
+                    <strong class="p-price second-color" id="price">{$goods_info['member_price']}</strong>
                 </div>
             </div>
         </div>
@@ -131,7 +131,7 @@
                         <div id="phone-tan" style="left:53px;">
                             <span class="arr"></span>
                             <div class="m-qrcode-wrap">
-                                <img src="__PUBLIC_INDEX__/picture/goods_qrcode_383.png" alt="二维码图片" width="100" height="100">
+                                <img src="{$goods_info['QRcode']}" alt="二维码图片" width="100" height="100">
                             </div>
                         </div>
                     </a>
