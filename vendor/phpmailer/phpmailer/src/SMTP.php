@@ -313,7 +313,6 @@ class SMTP
         );
         $errno = 0;
         $errstr = '';
-        var_dump($streamok,'=====================================');
         if ($streamok) {
             $socket_context = stream_context_create($options);
             set_error_handler([$this, 'errorHandler']);
